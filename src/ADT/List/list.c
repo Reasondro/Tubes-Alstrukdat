@@ -17,7 +17,7 @@ List MakeList(){
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test list kosong *** */
-boolean IsEmpty(List L){
+boolean IsEmptyList(List L){
     return(L.A[0] == -9999);
 }
 /* Mengirimkan true jika list L kosong, mengirimkan false jika tidak */
@@ -38,7 +38,7 @@ void Set(List *L, IdxType i, ElType v){
 
 /* ********** SELEKTOR ********** */
 /* *** Banyaknya elemen *** */
-int Length(List L){
+int LengthList(List L){
     IdxType i = 0;
     while (Get(L, i) != -9999){
         i++;

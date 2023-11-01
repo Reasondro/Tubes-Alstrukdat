@@ -37,7 +37,7 @@ List MakeList();
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test list kosong *** */
-boolean IsEmpty(List L);
+boolean IsEmptyList(List L);
 /* Mengirimkan true jika list L kosong, mengirimkan false jika tidak */
 
 /* *** Menghasilkan sebuah elemen *** */
@@ -52,7 +52,7 @@ void Set(List *L, IdxType i, ElType v);
 
 /* ********** SELEKTOR ********** */
 /* *** Banyaknya elemen *** */
-int Length(List L);
+int LengthList(List L);
 /* Mengirimkan banyaknya elemen efektif list */
 /* Mengirimkan nol jika list kosong */
 
