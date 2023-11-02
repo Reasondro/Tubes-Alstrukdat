@@ -1,6 +1,6 @@
 #include "boolean.h"
 #include "mesinkata.h"
-
+#include "mesinkarakter.h"
 /* State Mesin Kata */
 boolean EndWord;
 Word currentWord;
@@ -10,7 +10,8 @@ void IgnoreBlanks()
    I.S. : currentChar sembarang
    F.S. : currentChar ≠ BLANK atau currentChar = MARK */
 {
-    while(currentChar == BLANK){
+    while (currentChar == BLANK || currentChar == ENTER)
+    {
         ADV();
     }
 }
@@ -23,9 +24,12 @@ void STARTWORD()
 {
     START();
     IgnoreBlanks();
-    if (currentChar ==  MARK) {
+    if (currentChar == MARK)
+    {
         EndWord = true;
-    } else {
+    }
+    else
+    {
         EndWord = false;
         CopyWord();
     }
@@ -39,9 +43,12 @@ void ADVWORD()
    Proses : Akuisisi kata menggunakan procedure SalinWord */
 {
     IgnoreBlanks();
-    if (currentChar==MARK){
+    if (currentChar == MARK)
+    {
         EndWord = true;
-    } else {
+    }
+    else
+    {
         EndWord = false;
         CopyWord();
         IgnoreBlanks();
@@ -56,14 +63,55 @@ void CopyWord()
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
-    int i=0;
-    while((currentChar!=MARK) && (currentChar != BLANK)){
-        if (i < NMax) {
-            currentWord.TabWord[i] = currentChar;
-            i++;
-        }
-        
+    int i = 1;
+    currentWord.Length = 0;
+    while ((currentChar != BLANK) && (currentChar != ENTER))
+    {
+        IgnoreBlanks();
+        currentWord.TabWord[i] = currentChar;
+        i++;
         ADV();
     }
-    currentWord.Length = i;
+    currentWord.Length = i - 1;
+}
+
+void printWord(Word word)
+{
+    for (int i = 1; i <= word.Length; i++)
+    {
+        printf("%c", word.TabWord[i]);
+    }
+    printf("\n");
+}
+
+void STARTCOMMAND()
+{
+    STARTINPUT();
+    IgnoreBlanks();
+    if (currentChar == MARK)
+    {
+        EndWord = true;
+    }
+    else
+    {
+        EndWord = false;
+        CopyWord();
+    }
+}
+
+void readCommand()
+{
+    printf("Masukkan command: ");
+    STARTCOMMAND();
+}
+
+boolean IsSameWord(Word w1, char *w2)
+{
+    boolean IsSame = true;
+    for (int i = 0; i < w1.Length; i++)
+    {
+        if (w2[i] != w1.TabWord[i + 1])
+            IsSame = false;
+    }
+    return IsSame;
 }

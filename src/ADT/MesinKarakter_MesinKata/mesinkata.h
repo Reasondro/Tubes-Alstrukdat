@@ -5,10 +5,10 @@
 #define __MESINKATA_H__
 
 #include "boolean.h"
-#include "mesinkarakterv2.h"
 
-#define NMax 50
+#define NMax 500
 #define BLANK ' '
+#define ENTER '\n'
 
 typedef struct
 {

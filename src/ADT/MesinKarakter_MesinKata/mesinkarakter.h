@@ -6,7 +6,7 @@
 
 #include "boolean.h"
 
-#define MARK '.'
+#define MARK ';'
 /* State Mesin */
 extern char currentChar;
 extern boolean EOP;
@@ -27,10 +27,9 @@ void ADV();
           currentChar mungkin = MARK
           Jika  currentChar = MARK maka EOP akan menyala (true) */
 
-char GetCC();
-/* Mengirimkan currentChar */
+void STARTINPUT();
 
-boolean IsEOP();
-/* Mengirimkan true jika currentChar = MARK */
+// boolean IsEOP();
+// /* Mengirimkan true jika currentChar = MARK */
 
 #endif
