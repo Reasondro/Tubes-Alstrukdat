@@ -104,3 +104,14 @@ void readCommand()
     printf("Masukkan command: ");
     STARTCOMMAND();
 }
+
+boolean IsSameWord(Word w1, char *w2)
+{
+    boolean IsSame = true;
+    for (int i = 0; i < w1.Length; i++)
+    {
+        if (w2[i] != w1.TabWord[i + 1])
+            IsSame = false;
+    }
+    return IsSame;
+}

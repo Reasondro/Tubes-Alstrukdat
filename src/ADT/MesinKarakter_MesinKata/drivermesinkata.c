@@ -5,5 +5,10 @@
 
 int main()
 {
+    char APA[] = "APA";
     readCommand();
+    if (IsSameWord(currentWord, APA))
+    {
+        printf("berarti bisa");
+    }
 }
