@@ -35,7 +35,8 @@ void ADV()
               currentChar mungkin = MARK
               Jika  currentChar = MARK maka EOP akan menyala (true) */
 
-    EOP = (currentChar == MARK);
+    currentChar = getc(pita);
+    EOP = (currentChar == EOF);
     if (EOP)
     {
         fclose(pita);

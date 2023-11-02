@@ -10,7 +10,7 @@ void IgnoreBlanks()
    I.S. : currentChar sembarang
    F.S. : currentChar ≠ BLANK atau currentChar = MARK */
 {
-    while (currentChar == BLANK)
+    while (currentChar == BLANK || currentChar == ENTER)
     {
         ADV();
     }
@@ -63,16 +63,44 @@ void CopyWord()
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
-    int i = 0;
-    while ((currentChar != MARK) && (currentChar != BLANK))
+    int i = 1;
+    currentWord.Length = 0;
+    while ((currentChar != BLANK) && (currentChar != ENTER))
     {
-        if (i < NMax)
-        {
-            currentWord.TabWord[i] = currentChar;
-            i++;
-        }
-
+        IgnoreBlanks();
+        currentWord.TabWord[i] = currentChar;
+        i++;
         ADV();
     }
-    currentWord.Length = i;
+    currentWord.Length = i - 1;
+}
+
+void printWord(Word word)
+{
+    for (int i = 1; i <= word.Length; i++)
+    {
+        printf("%c", word.TabWord[i]);
+    }
+    printf("\n");
+}
+
+void STARTCOMMAND()
+{
+    STARTINPUT();
+    IgnoreBlanks();
+    if (currentChar == MARK)
+    {
+        EndWord = true;
+    }
+    else
+    {
+        EndWord = false;
+        CopyWord();
+    }
+}
+
+void readCommand()
+{
+    printf("Masukkan command: ");
+    STARTCOMMAND();
 }
