@@ -5,10 +5,14 @@
 
 int main()
 {
-    char fungsi1[] = "fungsi1;";
+    printWord(currentWord);
+
+    char fungsi1[] = "fungsi1;"; // contoh nulis command ke variable buat dicek nanti
     char fungsi2[] = "fungsi2;";
+
     readCommand();
     printWord(currentWord);
+
     printf("\n");
     if (IsSameWord(currentWord, fungsi1))
     {
