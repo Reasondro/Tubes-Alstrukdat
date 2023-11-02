@@ -1,6 +1,6 @@
 #include "boolean.h"
 #include "mesinkata.h"
-
+#include "mesinkarakter.h"
 /* State Mesin Kata */
 boolean EndWord;
 Word currentWord;
@@ -10,7 +10,8 @@ void IgnoreBlanks()
    I.S. : currentChar sembarang
    F.S. : currentChar ≠ BLANK atau currentChar = MARK */
 {
-    while(currentChar == BLANK){
+    while (currentChar == BLANK)
+    {
         ADV();
     }
 }
@@ -23,9 +24,12 @@ void STARTWORD()
 {
     START();
     IgnoreBlanks();
-    if (currentChar ==  MARK) {
+    if (currentChar == MARK)
+    {
         EndWord = true;
-    } else {
+    }
+    else
+    {
         EndWord = false;
         CopyWord();
     }
@@ -39,9 +43,12 @@ void ADVWORD()
    Proses : Akuisisi kata menggunakan procedure SalinWord */
 {
     IgnoreBlanks();
-    if (currentChar==MARK){
+    if (currentChar == MARK)
+    {
         EndWord = true;
-    } else {
+    }
+    else
+    {
         EndWord = false;
         CopyWord();
         IgnoreBlanks();
@@ -56,13 +63,15 @@ void CopyWord()
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
-    int i=0;
-    while((currentChar!=MARK) && (currentChar != BLANK)){
-        if (i < NMax) {
+    int i = 0;
+    while ((currentChar != MARK) && (currentChar != BLANK))
+    {
+        if (i < NMax)
+        {
             currentWord.TabWord[i] = currentChar;
             i++;
         }
-        
+
         ADV();
     }
     currentWord.Length = i;

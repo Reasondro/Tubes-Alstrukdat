@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.html": "html",
+    "boolean.h": "c",
+    "mesinkarakterv2.h": "c"
+  }
+}

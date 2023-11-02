@@ -4,11 +4,11 @@
 #ifndef __MESINKATA_H__
 #define __MESINKATA_H__
 
-#include "boolean.h"
-#include "mesinkarakterv2.h"
+#include "../../boolean.h"
 
-#define NMax 50
+#define NMax 500
 #define BLANK ' '
+#define ENTER '\n'
 
 typedef struct
 {
