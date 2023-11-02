@@ -9,7 +9,7 @@ int main()
 
     char fungsi1[] = "fungsi1;"; // contoh nulis command ke variable buat dicek nanti
     char fungsi2[] = "fungsi2;";
-
+    char fungsi3[] = "ini fungsi3;";
     readCommand();
     printWord(currentWord);
 
@@ -25,5 +25,15 @@ int main()
         // panggil fungsi2 disini
         printf("fungsi2 kepanggil\n");
         printWord(currentWord);
+    }
+    else if (IsSameWord(currentWord, fungsi3))
+    {
+        // panggil fungsi3 disini
+        printf("fungsi3 kepanggil\n");
+        printWord(currentWord);
+    }
+    else
+    {
+        printf("Command tidak diketahui!");
     }
 }
