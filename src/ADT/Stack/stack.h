@@ -6,18 +6,18 @@
 #define stackt_H
 
 #include "boolean.h"
+#include "../struct.h"
 
 #define Nil -1
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
 
-typedef int infotype;
 typedef int address;   /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
 typedef struct { 
-  infotype T[MaxEl]; /* tabel penyimpan elemen */
+  songtype T[MaxEl]; /* tabel penyimpan elemen */
   address TOP;  /* alamat TOP: elemen puncak */
 } Stack;
 /* Definisi stack S kosong : S.TOP = Nil */
@@ -28,7 +28,9 @@ typedef struct {
 
 /* Definisi akses dengan Selektor : Set dan Get */
 #define Top(S) (S).TOP
-#define InfoTop(S) (S).T[(S).TOP]
+#define Penyanyi(S) (S).T[(S).TOP].penyanyi
+#define Album(S) (S).T[(S).TOP].album
+#define Judul_Lagu(S) (S).T[(S).TOP].judul_lagu
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
@@ -45,13 +47,13 @@ boolean IsFullStack(Stack S);
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
-void Push(Stack * S, infotype X);
+void Push(Stack * S, songtype X);
 /* Menambahkan X sebagai elemen Stack S. */
 /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. TOP bertambah 1, X menjadi TOP yang baru, */
 
 /* ************ Menghapus sebuah elemen Stack ************ */
-void Pop(Stack * S, infotype* X);
+void Pop(Stack * S, songtype* X);
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */

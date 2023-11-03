@@ -5,25 +5,28 @@
 #define QUEUE_H
 
 #include "boolean.h"
+#include "struct.h"
 
 #define IDX_UNDEF -1
 #define CAPACITY 100
 
 /* Definisi elemen dan address */
-typedef int ElType;
 typedef struct {
-	ElType buffer[CAPACITY]; 
+	songtype buffer[CAPACITY]; 
 	int idxHead;
 	int idxTail;
 } Queue;
 
-
 /* ********* AKSES (Selektor) ********* */
 /* Jika q adalah Queue, maka akses elemen : */
-#define IDX_HEAD(q) (q).idxHead
-#define IDX_TAIL(q) (q).idxTail
-#define     HEAD(q) (q).buffer[(q).idxHead]
-#define     TAIL(q) (q).buffer[(q).idxTail]
+#define        IDX_HEAD(q) (q).idxHead
+#define        IDX_TAIL(q) (q).idxTail
+#define   Penyanyi_Head(q) (q).buffer[(q).idxHead].penyanyi
+#define      Album_Head(q) (q).buffer[(q).idxHead].album
+#define Judul_Lagu_Head(q) (q).buffer[(q).idxHead].judul_lagu
+#define   Penyanyi_Tail(q) (q).buffer[(q).idxTail].penyanyi
+#define      Album_Tail(q) (q).buffer[(q).idxTail].album
+#define Judul_Lagu_Tail(q) (q).buffer[(q).idxTail].judul_lagu
 
 /* *** Kreator *** */
 void CreateQueue(Queue *q);
@@ -44,12 +47,12 @@ int lengthQueue(Queue q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika q kosong. */
 
 /* *** Primitif Add/Delete *** */
-void enqueue(Queue *q, ElType val);
+void enqueue(Queue *q, songtype val);
 /* Proses: Menambahkan val pada q dengan aturan FIFO */
 /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
 /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur" dalam buffer melingkar. */
 
-void dequeue(Queue *q, ElType *val);
+void dequeue(Queue *q, songtype *val);
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. q tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd I.S., IDX_HEAD "mundur";

@@ -38,7 +38,7 @@ int lengthQueue(Queue q){
     }
 }
 /* *** Primitif Add/Delete *** */
-void enqueue(Queue *q, ElType val){
+void enqueue(Queue *q, songtype val){
 /* Proses: Menambahkan val pada q dengan aturan FIFO */
 /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
 /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur" dalam buffer melingkar. */
@@ -52,14 +52,18 @@ void enqueue(Queue *q, ElType val){
             IDX_TAIL(*q) ++;
         }
     }
-    (*q).buffer[IDX_TAIL(*q)] = val;
+    Penyanyi_Tail(*q) = val.penyanyi;
+    Album_Tail(*q) = val.album;
+    Judul_Lagu_Tail(*q) = val.judul_lagu;
 }
-void dequeue(Queue *q, ElType *val){
+void dequeue(Queue *q, songtype *val){
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. q tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd I.S., IDX_HEAD "mundur";
         q mungkin kosong */
-    *val = HEAD(*q);
+    (*val).penyanyi = Penyanyi_Head(*q);
+    (*val).album = Album_Head(*q);
+    (*val).judul_lagu = Judul_Lagu_Head(*q);    
     if (IDX_HEAD(*q) == IDX_TAIL(*q)){
         IDX_HEAD(*q) = IDX_UNDEF;
         IDX_TAIL(*q) = IDX_UNDEF;
@@ -71,6 +75,9 @@ void dequeue(Queue *q, ElType *val){
         }
     }
 }
+
+// Display queue belom diganti
+
 /* *** Display Queue *** */
 void displayQueue(Queue q){
 /* Proses : Menuliskan isi Queue dengan traversal, Queue ditulis di antara kurung
