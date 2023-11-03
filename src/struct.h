@@ -1,7 +1,7 @@
 #include "boolean.h"
 
-#ifndef song_H
-#define song_H
+#ifndef struct_H
+#define struct_H
 
 typedef struct{
   char penyanyi;
