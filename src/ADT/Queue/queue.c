@@ -38,7 +38,7 @@ int lengthQueue(Queue q){
     }
 }
 /* *** Primitif Add/Delete *** */
-void enqueue(Queue *q, songtype val){
+void enqueue(Queue *q, QueueSongType val){
 /* Proses: Menambahkan val pada q dengan aturan FIFO */
 /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
 /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur" dalam buffer melingkar. */
@@ -56,7 +56,7 @@ void enqueue(Queue *q, songtype val){
     Album_Tail(*q) = val.album;
     Judul_Lagu_Tail(*q) = val.judul_lagu;
 }
-void dequeue(Queue *q, songtype *val){
+void dequeue(Queue *q, QueueSongType *val){
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. q tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd I.S., IDX_HEAD "mundur";

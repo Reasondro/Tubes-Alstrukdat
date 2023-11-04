@@ -5,7 +5,7 @@
 #ifndef ADTList1
 #define ADTList1
 
-#include "boolean.h"
+#include "../struct.h"
 
 /* Kamus Umum */
 #define MaxEl 100
@@ -14,13 +14,10 @@
 
 /* Definisi elemen dan koleksi objek */
 #define IdxType int
-#define ElType int
 
 typedef struct {
-	ElType A[MaxEl];  /* Memori tempat penyimpanan elemen (container) */
+	PenyanyiType A[MaxEl];  /* Memori tempat penyimpanan elemen (container) */
 } List;
-
-#define List(i) L.A(i)
 
 /* Indeks yang digunakan seberapa banyak memori itu terisi */
 /* Jika L adalah List, cara deklarasi dan akses: */
@@ -41,12 +38,12 @@ boolean IsEmptyList(List L);
 /* Mengirimkan true jika list L kosong, mengirimkan false jika tidak */
 
 /* *** Menghasilkan sebuah elemen *** */
-ElType Get(List L, IdxType i);
+PenyanyiType Get(List L, IdxType i);
 /* Prekondisi : list tidak kosong, i antara FirstIdx(T)..LastIdx(T) */
 /* Mengirimkan elemen list yang ke-i */
 
 /* *** Selektor SET : Mengubah nilai list dan elemen list *** */
-void Set(List *L, IdxType i, ElType v);
+void Set(List *L, IdxType i, PenyanyiType v);
 /* I.S. T terdefinisi, sembarang */
 /* F.S. Elemen T yang ke-i bernilai v */
 
@@ -77,20 +74,20 @@ boolean IsIdxEff (List L, IdxType i);
 /* yaitu antara FirstIdx(L)..LastIdx(L) */
 
 /* ********** Operasi-operasi ********** */
-boolean Search(List L, ElType X);
+boolean Search(List L, PenyanyiType X);
 /* Prekondisi : X sembarang */
 /* Mengirimkan true jika terdapat elemen X di dalam list */
 /* yaitu antara FirstIdx(L)..LastIdx(L) */
 
-void InsertFirst(List *L, ElType X);
+void InsertFirst(List *L, PenyanyiType X);
 /* I.S. L terdefinisi, mungkin kosong. */
 /* F.S. v menjadi elemen pertama L. */
 
-void InsertAt(List *L, ElType X, IdxType i);
+void InsertAt(List *L, PenyanyiType X, IdxType i);
 /* I.S. L terdefinisi, tidak kosong, i merupakan indeks lojik yang valid di L. */
 /* F.S. v disisipkan dalam L pada indeks ke-i (bukan menimpa elemen di i). */
 
-void InsertLast(List *L, ElType X);
+void InsertLast(List *L, PenyanyiType X);
 /* I.S. L terdefinisi, mungkin kosong. */
 /* F.S. v menjadi elemen terakhir L. */
 

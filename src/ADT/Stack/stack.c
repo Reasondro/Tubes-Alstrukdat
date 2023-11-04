@@ -24,7 +24,7 @@ boolean IsFullStack(Stack S)
 }
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
 
-void PushAll(Stack * S, songtype X)
+void PushAll(Stack * S, QueueSongType X)
 /* Menambahkan X sebagai elemen Stack S. */
 /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. TOP bertambah 1, X menjadi TOP yang baru, */
@@ -39,7 +39,7 @@ void PushAll(Stack * S, songtype X)
     Judul_Lagu(*S) = X.judul_lagu;
 }
 /* ************ Menghapus sebuah elemen Stack ************ */
-void Pop(Stack * S, songtype* X)
+void Pop(Stack * S, QueueSongType* X)
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */

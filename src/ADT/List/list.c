@@ -8,7 +8,7 @@ List MakeList(){
     List L;
     int i;
     for (i = 0; i < MaxEl; i++){
-        L.A[i] = -9999;
+        L.A[i].penyanyi = -9999;
     }
     return L;
 }
@@ -18,20 +18,20 @@ List MakeList(){
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test list kosong *** */
 boolean IsEmptyList(List L){
-    return(L.A[0] == -9999);
+    return(L.A[0].penyanyi == -9999);
 }
 /* Mengirimkan true jika list L kosong, mengirimkan false jika tidak */
 
 /* *** Menghasilkan sebuah elemen *** */
-ElType Get(List L, IdxType i){
+PenyanyiType GetPenyanyi(List L, IdxType i){
     return (L.A[i]);
 }
 /* Prekondisi : list tidak kosong, i antara FirstIdx(T)..LastIdx(T) */
 /* Mengirimkan elemen list yang ke-i */
 
 /* *** Selektor SET : Mengubah nilai list dan elemen list *** */
-void Set(List *L, IdxType i, ElType v){
-    (*L).A[i] = v;
+void Set(List *L, IdxType i, PenyanyiType v){
+    (*L).A[i].penyanyi = v;
 }
 /* I.S. T terdefinisi, sembarang */
 /* F.S. Elemen T yang ke-i bernilai v */
@@ -40,7 +40,7 @@ void Set(List *L, IdxType i, ElType v){
 /* *** Banyaknya elemen *** */
 int LengthList(List L){
     IdxType i = 0;
-    while (Get(L, i) != -9999){
+    while ((GetPenyanyi(L, i)).penyanyi != -9999){
         i++;
     }
     return i;
@@ -77,12 +77,12 @@ boolean IsIdxEff (List L, IdxType i){
 /* yaitu antara FirstIdx(L)..LastIdx(L) */
 
 /* ********** Operasi-operasi ********** */
-boolean Search(List L, ElType X){
+boolean Search(List L, PenyanyiType X){
     int i = FirstIdx(L);
-    boolean sama = true;
+    boolean sama = false;
     while (i <= LastIdx(L)){
-        if (X != Get(L, i)){
-            sama = false;
+        if (X.penyanyi == (GetPenyanyi(L, i)).penyanyi){
+            sama = true;
         }
     }
     return sama;
@@ -91,13 +91,13 @@ boolean Search(List L, ElType X){
 /* Mengirimkan true jika terdapat elemen X di dalam list */
 /* yaitu antara FirstIdx(L)..LastIdx(L) */
 
-void InsertFirst(List *L, ElType X){
+void InsertFirst(List *L, PenyanyiType X){
     if (IsEmpty(*L)){
         (*L).A[0] = X;
     }else{
         IdxType i;
         for (i = LastIdx(*L); i > FirstIdx(*L); i--){
-            (*L).A[i+1] = Get(*L, i);
+            (*L).A[i+1] = GetPenyanyi(*L, i);
         }
         (*L).A[0] = X;
     }
@@ -105,13 +105,13 @@ void InsertFirst(List *L, ElType X){
 /* I.S. L terdefinisi, mungkin kosong. */
 /* F.S. v menjadi elemen pertama L. */
 
-void InsertAt(List *L, ElType X, IdxType i){
+void InsertAt(List *L, PenyanyiType X, IdxType i){
     if (IsEmpty(*L)){
         (*L).A[0] = X;
     }else{
         IdxType j;
         for (j = i; j > FirstIdx(*L); j--){
-            (*L).A[j+1] = Get(*L, j);
+            (*L).A[j+1].penyanyi = (GetPenyanyi(*L, j)).penyanyi;
         }
         (*L).A[0] = X;
     }
@@ -119,7 +119,7 @@ void InsertAt(List *L, ElType X, IdxType i){
 /* I.S. L terdefinisi, tidak kosong, i merupakan indeks lojik yang valid di L. */
 /* F.S. v disisipkan dalam L pada indeks ke-i (bukan menimpa elemen di i). */
 
-void InsertLast(List *L, ElType X){
+void InsertLast(List *L, PenyanyiType X){
     if (Length(*L) < 100){
         (*L).A[LastIdx(*L)] = X;
     }
@@ -131,7 +131,7 @@ void DeleteFirst(List *L){
     IdxType i;
     (*L).A[FirstIdx(*L)] = Mark;
     for (i = FirstIdx(*L)+1; i <= LastIdx(*L); i++){
-        (*L).A[i] = (*L).A[i+1];
+        (*L).A[i].penyanyi = (*L).A[i+1];
     }
 }
 /* I.S. L terdefinisi, tidak kosong. */
@@ -141,14 +141,14 @@ void DeleteAt(List *L, IdxType i){
     IdxType j;
     (*L).A[FirstIdx(*L)] = Mark;
     for (j = FirstIdx(*L)+1; j <= i; j++){
-        (*L).A[j] = (*L).A[j+1];
+        (*L).A[j].penyanyi = (*L).A[j+1].penyanyi;
     }
 }
 /* I.S. L terdefinisi, tidak kosong, i merupakan indeks lojik yang valid di L. */
 /* F.S. Elemen L pada indeks ke-i dihapus dari L. */
 
 void DeleteLast(List *L){
-    (*L).A[LastIdx(*L)] = Mark;
+    (*L).A[LastIdx(*L)].penyanyi = Mark;
 }
 /* I.S. L terdefinisi, tidak kosong. */
 /* F.S. F diset dengan elemen terakhir L, elemen terakhir L dihapus dari L. */
@@ -157,14 +157,14 @@ List Concat(List L1, List L2){
     List L;
     IdxType i;
     for (i = 0; i < MaxEl; i++){
-        L.A[i] = -9999;
+        L.A[i].penyanyi = -9999;
     }
 
     for (i = 0; i < Length(L1);i++){
-        L.A[i] = Get(L1, i);
+        L.A[i].penyanyi = (GetPenyanyi(L1, i)).penyanyi;
     }
     for (i = 0; i < Length(L2);i++){
-        L.A[i] = Get(L2, i);
+        L.A[i].penyanyi = (GetPenyanyi(L2, i)).penyanyi;
     }
     return L;
 }

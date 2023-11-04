@@ -47,7 +47,7 @@ int Length(Queue Q)
 }
 
 /* *** Primitif Add/Delete *** */
-void enqueue(Queue *Q, songtype X)
+void enqueue(Queue *Q, QueueSongType X)
 /* Proses: Menambahkan val pada q dengan aturan FIFO */
 /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
 /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur" dalam Tab melingkar. */
@@ -64,13 +64,13 @@ void enqueue(Queue *Q, songtype X)
 
 }
 
-songtype dequeue(Queue *Q)
+QueueSongType dequeue(Queue *Q)
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. q tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd I.S., IDX_HEAD "mundur";
         q mungkin kosong */
 {
-    songtype val;
+    QueueSongType val;
     val.penyanyi = Penyanyi_Head(*Q);
     val.album = Album_Head (*Q);
     val.judul_lagu = Judul_Lagu_Head(*Q);

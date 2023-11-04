@@ -1,7 +1,24 @@
 #include "boolean.h"
 
+typedef char keytype;
+typedef SongType valuetype;
+
 typedef struct{
-  char penyanyi;
-  char album;
-  char judul_lagu;
-} songtype;
+  char penyanyi[50];
+  char album[50];
+  char judul_lagu[100];
+} QueueSongType;
+
+typedef struct{
+  char judul[100];
+} SongType;
+
+typedef struct{
+  keytype key;
+  valuetype song;
+} AlbumType;
+
+typedef struct{
+  char penyanyi[100];
+  AlbumType album;
+} PenyanyiType;
