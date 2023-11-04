@@ -15,7 +15,7 @@ void CreateQueue(Queue *q)
     IDX_HEAD(*q) = IDX_UNDEF;
     IDX_TAIL(*q) = IDX_UNDEF;
 }
-/* ********* Prototype ********* */
+
 boolean isEmptyQueue(Queue q)
 {
     /* Mengirim true jika q kosong: lihat definisi di atas */
@@ -43,7 +43,7 @@ int lengthQueue(Queue q)
     }
     else
     {
-        if (isEmpty(q))
+        if (isEmptyQueue(q))
         {
             return 0;
         }
@@ -59,7 +59,7 @@ void enqueue(Queue *q, songtype val)
     /* Proses: Menambahkan val pada q dengan aturan FIFO */
     /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
     /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur" dalam buffer melingkar. */
-    if (isEmpty(*q))
+    if (isEmptyQueue(*q))
     {
         IDX_HEAD(*q) = 0;
         IDX_TAIL(*q) = 0;
@@ -77,7 +77,7 @@ void enqueue(Queue *q, songtype val)
         }
     }
     // Penyanyi_Head(*q) = val.penyanyi;  // ini yang sebelumny ga dipake gara" sekarang kita make string bukan char
-    strcpy(Penyanyi_Head(*q), val.penyanyi); // jadi harus strcpy buat nerima input string
+    strcpy(Penyanyi_Tail(*q), val.penyanyi); // jadi harus strcpy buat nerima input string
     // Album_Tail(*q) = val.album; // sama kaya di atas
     strcpy(Album_Tail(*q), val.album); // fix sama kaya di atas
     // Judul_Lagu_Tail(*q) = val.judul_lagu; //
@@ -128,18 +128,42 @@ void displayQueue(Queue q)
     /* F.S. Jika q tidak kosong: [e1,e2,...,en] */
     /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
     /* Jika Queue kosong : menulis [] */
-    if (isEmpty(q))
+    if (isEmptyQueue(q))
     {
         printf("[]");
     }
     else
     {
         int i = IDX_HEAD(q);
-        printf("[");
-        for (i = IDX_HEAD(q); i < (IDX_HEAD(q) + length(q) - 1); i++)
+        // printf("[");
+        for (i = IDX_HEAD(q); i < (IDX_HEAD(q) + lengthQueue(q) - 1); i++)
         {
-            printf("%d,", q.buffer[i % CAPACITY]);
+            printf("%s;", q.buffer[i % CAPACITY].penyanyi);
+            printf("%s;", q.buffer[i % CAPACITY].album);
+            printf("%s\n", q.buffer[i % CAPACITY].judul_lagu);
         }
-        printf("%d]\n", q.buffer[i % CAPACITY]);
+        printf("%s;", q.buffer[i % CAPACITY].penyanyi);
+        printf("%s;", q.buffer[i % CAPACITY].album);
+        printf("%s\n", q.buffer[i % CAPACITY].judul_lagu);
+    }
+}
+
+void CopyQueue(Queue qIn, Queue *qOut)
+{
+    /* I.S. qIn terdefinisi, qOut sembarang */
+    /* F.S. qOut berisi salinan dari qIn (identik) */
+    /* Proses : Menyalin isi qIn ke qOut */
+
+    CreateQueue(qOut);
+
+    songtype temp;
+    int length = lengthQueue(qIn);
+
+    for (int i = 0; i < length; i++)
+    {
+
+        dequeue(&qIn, &temp);
+        enqueue(qOut, temp);
+        enqueue(&qIn, temp);
     }
 }
