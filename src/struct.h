@@ -14,7 +14,7 @@ typedef struct{
 } SongType;
 
 typedef struct{
-  keytype key;
+  keytype key[50];
   valuetype song;
 } AlbumType;
 
