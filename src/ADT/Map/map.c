@@ -37,7 +37,7 @@ valuetype Song(Map M, keytype k){
 boolean IsMember(Map M, keytype k){
     int i;
     for (i = 0; i < M.Count; i++){
-        if (k == M.Elements[i].song){
+        if (k == M.Elements[i].key){
             return true;
         }
     }
