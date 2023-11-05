@@ -24,7 +24,7 @@ boolean IsFullStack(Stack S)
 }
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
 
-void PushAll(Stack *S, songtype X)
+void Push(Stack *S, songtype X)
 /* Menambahkan X sebagai elemen Stack S. */
 /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. TOP bertambah 1, X menjadi TOP yang baru, */
@@ -62,4 +62,64 @@ void Pop(Stack *S, songtype *X)
     // (*X).judul_lagu = Judul_Lagu(*S); // sama kaya di atas
     strcpy((*X).judul_lagu, Judul_Lagu(*S)); // fix sama kaya di atas
     Top(*S)--;
+}
+
+int lengthStack(Stack S)
+{
+    /* Mengirimkan banyaknya elemen stack. Mengirimkan 0 jika S kosong. */
+    return (Top(S) + 1);
+}
+
+void CopyStack(Stack SIn, Stack *SOut)
+{
+    /* I.S. SIn terdefinisi, SOut sembarang */
+    /* F.S. SOut berisi salinan dari SIn (identik) */
+    /* Proses : Menyalin isi SIn ke SOut */
+
+    CreateEmptyStack(SOut);
+
+    Stack StackTemp;
+    CreateEmptyStack(&StackTemp);
+
+    songtype temp;
+
+    int length = lengthStack(SIn);
+
+    for (int i = 0; i < length; i++)
+    {
+
+        Pop(&SIn, &temp);
+        Push(&StackTemp, temp);
+    }
+
+    for (int i = 0; i < length; i++)
+    {
+        Pop(&StackTemp, &temp);
+        Push(&SIn, temp);
+        Push(SOut, temp);
+    }
+}
+
+void displayStack(Stack S)
+{
+    if (IsEmptyStack(S))
+    {
+        printf("[]\n");
+    }
+    else
+    {
+        songtype temp;
+        Stack StackTemp;
+        CopyStack(S, &StackTemp);
+
+        int length = lengthStack(S);
+
+        for (int i = 0; i < length; i++)
+        {
+            Pop(&StackTemp, &temp);
+            printf("%s;", temp.penyanyi);
+            printf("%s;", temp.album);
+            printf("%s\n", temp.judul_lagu);
+        }
+    }
 }
