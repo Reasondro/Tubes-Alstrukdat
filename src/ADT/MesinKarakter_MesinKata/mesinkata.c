@@ -16,6 +16,17 @@ void IgnoreBlanks()
     }
 }
 
+void IgnoreBlanksInput()
+/* Mengabaikan satu atau beberapa BLANK
+   I.S. : currentChar sembarang
+   F.S. : currentChar ≠ BLANK atau currentChar = MARK */
+{
+    while (currentChar == BLANK || currentChar == ENTER)
+    {
+        ADVINPUT();
+    }
+}
+
 void STARTWORD()
 /* I.S. : currentChar sembarang
    F.S. : EndWord = true, dan currentChar = MARK;
@@ -23,7 +34,7 @@ void STARTWORD()
           currentChar karakter pertama sesudah karakter terakhir kata */
 {
     START();
-    IgnoreBlanks();
+    // IgnoreBlanks();
     if (currentChar == MARK)
     {
         EndWord = true;
@@ -75,19 +86,35 @@ void CopyWord()
     currentWord.Length = i - 1;
 }
 
-void printWord(Word word)
+void CopyCommand()
 {
-    for (int i = 1; i <= word.Length; i++)
+    int i = 0;
+    currentWord.Length = 0;
+    while ((currentChar != MARK))
     {
-        printf("%c", word.TabWord[i]);
+        currentWord.TabWord[i] = currentChar;
+        i++;
+        ADVINPUT();
     }
-    printf("\n");
+    currentWord.Length = i;
+}
+void ADVCOMMAND()
+{
+    IgnoreBlanksInput();
+    if (currentChar == MARK)
+    {
+        EndWord = true;
+    }
+    else
+    {
+        CopyCommand();
+    }
 }
 
 void STARTCOMMAND()
 {
     STARTINPUT();
-    IgnoreBlanks();
+    IgnoreBlanksInput();
     if (currentChar == MARK)
     {
         EndWord = true;
@@ -95,7 +122,7 @@ void STARTCOMMAND()
     else
     {
         EndWord = false;
-        CopyWord();
+        CopyCommand();
     }
 }
 
@@ -105,15 +132,34 @@ void readCommand()
     STARTCOMMAND();
 }
 
-boolean IsSameWord(Word w1, char *w2)
+int stringLength(char *string)
+{
+    int length = 0;
+    while (string[length] != '\0')
+    {
+        length++;
+    }
+    return length;
+}
+boolean IsSameWord(Word w1, char w2[])
 {
     boolean IsSame = true;
-    for (int i = 0; i < w1.Length; i++)
+    for (int i = 0; i < stringLength(w2); i++)
     {
-        if (w2[i] != w1.TabWord[i + 1])
+        if (w2[i] != w1.TabWord[i])
         {
             IsSame = false;
         }
     }
     return IsSame;
+}
+
+void printWord(Word word)
+{
+    for (int i = 0; i < word.Length; i++)
+    {
+        printf("%c", word.TabWord[i]);
+    }
+
+    printf("\n");
 }

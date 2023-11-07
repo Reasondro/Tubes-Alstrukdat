@@ -25,6 +25,11 @@ void IgnoreBlanks();
    I.S. : currentChar sembarang
    F.S. : currentChar ≠ BLANK atau currentChar = MARK */
 
+void IgnoreBlanksInput();
+/* Mengabaikan satu atau beberapa BLANK
+   I.S. : currentChar sembarang
+   F.S. : currentChar ≠ BLANK atau currentChar = MARK */
+
 void STARTWORD();
 /* I.S. : currentChar sembarang
    F.S. : EndWord = true, dan currentChar = MARK;
@@ -45,5 +50,19 @@ void CopyWord();
           currentChar = BLANK atau currentChar = MARK;
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+
+void STARTCOMMAND();
+
+void ADVCOMMAND();
+
+void CopyCommand();
+
+void readCommand();
+
+int stringLength(char *string);
+
+boolean IsSameWord(Word W1, char w2[]);
+
+void printWord(Word word);
 
 #endif

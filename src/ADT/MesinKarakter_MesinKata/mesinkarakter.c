@@ -21,12 +21,6 @@ void START()
     ADV();
 }
 
-void STARTINPUT()
-{
-    pita = stdin;
-    ADV();
-}
-
 void ADV()
 {
     /* Pita dimajukan satu karakter.
@@ -36,11 +30,22 @@ void ADV()
               Jika  currentChar = MARK maka EOP akan menyala (true) */
 
     currentChar = getc(pita);
-    EOP = (currentChar == EOF);
+    EOP = (currentChar == MARK);
     if (EOP)
     {
         fclose(pita);
     }
+}
+
+void STARTINPUT()
+{
+    pita = stdin;
+    ADVINPUT();
+}
+
+void ADVINPUT()
+{
+    retval = fscanf(pita, "%c", &currentChar);
 }
 
 boolean IsEOP()
