@@ -54,7 +54,7 @@ int lengthQueue(Queue q)
     }
 }
 /* *** Primitif Add/Delete *** */
-void enqueue(Queue *q, songtype val)
+void enqueue(Queue *q, QueueSongType val)
 {
     /* Proses: Menambahkan val pada q dengan aturan FIFO */
     /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
@@ -83,7 +83,7 @@ void enqueue(Queue *q, songtype val)
     // Judul_Lagu_Tail(*q) = val.judul_lagu; //
     strcpy(Judul_Lagu_Tail(*q), val.judul_lagu); // fix sama kaya di atas
 }
-void dequeue(Queue *q, songtype *val)
+void dequeue(Queue *q, QueueSongType *val)
 {
     /* Proses: Menghapus val pada q dengan aturan FIFO */
     /* I.S. q tidak mungkin kosong */
@@ -156,7 +156,7 @@ void CopyQueue(Queue qIn, Queue *qOut)
 
     CreateQueue(qOut);
 
-    songtype temp;
+    QueueSongType temp;
     int length = lengthQueue(qIn);
 
     for (int i = 0; i < length; i++)

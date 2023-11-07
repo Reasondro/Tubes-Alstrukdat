@@ -13,7 +13,7 @@
 /* Definisi elemen dan address */
 typedef struct
 {
-        songtype buffer[CAPACITY];
+        QueueSongType buffer[CAPACITY];
         int idxHead;
         int idxTail;
 } Queue;
@@ -48,12 +48,12 @@ int lengthQueue(Queue q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika q kosong. */
 
 /* *** Primitif Add/Delete *** */
-void enqueue(Queue *q, songtype val);
+void enqueue(Queue *q, QueueSongType val);
 /* Proses: Menambahkan val pada q dengan aturan FIFO */
 /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
 /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur" dalam buffer melingkar. */
 
-void dequeue(Queue *q, songtype *val);
+void dequeue(Queue *q, QueueSongType *val);
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. q tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd I.S., IDX_HEAD "mundur";
