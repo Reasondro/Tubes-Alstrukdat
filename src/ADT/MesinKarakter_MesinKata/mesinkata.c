@@ -169,3 +169,33 @@ void printWord(Word word)
 
     printf("\n");
 }
+
+void stringCopy(char *string1, char *string2)
+{
+    int i = 0;
+    while (string2[i] != '\0')
+    {
+        string1[i] = string2[i];
+        i++;
+    }
+    string1[i] = '\0';
+}
+
+boolean IsSameString(char w1[], char w2[])
+{
+    boolean IsSame = true;
+    if (stringLength(w1) != stringLength(w2))
+    {
+        IsSame = false;
+        return IsSame;
+    }
+    for (int i = 0; i < stringLength(w2); i++)
+    {
+        if (w2[i] != w1[i])
+        {
+            IsSame = false;
+            return IsSame;
+        }
+    }
+    return IsSame;
+}
