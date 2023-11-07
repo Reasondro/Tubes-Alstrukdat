@@ -77,11 +77,11 @@ void enqueue(Queue *q, QueueSongType val)
         }
     }
     // Penyanyi_Head(*q) = val.penyanyi;  // ini yang sebelumny ga dipake gara" sekarang kita make string bukan char
-    strcpy(Penyanyi_Tail(*q), val.penyanyi); // jadi harus strcpy buat nerima input string
+    stringCopy(Penyanyi_Tail(*q), val.penyanyi); // jadi harus strcpy buat nerima input string
     // Album_Tail(*q) = val.album; // sama kaya di atas
-    strcpy(Album_Tail(*q), val.album); // fix sama kaya di atas
+    stringCopy(Album_Tail(*q), val.album); // fix sama kaya di atas
     // Judul_Lagu_Tail(*q) = val.judul_lagu; //
-    strcpy(Judul_Lagu_Tail(*q), val.judul_lagu); // fix sama kaya di atas
+    stringCopy(Judul_Lagu_Tail(*q), val.judul_lagu); // fix sama kaya di atas
 }
 void dequeue(Queue *q, QueueSongType *val)
 {
@@ -91,11 +91,11 @@ void dequeue(Queue *q, QueueSongType *val)
             q mungkin kosong */
 
     // (*val).penyanyi = Penyanyi_Head(*q); // ini yang sebelumny ga dipake gara" sekarang kita make string bukan char
-    strcpy((*val).penyanyi, Penyanyi_Head(*q)); // jadi harus strcpy buat nerima input string
+    stringCopy((*val).penyanyi, Penyanyi_Head(*q)); // jadi harus strcpy buat nerima input string
     // (*val).album = Album_Head(*q);
-    strcpy((*val).album, Album_Head(*q)); // fix sama kaya di atas
+    stringCopy((*val).album, Album_Head(*q)); // fix sama kaya di atas
     // (*val).judul_lagu = Judul_Lagu_Head(*q);
-    strcpy((*val).judul_lagu, Judul_Lagu_Head(*q)); // fix sama kaya di atas
+    stringCopy((*val).judul_lagu, Judul_Lagu_Head(*q)); // fix sama kaya di atas
 
     if (IDX_HEAD(*q) == IDX_TAIL(*q))
     {

@@ -39,13 +39,13 @@ void Push(Stack *S, QueueSongType X)
     }
 
     // Penyanyi(*S) = X.penyanyi; // ini yang sebelumny ga dipake gara" sekarang kita make string bukan char
-    strcpy(Penyanyi(*S), X.penyanyi); // jadi harus strcpy buat nerima input string
+    stringCopy(Penyanyi(*S), X.penyanyi); // jadi harus strcpy buat nerima input string
 
     // Album(*S) = X.album;    // sama kaya di atas
-    strcpy(Album(*S), X.album); // fix sama kaya di atas
+    stringCopy(Album(*S), X.album); // fix sama kaya di atas
 
     // Judul_Lagu(*S) = X.judul_lagu; // sama kaya di atas
-    strcpy(Judul_Lagu(*S), X.judul_lagu); // fix sama kaya di atas
+    stringCopy(Judul_Lagu(*S), X.judul_lagu); // fix sama kaya di atas
 }
 /* ************ Menghapus sebuah elemen Stack ************ */
 void Pop(Stack *S, QueueSongType *X)
@@ -54,13 +54,13 @@ void Pop(Stack *S, QueueSongType *X)
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
 {
     // (*X).penyanyi = Penyanyi(*S); // ini yang sebelumny ga dipake gara" sekarang kita make string bukan char
-    strcpy((*X).penyanyi, Penyanyi(*S)); // jadi harus strcpy buat nerima input string
+    stringCopy((*X).penyanyi, Penyanyi(*S)); // jadi harus strcpy buat nerima input string
 
     // (*X).album = Album(*S); // sama kaya di atas
-    strcpy((*X).album, Album(*S)); // fix sama kaya di atas
+    stringCopy((*X).album, Album(*S)); // fix sama kaya di atas
 
     // (*X).judul_lagu = Judul_Lagu(*S); // sama kaya di atas
-    strcpy((*X).judul_lagu, Judul_Lagu(*S)); // fix sama kaya di atas
+    stringCopy((*X).judul_lagu, Judul_Lagu(*S)); // fix sama kaya di atas
     Top(*S)--;
 }
 
