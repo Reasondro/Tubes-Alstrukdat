@@ -7,6 +7,7 @@
 #include "boolean.h"
 
 #define MARK ';'
+
 /* State Mesin */
 extern char currentChar;
 extern boolean EOP;
@@ -29,7 +30,9 @@ void ADV();
 
 void STARTINPUT();
 
-// boolean IsEOP();
+void ADVINPUT();
+
+boolean IsEOP();
 // /* Mengirimkan true jika currentChar = MARK */
 
 #endif

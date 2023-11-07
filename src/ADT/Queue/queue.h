@@ -10,21 +10,22 @@
 #define CAPACITY 100
 
 /* Definisi elemen dan address */
-typedef struct {
-	QueueSongType buffer[CAPACITY]; 
-	int idxHead;
-	int idxTail;
+typedef struct
+{
+        QueueSongType buffer[CAPACITY];
+        int idxHead;
+        int idxTail;
 } Queue;
 
 /* ********* AKSES (Selektor) ********* */
 /* Jika q adalah Queue, maka akses elemen : */
-#define        IDX_HEAD(q) (q).idxHead
-#define        IDX_TAIL(q) (q).idxTail
-#define   Penyanyi_Head(q) (q).buffer[(q).idxHead].penyanyi
-#define      Album_Head(q) (q).buffer[(q).idxHead].album
+#define IDX_HEAD(q) (q).idxHead
+#define IDX_TAIL(q) (q).idxTail
+#define Penyanyi_Head(q) (q).buffer[(q).idxHead].penyanyi
+#define Album_Head(q) (q).buffer[(q).idxHead].album
 #define Judul_Lagu_Head(q) (q).buffer[(q).idxHead].judul_lagu
-#define   Penyanyi_Tail(q) (q).buffer[(q).idxTail].penyanyi
-#define      Album_Tail(q) (q).buffer[(q).idxTail].album
+#define Penyanyi_Tail(q) (q).buffer[(q).idxTail].penyanyi
+#define Album_Tail(q) (q).buffer[(q).idxTail].album
 #define Judul_Lagu_Tail(q) (q).buffer[(q).idxTail].judul_lagu
 
 /* *** Kreator *** */
@@ -59,13 +60,14 @@ void dequeue(Queue *q, QueueSongType *val);
 
 /* *** Display Queue *** */
 void displayQueue(Queue q);
-/* Proses : Menuliskan isi Queue dengan traversal, Queue ditulis di antara kurung 
-   siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan 
+/* Proses : Menuliskan isi Queue dengan traversal, Queue ditulis di antara kurung
+   siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan
    karakter di depan, di tengah, atau di belakang, termasuk spasi dan enter */
 /* I.S. q boleh kosong */
 /* F.S. Jika q tidak kosong: [e1,e2,...,en] */
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 /* Jika Queue kosong : menulis [] */
 
+void CopyQueue(Queue qIn, Queue *qOut);
 
 #endif
