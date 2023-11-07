@@ -3,13 +3,11 @@
 /* Representasi address dengan pointer */
 /* infotype adalah integer */
 
-#include "stdio.h"
-#include "stdlib.h"
 #include "listlinier.h"
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
-boolean IsEmpty(List L)
+boolean IsEmptyList(List L)
 /* Mengirim true jika list kosong */
 {
     return First(L) == Nil;
@@ -59,7 +57,7 @@ address Search(List L, infotype X)
     address P;
     boolean bFound = false;
 
-    if (!IsEmpty(L))
+    if (!IsEmptyList(L))
     {
         P = First(L);
         while (!bFound && P != Nil)
@@ -179,7 +177,7 @@ void InsertLast(List *L, address P)
 {
     address Last;
 
-    if (IsEmpty(*L))
+    if (IsEmptyList(*L))
     {
         InsertFirst(L, P);
     }
@@ -217,7 +215,7 @@ void DelP(List *L, infotype X)
     address P;
     boolean bFound = false;
 
-    if (!IsEmpty(*L))
+    if (!IsEmptyList(*L))
     {
         if (X == Info(First(*L)))
         {
@@ -298,7 +296,7 @@ void PrintInfo(List L)
     boolean isFirst = true;
 
     printf("[");
-    if (!IsEmpty(L))
+    if (!IsEmptyList(L))
     {
         P = First(L);
         while (P != Nil)
@@ -321,7 +319,7 @@ int NbElmt(List L)
     int cnt = 0;
     address P;
 
-    if (!IsEmpty(L))
+    if (!IsEmptyList(L))
     {
         P = First(L);
         while (P != Nil)
@@ -430,7 +428,7 @@ void InversList(List *L)
     address Prec = Nil;
     address Succ;
 
-    if (!IsEmpty(*L))
+    if (!IsEmptyList(*L))
     {
         P = First(*L);
         while (P != Nil)
@@ -455,7 +453,7 @@ void Konkat1(List *L1, List *L2, List *L3)
     address Last1;
 
     CreateEmpty(L3);
-    if (IsEmpty(*L1))
+    if (IsEmptyList(*L1))
     {
         First(*L3) = First(*L2);
     }

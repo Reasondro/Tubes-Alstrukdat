@@ -9,55 +9,46 @@ void song_next(Queue *q, Stack *s)
     Push(s, next_song);
 }
 
-void song_previous(Queue *q, Stack *s)
-{
-    QueueSongType ccSong, prevSong, otherSong;
+void song_previous(Queue *q, Stack *s){
+    QueueSongType ccSong, prevSong, otherSong; 
     Pop(s, &ccSong);
-    if (!(IsEmptyStack(*s)))
-    { // Ada Riwayat lagu
+    if (!(IsEmptyStack(*s))){ //Ada Riwayat lagu
         Pop(s, &prevSong);
-        Push(s, prevSong); // ccSong langsung masuk stack atau kaga
-        push(s, ccSong);
-    }
-    else
-    { // stacknya cuma ada ccSong -> playing cclagu dan cclagu taro ke stack
-        Push(s, ccSong);
+        Push (s, prevSong); //ccSong langsung masuk stack atau kaga
+        Push (s, ccSong);
+    }else{ // stacknya cuma ada ccSong -> playing cclagu dan cclagu taro ke stack
+        Push (s, ccSong);
     }
     Push(s, ccSong);
-    enqueue(q, ccSong);
-    for (int i = 0; i < lengthQueue(*q); i++)
-    {
-        dequeue(q, &otherSong);
-        enqueue(q, otherSong);
+    enqueue (q, ccSong);
+    for (int i = 0; i < lengthQueue (*q); i++){
+        dequeue (q, &otherSong);
+        enqueue (q, otherSong);
     }
 }
 
-void play_song(Queue *q, Stack *s, QueueSongType song)
-{
+void play_song(Queue *q, Stack *s, QueueSongType song){
     QueueSongType otherSong;
-    for (int i = 0; i < lengthQueue; i++)
-    {
-        dequeue(q, &otherSong);
+    for (int i = 0; i < lengthQueue; i++){
+        dequeue (q, &otherSong);
     }
-    while (!(IsEmptyStack))
-    {
-        Pop(s, &otherSong);
+    while (!(IsEmptyStack)){
+        Pop (s, &otherSong);
     }
-    Push(s, song);
+    Push (s, song);
 }
 
-void play_playlist(Queue *q, Stack *s) // nunggu linked list
-{
+void play_playlist (Queue *q, Stack *s, ){
     QueueSongType otherSong;
-    for (int i = 0; i < lengthQueue; i++)
-    {
-        dequeue(q, &otherSong);
+    for (int i = 0; i < lengthQueue; i++){
+        dequeue (q, &otherSong);
     }
-    while (!(IsEmptyStack))
-    {
-        Pop(s, &otherSong);
+    while (!(IsEmptyStack)){
+        Pop (s, &otherSong);
     }
-}
+    
+} //nunggu linked list
+
 
 void Save()
 {

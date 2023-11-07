@@ -6,8 +6,8 @@
 #ifndef listlinier_H
 #define listlinier_H
 
-#include "boolean.h"
-#include "stdio.h"
+#include "../struct.h"
+#include <stdio.h>
 #include "stdlib.h"
 
 #define Nil NULL
@@ -34,7 +34,7 @@ typedef struct
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
-boolean IsEmpty(List L);
+boolean IsEmptyList(List L);
 /* Mengirim true jika list kosong */
 
 /****************** PEMBUATAN LIST KOSONG ******************/

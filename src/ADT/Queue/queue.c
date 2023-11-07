@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "queue.h"
-#include "boolean.h"
-#include "struct.h"
-#include "string.h"
+#include "../../boolean.h"
+#include "../struct.h"
+#include <string.h>
 
 /* *** Kreator *** */
 void CreateQueue(Queue *q)

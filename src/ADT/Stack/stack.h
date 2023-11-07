@@ -6,7 +6,7 @@
 #define stackt_H
 
 #include "boolean.h"
-#include "struct.h"
+#include "../struct.h"
 
 #define Nil -1
 #define MaxEl 100
@@ -27,11 +27,10 @@ typedef struct
 /* S.T[(S.TOP)] untuk mengakses elemen TOP */
 /* S.TOP adalah alamat elemen TOP */
 
-/* Definisi akses dengan Selektor : Set dan Get */
-#define Top(S) (S).TOP
-#define Penyanyi(S) (S).T[(S).TOP].penyanyi
-#define Album(S) (S).T[(S).TOP].album
-#define Judul_Lagu(S) (S).T[(S).TOP].judul_lagu
+#define        Top(S) (S).TOP
+#define	     Album(S) (S).T[(S).TOP].album
+#define   Penyanyi(S) (S).T[(S).TOP].penyanyi
+#define	Judul_Lagu(S) (S).T[(S).TOP].judul_lagu
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */

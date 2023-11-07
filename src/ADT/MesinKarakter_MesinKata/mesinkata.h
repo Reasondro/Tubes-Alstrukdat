@@ -65,4 +65,8 @@ boolean IsSameWord(Word W1, char w2[]);
 
 void printWord(Word word);
 
+void stringCopy(char *string1, char *string2);
+
+boolean IsSameString(char w1[], char w2[]);
+
 #endif
