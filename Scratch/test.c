@@ -15,5 +15,8 @@ int main() {
 
     printList(&singerList);
 
+    insert(&singerList, "Afgan");
+    deleteItem(&singerList,"Penyanyi A");
+    printList(&singerList);
     return 0;
 }
