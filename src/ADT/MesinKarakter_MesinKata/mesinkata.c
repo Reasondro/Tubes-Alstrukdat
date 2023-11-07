@@ -144,11 +144,17 @@ int stringLength(char *string)
 boolean IsSameWord(Word w1, char w2[])
 {
     boolean IsSame = true;
+    if (w1.Length != stringLength(w2))
+    {
+        IsSame = false;
+        return IsSame;
+    }
     for (int i = 0; i < stringLength(w2); i++)
     {
         if (w2[i] != w1.TabWord[i])
         {
             IsSame = false;
+            return IsSame;
         }
     }
     return IsSame;
