@@ -6,7 +6,7 @@
 #define stackt_H
 
 #include "boolean.h"
-#include "struct.h"
+#include "../struct.h"
 
 #define Nil -1
 #define MaxEl 100

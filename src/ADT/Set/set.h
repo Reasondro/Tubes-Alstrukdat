@@ -25,17 +25,17 @@ typedef struct
 /* ********* Prototype ********* */
 
 /* ********* Predikat Untuk test keadaan KOLEKSI ********* */
-boolean IsEmpty(Set S);
+boolean IsEmptySet(Set S);
 /* Mengirim true jika Set S kosong*/
 /* Ciri Set kosong : count bernilai Nil */
 
-boolean IsFull(Set S);
+boolean IsFullSet(Set S);
 /* Mengirim true jika Set S penuh */
 /* Ciri Set penuh : count bernilai MaxEl */
 
 /* ********** Operator Dasar Set ********* */
 
-boolean IsMember(Set S, SongType *Elmt);
+// boolean IsMember(Set S, SongType *Elmt);
 /* Mengembalikan true jika Elmt adalah member dari S */
 
 #endif

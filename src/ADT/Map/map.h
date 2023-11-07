@@ -2,6 +2,7 @@
 #define map_H
 #include <stdio.h>
 #include "../struct.h"
+#include "../MesinKarakter_MesinKata/mesinkata.h"
 
 /* MODUL Map
 Deklarasi stack yang dengan implementasi array eksplisit-statik rata kiri
@@ -26,20 +27,20 @@ typedef struct {
 /* M.Elements = tempat penyimpanan element Map */
 
 /* ********* Predikat Untuk test keadaan KOLEKSI ********* */
-boolean IsEmpty(Map M);
+boolean IsEmptyMap(Map M);
 /* Mengirim true jika Map M kosong*/
 /* Ciri Map kosong : count bernilai Nil */
 
-boolean IsFull(Map M);
+boolean IsFullMap(Map M);
 /* Mengirim true jika Map M penuh */
 /* Ciri Map penuh : count bernilai MaxEl */
 
 /* ********** Operator Dasar Map ********* */
-valuetype Value(Map M, keytype k);
+valuetype Value(Map M, keytype *k);
 /* Mengembalikan nilai value dengan key k dari M */
 /* Jika tidak ada key k pada M, akan mengembalikan Undefined */
 
-boolean IsMember(Map M, keytype k);
+boolean IsMember(Map M, keytype *k);
 /* Mengembalikan true jika k adalah member dari M */
 
 #endif

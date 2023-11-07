@@ -1,4 +1,5 @@
 #!/bin/bash
-C_SOURCE_FILES=$(find ../ -name "*.c")
-gcc -o main.exe $C_SOURCE_FILES
+SOURCE_FILES=$(find ../ -name "*.c")
+DRIVER_FILES=$(find ../ -name "*.c")
+gcc -o main.exe $SOURCE_FILES
 ./main.exe

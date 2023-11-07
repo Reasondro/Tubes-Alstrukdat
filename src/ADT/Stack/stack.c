@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "stack.h"
+#include <string.h>
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */

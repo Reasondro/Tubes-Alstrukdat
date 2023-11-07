@@ -4,7 +4,6 @@
 #define struct_H
 
 typedef char keytype;
-typedef SongType valuetype;
 
 typedef struct{
   char penyanyi[50];
@@ -15,6 +14,8 @@ typedef struct{
 typedef struct{
   char judul[100];
 } SongType;
+
+typedef SongType valuetype;
 
 typedef struct{
   keytype key[50];
