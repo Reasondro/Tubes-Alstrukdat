@@ -4,14 +4,14 @@ Queue QueueOriginal;
 Stack StackOriginal;
 void song_next(Queue *q, Stack *s)
 {
-    songtype next_song;
+    QueueSongType next_song;
     dequeue(q, &next_song);
     Push(s, next_song);
 }
 
 void song_previous(Queue *q, Stack *s)
 {
-    songtype ccSong, prevSong, otherSong;
+    QueueSongType ccSong, prevSong, otherSong;
     Pop(s, &ccSong);
     if (!(IsEmptyStack(*s)))
     { // Ada Riwayat lagu
@@ -32,9 +32,9 @@ void song_previous(Queue *q, Stack *s)
     }
 }
 
-void play_song(Queue *q, Stack *s, songtype song)
+void play_song(Queue *q, Stack *s, QueueSongType song)
 {
-    songtype otherSong;
+    QueueSongType otherSong;
     for (int i = 0; i < lengthQueue; i++)
     {
         dequeue(q, &otherSong);
@@ -48,6 +48,15 @@ void play_song(Queue *q, Stack *s, songtype song)
 
 void play_playlist(Queue *q, Stack *s) // nunggu linked list
 {
+    QueueSongType otherSong;
+    for (int i = 0; i < lengthQueue; i++)
+    {
+        dequeue(q, &otherSong);
+    }
+    while (!(IsEmptyStack))
+    {
+        Pop(s, &otherSong);
+    }
 }
 
 void Save()
@@ -63,7 +72,7 @@ void Save()
     Queue QueueTemp; // mulai prosedur save queue
     CreateQueue(&QueueTemp);
     CopyQueue(QueueOriginal, &QueueTemp);
-    songtype SongQueue;
+    QueueSongType SongQueue;
     int jumlahQueue;
 
     if (!isEmptyQueue(QueueOriginal))
@@ -82,7 +91,7 @@ void Save()
     Stack StackTemp; // mulai prosedur save stack
     CreateEmptyStack(&StackTemp);
     CopyStack(StackOriginal, &StackTemp);
-    songtype SongStack;
+    QueueSongType SongStack;
     int jumlahStack;
 
     if (!IsEmptyStack(StackOriginal))
