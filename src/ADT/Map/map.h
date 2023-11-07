@@ -1,7 +1,7 @@
 #ifndef map_H
 #define map_H
 #include <stdio.h>
-#include "struct.h"
+#include "../struct.h"
 
 /* MODUL Map
 Deklarasi stack yang dengan implementasi array eksplisit-statik rata kiri

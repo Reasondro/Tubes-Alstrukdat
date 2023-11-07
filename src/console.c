@@ -35,6 +35,13 @@ void play_song(Queue *q, Stack *s, QueueSongType song){
     Push (s, song);
 }
 
-void play_playlist (Queue *q, Stack *s){
-    return 0;
+void play_playlist (Queue *q, Stack *s, ){
+    QueueSongType otherSong;
+    for (int i = 0; i < lengthQueue; i++){
+        dequeue (q, &otherSong);
+    }
+    while (!(IsEmptyStack)){
+        Pop (s, &otherSong);
+    }
+    
 } //nunggu linked list

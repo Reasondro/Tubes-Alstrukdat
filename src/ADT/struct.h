@@ -1,4 +1,7 @@
-#include "boolean.h"
+#include "../boolean.h"
+
+#ifndef struct_H
+#define struct_H
 
 typedef char keytype;
 typedef SongType valuetype;
@@ -22,3 +25,5 @@ typedef struct{
   char penyanyi[100];
   AlbumType album;
 } PenyanyiType;
+
+#endif
