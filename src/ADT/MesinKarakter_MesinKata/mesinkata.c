@@ -143,6 +143,19 @@ int stringLength(char *string)
     }
     return length;
 }
+
+int stringLengthNoBlanks(char *string)
+{
+    int length = 0;
+    int lenBlank = 0;
+    while (string[length] != '\0')
+    {
+        if (string[length] == BLANK) lenBlank++;
+        length++;
+    }
+    return length-lenBlank;
+}
+
 boolean IsSameWord(Word w1, char w2[])
 {
     boolean IsSame = true;

@@ -61,6 +61,8 @@ void readCommand();
 
 int stringLength(char *string);
 
+int stringLengthNoBlanks(char *string);
+
 boolean IsSameWord(Word W1, char w2[]);
 
 void printWord(Word word);
