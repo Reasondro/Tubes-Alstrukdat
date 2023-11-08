@@ -28,7 +28,7 @@ typedef struct{
 } PenyanyiType;
 
 typedef struct{
-  char nama[50];
+  char nama[100];
 } PlaylistType;
 
 #endif
