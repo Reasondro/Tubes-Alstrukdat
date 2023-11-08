@@ -49,6 +49,10 @@ void play_playlist (Queue *q, Stack *s, ){
     
 } //nunggu linked list
 
+void playlist_create(List *L){
+    First(*L) = Nil;
+    scanf("%s", (*L).nama);
+    }
 
 void Save()
 {
