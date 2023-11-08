@@ -22,13 +22,13 @@ void CreateEmpty(List *L)
 }
 
 /****************** Manajemen Memori ******************/
-address Alokasi(infotype X)
+address Alokasi(SongType X)
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 {
-    address P = (address)malloc(1 * sizeof(ElmtList));
+    address P = (address)malloc(1 * sizeof(Node));
     if (P != Nil)
     {
         Info(P) = X;
@@ -49,7 +49,7 @@ void Dealokasi(address *P)
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address Search(List L, infotype X)
+address Search(List L, SongType X)
 /* Mencari apakah ada elemen list dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
@@ -89,7 +89,7 @@ address Search(List L, infotype X)
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void InsVFirst(List *L, infotype X)
+void InsVFirst(List *L, SongType X)
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
@@ -101,7 +101,7 @@ void InsVFirst(List *L, infotype X)
     }
 }
 
-void InsVLast(List *L, infotype X)
+void InsVLast(List *L, SongType X)
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen list di akhir: elemen terakhir yang baru */
@@ -115,7 +115,7 @@ void InsVLast(List *L, infotype X)
 }
 
 /*** PENGHAPUSAN ELEMEN ***/
-void DelVFirst(List *L, infotype *X)
+void DelVFirst(List *L, SongType *X)
 /* I.S. List L tidak kosong  */
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-dtpealokasi */
@@ -126,7 +126,7 @@ void DelVFirst(List *L, infotype *X)
     Dealokasi(&P);
 }
 
-void DelVLast(List *L, infotype *X)
+void DelVLast(List *L, SongType *X)
 /* I.S. list tidak kosong */
 /* F.S. Elemen terakhir list dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen terakhir di-dealokasi */
@@ -204,7 +204,7 @@ void DelFirst(List *L, address *P)
     Next(*P) = Nil;
 }
 
-void DelP(List *L, infotype X)
+void DelP(List *L, SongType X)
 /* I.S. Sembarang */
 /* F.S. Jika ada elemen list beraddress P, dengan Info(P)=X  */
 /* Maka P dihapus dari list dan di-dealokasi */
