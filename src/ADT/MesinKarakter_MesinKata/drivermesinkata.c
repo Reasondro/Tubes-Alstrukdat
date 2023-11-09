@@ -26,14 +26,16 @@ int main()
     // {
     //     printf("Tidak sama\n");
     // }
+
+    // ini langkah-langkah untuk nerima command tanpa pake scanf
     char penyanyi[50];                    // ini misal string yang kalian mo isi
     printf("Masukkan nama penyanyi: ");   // misal gini
     STARTCOMMAND();                       // ini buat nerima command
-    printf("ini currentWord sekarang: "); // ini buat ngeprint command yang udah diambil
-    printWord(currentWord);               // ini buat ngeprint command yang udah diambil
+    printf("ini currentWord sekarang: "); // ini buat ngeprint command yang udah diambil, pembuktian aja ini, nanti di main ga usah
+    printWord(currentWord);               // ini buat ngeprint command yang udah diambil ,pembuktian aja ini, nanti di main ga usah
     WordToString(currentWord, penyanyi);  // ini buat convert word ke string
-    printf("ini penyanyi sekarang: ");    // ini buat ngeprint string yang udah diambil
-    printf("%s", penyanyi);               // ini buat ngeprint string yang udah diambil
+    printf("ini penyanyi sekarang: ");    // ini buat ngeprint string yang udah diambil, nah ini pembuktian juga
+    printf("%s", penyanyi);               // ini buat ngeprint string yang udah diambil, nah ini pembuktian juga
 
     boolean exitRule = true;
 
