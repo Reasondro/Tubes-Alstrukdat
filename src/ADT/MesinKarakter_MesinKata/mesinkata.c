@@ -196,6 +196,17 @@ void stringCopy(char *string1, char *string2)
     string1[i] = '\0';
 }
 
+void WordToString(Word word, char *string)
+{
+    int i = 0;
+    while (i < word.Length)
+    {
+        string[i] = word.TabWord[i];
+        i++;
+    }
+    string[i] = '\0';
+}
+
 boolean IsSameString(char w1[], char w2[])
 {
     boolean IsSame = true;
