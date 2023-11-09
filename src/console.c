@@ -50,10 +50,10 @@ void play_playlist (Queue *q, Stack *s ){
 } //nunggu linked list
 
 void playlist_create(List *L){
-    CreateEmpty(&L);
+    CreateEmpty(L);
     STARTCOMMAND();
     printf("\n");
-    if (stringLengthNoBlanks(&currentWord)>=3) {
+    if (currentWord.Length>=3) {
         WordtoString(currentWord, Nama(*L));
         printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", Nama(*L));
     } else {
