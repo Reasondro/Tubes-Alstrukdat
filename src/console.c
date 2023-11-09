@@ -54,7 +54,7 @@ void playlist_create(List *L){
     STARTCOMMAND();
     printf("\n");
     if (currentWord.Length>=3) {
-        WordtoString(currentWord, Nama(*L));
+        WordToString(currentWord, Nama(*L));
         printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", Nama(*L));
     } else {
         printf("Minimal terdapat 3 karakter selain whitespace dalam nama playlist. Silakan coba lagi.");

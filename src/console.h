@@ -2,6 +2,7 @@
 #include "ADT\Queue\queue.h"
 #include "ADT\Stack\stack.h"
 #include "ADT\LinkedList\listlinier.h"
+#include "ADT\MesinKarakter_MesinKata\mesinkata.h"
 
 void song_next (Queue *q,Stack *s);
 
