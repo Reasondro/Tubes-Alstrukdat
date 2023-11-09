@@ -62,7 +62,7 @@ address Search(List L, SongType X)
         P = First(L);
         while (!bFound && P != Nil)
         {
-            if (X == Info(P))
+            if (IsSameString(X.judul, Info(P).judul))
             {
                 bFound = true;
             }
@@ -217,7 +217,7 @@ void DelP(List *L, SongType X)
 
     if (!IsEmptyList(*L))
     {
-        if (X == Info(First(*L)))
+        if (IsSameString(X.judul, Info(P).judul))
         {
             DelFirst(L, &P);
             Dealokasi(&P);
@@ -227,7 +227,7 @@ void DelP(List *L, SongType X)
             P = First(*L);
             while (!bFound && P != Nil)
             {
-                if (Info(P) == X)
+                if (IsSameString(X.judul, Info(P).judul))
                 {
                     bFound = true;
                 }
@@ -330,91 +330,6 @@ int NbElmt(List L)
     }
 
     return cnt;
-}
-
-/*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
-infotype Max(List L)
-/* Mengirimkan nilai Info(P) yang maksimum */
-{
-    infotype max_temp = Info(First(L));
-    address P = Next(First(L));
-    while (P != Nil)
-    {
-        if (Info(P) > max_temp)
-        {
-            max_temp = Info(P);
-        }
-        P = Next(P);
-    }
-
-    return max_temp;
-}
-
-address AdrMax(List L)
-/* Mengirimkan address P, dengan info(P) yang bernilai maksimum */
-{
-    address PMax = First(L);
-    address P = Next(First(L));
-    while (P != Nil)
-    {
-        if (Info(P) > Info(PMax))
-        {
-            PMax = P;
-        }
-        P = Next(P);
-    }
-
-    return PMax;
-}
-
-infotype Min(List L)
-/* Mengirimkan nilai info(P) yang minimum */
-{
-    infotype min_temp = Info(First(L));
-    address P = Next(First(L));
-    while (P != Nil)
-    {
-        if (Info(P) < min_temp)
-        {
-            min_temp = Info(P);
-        }
-        P = Next(P);
-    }
-
-    return min_temp;
-}
-
-address AdrMin(List L)
-/* Mengirimkan address P, dengan info(P) yang bernilai minimum */
-{
-    address PMin = First(L);
-    address P = Next(First(L));
-    while (P != Nil)
-    {
-        if (Info(P) < Info(PMin))
-        {
-            PMin = P;
-        }
-        P = Next(P);
-    }
-
-    return PMin;
-}
-
-float Average(List L)
-/* Mengirimkan nilai rata-rata info(P) */
-{
-    infotype sum = 0;
-    int count = 0;
-    address P = First(L);
-
-    while (P != Nil)
-    {
-        sum += Info(P);
-        count++;
-        P = Next(P);
-    }
-    return sum * 1.0 / count;
 }
 
 /****************** PROSES TERHADAP LIST ******************/

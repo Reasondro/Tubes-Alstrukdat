@@ -38,7 +38,7 @@ void play_song(Queue *q, Stack *s, QueueSongType song){
     Push (s, song);
 }
 
-void play_playlist (Queue *q, Stack *s, ){
+void play_playlist (Queue *q, Stack *s ){
     QueueSongType otherSong;
     for (int i = 0; i < lengthQueue; i++){
         dequeue (q, &otherSong);
@@ -50,9 +50,22 @@ void play_playlist (Queue *q, Stack *s, ){
 } //nunggu linked list
 
 void playlist_create(List *L){
-    First(*L) = Nil;
-    scanf("%s", (*L).nama);
+    CreateEmpty(&L);
+    STARTCOMMAND();
+    printf("\n");
+    if (stringLengthNoBlanks(&currentWord)>=3) {
+        WordtoString(currentWord, Nama(*L));
+        printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", Nama(*L));
+    } else {
+        printf("Minimal terdapat 3 karakter selain whitespace dalam nama playlist. Silakan coba lagi.");
     }
+}
+
+void playlist_add_song(List *L)
+{
+    printf("Daftar Penyanyi :\n");
+
+}
 
 void Save()
 {
@@ -102,4 +115,9 @@ void Save()
         }
     }
     fclose(fptr);
+}
+
+int main() {
+    List L;
+    playlist_create(&L);
 }

@@ -9,18 +9,17 @@
 #include "../struct.h"
 #include <stdio.h>
 #include "stdlib.h"
+#include "..\MesinKarakter_MesinKata\mesinkata.h"
 
 #define Nil NULL
 
 typedef struct tNode *address;
-typedef struct tNode
-{
+typedef struct tNode {
     SongType info;
     address next;
 } Node;
-typedef struct
-{
-    PlaylistType nama;
+typedef struct {
+    char nama[100];
     address First;
 } List;
 
@@ -31,6 +30,7 @@ typedef struct
 #define Info(P) (P)->info
 #define Next(P) (P)->next
 #define First(L) ((L).First)
+#define Nama(L) ((L).nama)
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
@@ -126,18 +126,6 @@ void PrintInfo(List L);
 /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
 int NbElmt(List L);
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
-
-/*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
-infotype Max(List L);
-/* Mengirimkan nilai info(P) yang maksimum */
-address AdrMax(List L);
-/* Mengirimkan address P, dengan info(P) yang bernilai maksimum */
-infotype Min(List L);
-/* Mengirimkan nilai info(P) yang minimum */
-address AdrMin(List L);
-/* Mengirimkan address P, dengan info(P) yang bernilai minimum */
-float Average(List L);
-/* Mengirimkan nilai rata-rata info(P) */
 
 /****************** PROSES TERHADAP LIST ******************/
 

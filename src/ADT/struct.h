@@ -27,8 +27,4 @@ typedef struct{
   AlbumType album;
 } PenyanyiType;
 
-typedef struct{
-  char nama[100];
-} PlaylistType;
-
 #endif
