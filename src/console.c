@@ -50,10 +50,10 @@ void play_playlist (Queue *q, Stack *s ){
 } //nunggu linked list
 
 void playlist_create(List *L){
-    CreateEmpty(L);
     STARTCOMMAND();
     printf("\n");
     if (currentWord.Length>=3) {
+        CreateEmpty(L);
         WordToString(currentWord, Nama(*L));
         printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", Nama(*L));
     } else {
@@ -61,10 +61,15 @@ void playlist_create(List *L){
     }
 }
 
-void playlist_add_song(List *L)
-{
-    printf("Daftar Penyanyi :\n");
+void playlist_add_song(List *L, QueueSongType song) {
+    address P = Alokasi(song.judul_lagu);
+    if (Search(*L, song.judul_lagu)==Nil) {
+        InsertLast(L, P);
+    } else Dealokasi(&P);
+}
 
+void playlist_add_album(List *L, AlbumType album) {
+    
 }
 
 void Save()

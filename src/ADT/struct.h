@@ -8,7 +8,7 @@ typedef char keytype;
 typedef struct{
   char penyanyi[50];
   char album[50];
-  char judul_lagu[100];
+  SongType judul_lagu[100];
 } QueueSongType;
 
 typedef struct{
