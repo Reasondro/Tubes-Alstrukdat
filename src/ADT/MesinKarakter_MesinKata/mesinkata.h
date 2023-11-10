@@ -6,7 +6,7 @@
 
 #include "boolean.h"
 
-#define NMax 10
+#define NMax 100
 #define BLANK ' '
 #define ENTER '\n'
 
