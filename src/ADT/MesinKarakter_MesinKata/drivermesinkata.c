@@ -37,8 +37,8 @@ int main()
     char fungsi2[] = "fungsi2";
     char fungsi3[] = "ini fungsi3";
     char exit[] = "exit";
-    char printLine[] = "printLine";
-    char majuLine[] = "maju line";
+    char printLine[] = "displayline";
+    char majuLine[] = "majuline";
     char Yes[] = "yes";
     char No[] = "no";
 
@@ -69,16 +69,10 @@ int main()
     // printf("%s", penyanyi);               // ini buat ngeprint string yang udah diambil, nah ini pembuktian juga
 
     STARTLINE();
-    displayLine(currentLine);
-    printf("Panjang karakter: %d\n", currentLine.LengthLine);
-    ADVLINE();
-    displayLine(currentLine);
-    printf("Panjang karakter: %d\n", currentLine.LengthLine);
-    ADVLINE();
-    displayLine(currentLine);
-    printf("Panjang karakter: %d\n", currentLine.LengthLine);
+    // displayLine(currentLine);
+    // printf("Panjang karakter: %d\n", currentLine.LengthLine);
 
-    boolean exitFile = true;
+    boolean exitFile = false;
 
     while (exitFile == false)
     {
@@ -93,10 +87,13 @@ int main()
                 exitFile = false;
             }
         }
+        else if (IsSameWord(currentWord, printLine))
+        {
+            displayLine(currentLine);
+            printf("%d\n", currentLine.LengthLine);
+        }
         else if (IsSameWord(currentWord, majuLine))
         {
-            printf("Harusnya maju\n");
-            printf("%d\n", currentLine.LengthLine);
             ADVLINE();
         }
     }
