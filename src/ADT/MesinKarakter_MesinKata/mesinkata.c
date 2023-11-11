@@ -245,7 +245,7 @@ void CopyLine()
 
     int i = 0;
     currentLine.LengthLine = 0;
-    while ((currentCharLoad != MARKLOAD))
+    while ((currentCharLoad != MARKLOAD && (currentCharLoad != ENTER)))
     {
         currentLine.TabLine[i] = currentCharLoad;
         i++;
