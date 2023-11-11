@@ -70,6 +70,13 @@ int main()
 
     STARTLINE();
     displayLine(currentLine);
+    printf("Panjang karakter: %d\n", currentLine.LengthLine);
+    ADVLINE();
+    displayLine(currentLine);
+    printf("Panjang karakter: %d\n", currentLine.LengthLine);
+    ADVLINE();
+    displayLine(currentLine);
+    printf("Panjang karakter: %d\n", currentLine.LengthLine);
 
     boolean exitFile = true;
 

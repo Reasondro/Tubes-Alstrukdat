@@ -290,5 +290,4 @@ void displayLine(Line line) // somehow naming the function printLine will result
     }
 
     printf("\n");
-    ADVLINE();
 }
