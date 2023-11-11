@@ -7,10 +7,13 @@
 #include "boolean.h"
 
 #define MARK ';'
+#define MARKLOAD '.'
 
 /* State Mesin */
 extern char currentChar;
+extern char currentCharLoad;
 extern boolean EOP;
+extern boolean EOL;
 
 void START();
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
@@ -31,6 +34,10 @@ void ADV();
 void STARTINPUT();
 
 void ADVINPUT();
+
+void STARTLOAD();
+
+void ADVLOAD();
 
 boolean IsEOP();
 // /* Mengirimkan true jika currentChar = MARK */

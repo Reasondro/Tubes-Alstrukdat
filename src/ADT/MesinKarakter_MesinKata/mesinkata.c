@@ -7,6 +7,9 @@
 boolean EndWord;
 Word currentWord;
 
+boolean EndLine;
+Line currentLine;
+
 void IgnoreBlanks()
 /* Mengabaikan satu atau beberapa BLANK
    I.S. : currentChar sembarang
@@ -150,10 +153,11 @@ int stringLengthNoBlanks(char *string)
     int lenBlank = 0;
     while (string[length] != '\0')
     {
-        if (string[length] == BLANK) lenBlank++;
+        if (string[length] == BLANK)
+            lenBlank++;
         length++;
     }
-    return length-lenBlank;
+    return length - lenBlank;
 }
 
 boolean IsSameWord(Word w1, char w2[])
@@ -224,4 +228,67 @@ boolean IsSameString(char w1[], char w2[])
         }
     }
     return IsSame;
+}
+
+void ignoreBlanksLine()
+{
+    {
+        while (currentCharLoad == BLANK || currentCharLoad == ENTER)
+        {
+            ADVLOAD();
+        }
+    }
+}
+
+void CopyLine()
+{
+
+    int i = 0;
+    currentLine.LengthLine = 0;
+    while ((currentCharLoad != MARKLOAD))
+    {
+        currentLine.TabLine[i] = currentCharLoad;
+        i++;
+        ADVLOAD();
+    }
+    currentLine.LengthLine = i;
+}
+void ADVLINE()
+{
+    ignoreBlanksLine();
+    if (currentCharLoad == MARKLOAD)
+    {
+        EndLine = true;
+    }
+    else
+    {
+        CopyLine();
+    }
+}
+
+void STARTLINE()
+{
+    STARTLOAD();
+    ignoreBlanksLine();
+    if (currentCharLoad == MARKLOAD)
+    {
+        EndLine = true;
+    }
+    else
+    {
+        EndLine = false;
+        CopyLine();
+        // CopyLine;
+    }
+}
+
+void displayLine(Line line) // somehow naming the function printLine will result in an error
+{
+    for (int i = 0; i < line.LengthLine; i++)
+    {
+        printf("%c", line.TabLine[i]);
+    }
+
+    printf("\n");
+    ADVLINE();
 }

@@ -7,6 +7,7 @@
 #include "boolean.h"
 
 #define NMax 100
+#define NMaxLoad 1000
 #define BLANK ' '
 #define ENTER '\n'
 
@@ -16,9 +17,19 @@ typedef struct
    int Length;
 } Word;
 
+typedef struct
+{
+   char TabLine[NMaxLoad];
+   int LengthLine;
+   /* data */
+} Line;
+
 /* State Mesin Kata */
 extern boolean EndWord;
 extern Word currentWord;
+
+extern boolean EndLine;
+extern Line currentLine;
 
 void IgnoreBlanks();
 /* Mengabaikan satu atau beberapa BLANK
@@ -72,5 +83,11 @@ void stringCopy(char *string1, char *string2);
 void WordToString(Word word, char *string);
 
 boolean IsSameString(char w1[], char w2[]);
+
+void STARTLINE();
+void ADVLINE();
+void ignoreBlanksLine();
+
+void CopyLine();
 
 #endif

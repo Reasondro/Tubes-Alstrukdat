@@ -3,6 +3,33 @@
 #include <string.h>
 #include <stdio.h>
 
+typedef char keytype;
+typedef struct
+{
+    char judul[100];
+} SongType;
+
+typedef SongType valuetype;
+
+typedef struct
+{
+    keytype key[50];
+    valuetype song;
+} AlbumType;
+
+typedef struct
+{
+    char penyanyi[50];
+    char album[50];
+    SongType judul_lagu[100];
+} QueueSongType;
+
+typedef struct
+{
+    char penyanyi[100];
+    AlbumType album;
+} PenyanyiType;
+
 int main()
 {
 
@@ -10,6 +37,10 @@ int main()
     char fungsi2[] = "fungsi2";
     char fungsi3[] = "ini fungsi3";
     char exit[] = "exit";
+    char printLine[] = "printLine";
+    char majuLine[] = "maju line";
+    char Yes[] = "yes";
+    char No[] = "no";
 
     char original[] = "halo pak riza\nhehehe";
     char copy[50];
@@ -28,14 +59,40 @@ int main()
     // }
 
     // ini langkah-langkah untuk nerima command tanpa pake scanf
-    char penyanyi[50];                    // ini misal string yang kalian mo isi
-    printf("Masukkan nama penyanyi: ");   // misal gini
-    STARTCOMMAND();                       // ini buat nerima command
-    printf("ini currentWord sekarang: "); // ini buat ngeprint command yang udah diambil, pembuktian aja ini, nanti di main ga usah
-    printWord(currentWord);               // ini buat ngeprint command yang udah diambil ,pembuktian aja ini, nanti di main ga usah
-    WordToString(currentWord, penyanyi);  // ini buat convert word ke string
-    printf("ini penyanyi sekarang: ");    // ini buat ngeprint string yang udah diambil, nah ini pembuktian juga
-    printf("%s", penyanyi);               // ini buat ngeprint string yang udah diambil, nah ini pembuktian juga
+    // char penyanyi[50];                    // ini misal string yang kalian mo isi
+    // printf("Masukkan nama penyanyi: ");   // misal gini
+    // STARTCOMMAND();                       // ini buat nerima command
+    // printf("ini currentWord sekarang: "); // ini buat ngeprint command yang udah diambil, pembuktian aja ini, nanti di main ga usah
+    // printWord(currentWord);               // ini buat ngeprint command yang udah diambil ,pembuktian aja ini, nanti di main ga usah
+    // WordToString(currentWord, penyanyi);  // ini buat convert word ke string
+    // printf("ini penyanyi sekarang: ");    // ini buat ngeprint string yang udah diambil, nah ini pembuktian juga
+    // printf("%s", penyanyi);               // ini buat ngeprint string yang udah diambil, nah ini pembuktian juga
+
+    STARTLINE();
+    displayLine(currentLine);
+
+    boolean exitFile = true;
+
+    while (exitFile == false)
+    {
+        readCommand();
+        if (IsSameWord(currentWord, exit))
+        {
+            exitFile = true;
+            printf("do you really wanto exit?\n");
+            readCommand();
+            if (IsSameWord(currentWord, No))
+            {
+                exitFile = false;
+            }
+        }
+        else if (IsSameWord(currentWord, majuLine))
+        {
+            printf("Harusnya maju\n");
+            printf("%d\n", currentLine.LengthLine);
+            ADVLINE();
+        }
+    }
 
     boolean exitRule = true;
 
@@ -66,7 +123,12 @@ int main()
         {
             exitRule = true;
         }
+        else if ((IsSameWord(currentWord, printLine)))
+        {
 
+            printf("%c\n", currentLine.TabLine[0]);
+            // printf("testing");
+        }
         else
         {
             printf("Command tidak diketahui!\n");
@@ -76,3 +138,13 @@ int main()
 
     return 0;
 }
+
+// while (!EndLine)
+// {
+//     for (int i = 0; i < currentLine.LengthLine; i++)
+//     {
+//         printf("%c", currentLine.TabLine[i]);
+//     }
+//     printf("\n");
+//     ADVLINE();
+// }

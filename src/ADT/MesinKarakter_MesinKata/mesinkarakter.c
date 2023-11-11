@@ -3,10 +3,16 @@
 #include "mesinkarakter.h"
 
 char currentChar;
+char currentCharLoad;
+
 boolean EOP;
+boolean EOL;
 
 static FILE *pita;
 static int retval;
+
+static FILE *pitaLoad;
+static int retvalLoad;
 
 void START()
 {
@@ -52,4 +58,21 @@ boolean IsEOP()
 {
     /* Mengirimkan true jika currentChar = MARK */
     return (currentChar == MARK);
+}
+
+void STARTLOAD()
+{
+    // pita = stdin;
+    pitaLoad = fopen("save.txt", "r");
+    ADVLOAD();
+}
+
+void ADVLOAD()
+{
+    retvalLoad = fscanf(pitaLoad, "%c", &currentCharLoad);
+    EOL = (currentCharLoad == MARKLOAD);
+    // if (EOL)
+    // {
+    //     fclose(pitaLoad);
+    // }
 }

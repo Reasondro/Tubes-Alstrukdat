@@ -1,0 +1,11 @@
+1                           <--  jumlah artist
+2 Michael Jackson           <-- jumlah album (2) dan nama artist 
+3 RIP                       <-- jumlah lagu (3) dan nama album PERTAMA
+Beat it                     <-- lagu ke-1 dari album PERTAMA
+Smooth criminal             <-- lagu ke-2 dari album PERTAMA
+Feel the world              <-- lagu ke-3 dari album PERTAMA
+2 WOW                       <-- jumlah lagu (2) dan nama album KEDUA
+Thriller                    <-- lagu ke-1 dari album KEDUA
+Smoker                     <-- lagu ke-2 dari album KEDUA.
+
+
