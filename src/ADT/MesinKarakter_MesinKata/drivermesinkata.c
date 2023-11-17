@@ -30,6 +30,37 @@ typedef struct
     AlbumType album;
 } PenyanyiType;
 
+// revisi ak mulai dari sini
+
+typedef struct
+{
+    SongType Songs[10]; // misal max 10 lagu per album
+    int JumlahLagu;     // buat nentuin jumlah lagu misal butuh
+} SetSong;
+
+typedef struct
+{
+    keytype NamaAlbum[50]; // nama album si penyanyinya sebagai key
+    SetSong DaftarLagu;    // kumpulan lagu dalam 1 album sebagai isi dari map
+} IsiAlbum;
+typedef struct
+{
+    IsiAlbum AlbumKe[3]; // nah ini harusny udah map yang benar
+    int JumlahAlbum;
+} AlbumTypeRevisi;
+
+typedef struct
+{
+    char nama[100];
+    AlbumTypeRevisi album; // sebagai map
+} PenyanyiTypeRevisi;
+
+typedef struct
+{
+    PenyanyiType Penyanyi[3]; // ini prototipe
+
+} ListPenyanyi;
+
 int main()
 {
 
