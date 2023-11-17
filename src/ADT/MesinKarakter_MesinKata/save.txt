@@ -7,3 +7,17 @@ Feel the world
 2 WOW
 Thriller
 Smoker. 
+
+
+// catetan aku - ale
+pola default
+Jumlah penyanyi (jumlahPenyanyi)
+--> loop sebanyak (jumlahPenyanyi)  loop
+
+jumlah album (jumlahAlbum) beserta nama penyanyi
+-------> loop sebanyak (jumlahAlbum) loop y
+
+jumlah lagu per album (jumlahLagu) untuk beserta nama album
+----------------> loop sebanyak (jumlahLagu) loop z
+Nama lagu
+Nama lagu 
