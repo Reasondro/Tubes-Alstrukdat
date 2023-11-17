@@ -31,7 +31,7 @@ void song_previous(Queue *q, Stack *s){
     printf ("\"%s\" oleh \"%s\"", prevSong.judul_lagu, prevSong.penyanyi);
 }
 
-void play_song(Queue *q, Stack *s, Playlist){
+void play_song(Queue *q, Stack *s){
     char *chosen_penyanyi;
     char *chosen_album;
     int id_chosen_lagu;
@@ -88,9 +88,8 @@ void play_playlist (Queue *q, Stack *s){
         for (int i = 0; i < length_playlist; i++){
             Push()
         }
-    }
-    
-} //nunggu linked list
+    }   
+}
 
 
 void Save()

@@ -6,4 +6,47 @@ Smooth criminal
 Feel the world
 2 WOW
 Thriller
-Smoker. 
+Smoker.
+
+STARTBARIS;
+// banyaknya penyanyi
+int count_penyanyi = CC[0] - '0';
+
+// loop per 1 penyanyi
+for (int i = 0; i < count_penyanyi; i++){
+    NEXTBARIS;
+
+    // banyaknya album
+    int count_album = CC[0] - '0';
+
+    // masukkin nama penyanyi
+    penyanyitype nama_penyanyi;
+    for (int j = 0; j < length(CC) - 2; j++){
+        nama_penyanyi[j] = CC[j];
+    }
+
+    // loop per 1 album
+    for (int j = 0; j < count_album; j++){
+        NEXTBARIS;
+
+        // banyaknya lagu
+        int count_lagu = CC[0] - '0';
+        
+        // masukkin nama album
+        albumtype nama_album;
+        for (int k = 0; k < length (CC); k++){
+            nama_album[k] = C[k];
+        }
+
+        // loop per 1 lagu
+        for (int k = 0; k < count_lagu; k++){
+            NEXTBARIS;
+
+            // masukkin nama lagu
+            lagutype judul_lagu;
+            for (int l = 0; l < length (CC); l++){
+                judul_lagu[l] = CC[l];
+            }
+        }
+    }
+}
