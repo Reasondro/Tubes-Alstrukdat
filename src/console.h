@@ -4,20 +4,36 @@
 #include "ADT\LinkedList\listlinier.h"
 #include "ADT\MesinKarakter_MesinKata\mesinkata.h"
 
-void song_next (Queue *q,Stack *s);
+void cmd_user();
 
-void song_previous(Queue *q, Stack *s);
+void list_default();
 
-void play_song(Queue *q, Stack *s);
+void list_playlist();
 
-void play_playlist(Queue *q, Stack *s);//nunggu linked list;
+void Song_Next ();
 
-void playlist_create(Playlist *L);
+void Song_Previous();
 
-void playlist_add_song(List *L);
+void Play_Song();
+
+void Play_Playlist();
+
+void Queue_Song();
+
+void Queue_Playlist();
+
+void Queue_Swap(int x, int y);
+
+void Queue_Remove(int id);
+
+void Queue_Clear();
+
+void playlist_create();
+
+void playlist_add_song();
+
+void playlist_add_album();
 
 void Save();
 
-void playlist_add_song(Playlist *L, QueueSongType song);
-
-void playlist_add_album(Playlist *L, IsiAlbum album);
+void Status();

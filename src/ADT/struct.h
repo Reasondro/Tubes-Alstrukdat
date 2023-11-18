@@ -1,5 +1,6 @@
 #include "../boolean.h"
 
+
 #ifndef struct_H
 #define struct_H
 
@@ -62,6 +63,8 @@ typedef struct
 
 } ListPenyanyi;
 
+typedef struct Playlist *address;
+
 typedef struct {
     char nama[100];
     address First;
@@ -69,8 +72,7 @@ typedef struct {
 
 typedef struct {
     int id;
-    Playlist playlist;
-    address next;
+    Playlist *playlist;
 } DaftarPlaylist;
 
 #endif
