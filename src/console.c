@@ -2,14 +2,14 @@
 
 Queue QueueOriginal;
 Stack StackOriginal;
-void song_next(Queue *q, Stack *s)
-{
+
+void Song_Next (Queue *q, Stack *s){
     QueueSongType next_song;
     dequeue(q, &next_song);
     Push(s, next_song);
 }
 
-void song_previous(Queue *q, Stack *s){
+void Song_Previous(Queue *q, Stack *s){
     QueueSongType ccSong, prevSong, otherSong; 
     Pop(s, &ccSong);
     if (!(IsEmptyStack(*s))){ //Ada Riwayat lagu
@@ -27,49 +27,71 @@ void song_previous(Queue *q, Stack *s){
     }
 }
 
-void play_song(Queue *q, Stack *s, QueueSongType song){
-    QueueSongType otherSong;
-    for (int i = 0; i < lengthQueue; i++){
-        dequeue (q, &otherSong);
+void Play_Song(Queue *q, Stack *s, PlayList *pl){
+    char *chosen_penyanyi;
+    char *chosen_album;
+    char *id_chosen_lagu_string;
+    int id_chosen_lagu;
+    printf("Daftar Penyanyi :\n");
+    // for (int i = 0; i < length_penyanyi; i++){
+    //     printf("%d. %s\n", i+1, Penyanyi[i])
+    // }
+    printf ("Masukkan Nama Penyanyi yang dipilih : ");
+    readCommand();
+    if (SearchList()){
+        WordToString(currentWord, chosen_penyanyi);
+        printf ("Daftar Album oleh %s :\n", chosen_penyanyi);
+        // for (int i = 0; i < length_album; i++){
+        //     printf("%d. %s\n", i+1, Penyanyi[i])
+        // }
+        printf ("Masukkan Nama Album yang dipilih : ");
+        readCommand();
+        if (IsMemberMap()){
+            WordToString(currentWord, chosen_album);
+            printf ("Daftar Lagu Album %s oleh %s : \n", chosen_penyanyi, chosen_album);
+            // for (int i = 0; i < length_lagu; i++){
+            //     printf("%d. %s\n", i+1, judul_lagu[i])
+            // }
+            printf ("Masukkan ID Lagu yang dipilih : ");
+            readCommand();
+            WordToString (currentWord, id_chosen_lagu_string);
+            id_chosen_lagu = id_chosen_lagu_string - '0';
+            if (id_chosen_lagu < set.count){
+                char chosen_lagu = lagu[id_chosen_lagu - 1];
+                QueueSongType added_song, otherSong;
+                for (int i = 0; i < lengthQueue; i++){
+                    dequeue (q, &otherSong);
+                }
+                while (!(IsEmptyStack)){
+                    Pop (s, &otherSong);
+                }
+                added_song.penyanyi[0] = chosen_penyanyi[0];
+                added_song.album[0] = chosen_album[0];
+                added_song.judul_lagu[0] = chosen_lagu[0];
+                Push (s, added_song);
+                printf("Memutar lagu \"%s\" oleh \"%s\"", chosen_lagu, chosen_penyanyi);
+            }
+        }
     }
-    while (!(IsEmptyStack)){
-        Pop (s, &otherSong);
-    }
-    Push (s, song);
 }
 
-void play_playlist (Queue *q, Stack *s ){
-    QueueSongType otherSong;
-    for (int i = 0; i < lengthQueue; i++){
-        dequeue (q, &otherSong);
-    }
-    while (!(IsEmptyStack)){
-        Pop (s, &otherSong);
-    }
-    
-} //nunggu linked list
-
-void playlist_create(List *L){
-    STARTCOMMAND();
-    printf("\n");
-    if (currentWord.Length>=3) {
-        CreateEmpty(L);
-        WordToString(currentWord, Nama(*L));
-        printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", Nama(*L));
-    } else {
-        printf("Minimal terdapat 3 karakter selain whitespace dalam nama playlist. Silakan coba lagi.");
-    }
-}
-
-void playlist_add_song(List *L, QueueSongType song) {
-    address P = Alokasi(song.judul_lagu);
-    if (Search(*L, song.judul_lagu)==Nil) {
-        InsertLast(L, P);
-    } else Dealokasi(&P);
-}
-
-void playlist_add_album(List *L, AlbumType album) {
-    
+Play_Playlist (Queue *q, Stack *s){
+    playlist id_PlayList;
+    printf("Masukkan Id Playlist: ");
+    readCommand();
+    id_Playlist = currentWord - '0';
+    if (id_PlayList < NbEmlt(playlist)){
+        QueueSongType otherSong;
+        for (int i = 0; i < lengthQueue; i++){
+            dequeue (q, &otherSong);
+        }
+        while (!(IsEmptyStack)){
+            Pop (s, &otherSong);
+        }
+        for (int i = 0; i < length_playlist; i++){
+            Push(s, queue_song_dari_playlist);
+        }
+    }   
 }
 
 void Save()
@@ -122,7 +144,116 @@ void Save()
     fclose(fptr);
 }
 
-int main() {
-    List L;
-    playlist_create(&L);
+
+void Status(Queue *q, Stack *s){
+    QueueSongType Now_Playing, Antrean_Lagu;
+    int i;
+    if (playlist != ""){ 
+        printf("Current Playlist: %s\n\n", playlist);
+    }     
+    if (isEmptyStack(*s)){
+        printf("Now Playing:\nNo songs have been played yet. Please search for a song to begin playback.\n\nQueue:\nYour queue is empty.");
+    }else{
+        Pop (s, &Now_Playing);
+        printf("Now Playing:\n%s - %s - %s\n\n", Now_Playing.penyanyi, Now_Playing.album, Now_Playing.judul_lagu);
+        if (isEmptyQueue (*q)){
+            printf("Queue:\nYour queue is empty.");
+        }else{
+            for (i = 0; i < lengthQueue; i++){
+                printf("%d. %s - %s - %s", i+1, Antrean_Lagu.penyanyi, Antrean_Lagu.album, Antrean_Lagu.judul_lagu);
+            }
+        }
+    }
+}
+
+void Queue_Song(Queue *q, Stack *s){
+    char *chosen_penyanyi;
+    char *chosen_album;
+    char *id_chosen_lagu_string;
+    int id_chosen_lagu;
+    printf("Daftar Penyanyi :\n");
+    // for (int i = 0; i < length_penyanyi; i++){
+    //     printf("%d. %s\n", i+1, Penyanyi[i])
+    // }
+    printf ("Masukkan Nama Penyanyi yang dipilih : ");
+    readCommand();
+    WordToString(currentWord, chosen_penyanyi);
+    if (SearchList()){
+        printf ("Daftar Album oleh %s :\n", chosen_penyanyi);
+        // for (int i = 0; i < length_album; i++){
+        //     printf("%d. %s\n", i+1, Penyanyi[i])
+        // }
+        printf ("Masukkan Nama Album yang dipilih : ");
+        readCommand();
+        WordToString(currentWord, chosen_album);
+        if (IsMemberMap()){
+            printf ("Daftar Lagu Album %s oleh %s : \n", chosen_penyanyi, chosen_album);
+            // for (int i = 0; i < length_lagu; i++){
+            //     printf("%d. %s\n", i+1, judul_lagu[i])
+            // }
+            printf ("Masukkan ID Lagu yang dipilih : ");
+            readCommand();
+            WordToString (currentWord, id_chosen_lagu_string);
+            id_chosen_lagu = id_chosen_lagu_string - '0';            
+            if (id_chosen_lagu < set.count){
+                char chosen_lagu = lagu[id_chosen_lagu - 1];
+                QueueSongType added_song;
+                added_song.penyanyi[0] = chosen_penyanyi[0];
+                added_song.album[0] = chosen_album[0];
+                added_song.judul_lagu[0] = chosen_lagu[0];
+                enqueue (s, added_song);
+                printf("Berhasil menambahkan lagu \"%s\" oleh \"%s\" ke queue.", chosen_lagu, chosen_penyanyi);
+            }
+        }
+    }
+}
+
+void Queue_Playlist(){
+    playlist id_playList;
+    char *id_playlist_string
+    readCommand();
+    WordToString(currentWord, id_playlist_string);
+    id_playlist = id_playlist_string - '0';
+    if (id_PlayList < NbEmlt(playlist)){
+        for (int i = 0; i < length_playlist; i++){
+            enqueue(q, queue_song)
+        }
+        printf("Berhasil menambahkan playlist \"%s\" ke queue.", playlist);
+    }   
+}
+
+void Queue_Swap(Queue *q, int x, int y){
+    QueueSongType temp, song_x, song_y;
+    if (x > lengthQueue(*q)){
+        printf("Lagu dengan urutan ke %d tidak terdapat dalam queue!", x);
+    }else if ( y > lengthQueue(*q)){
+        printf("Lagu dengan urutan ke %d tidak terdapat dalam queue!", y);
+    }else{
+        int NbElmt = lengthQueue(*q);
+        for (int i = 1; i <= NbElmt; i++){
+            if (i == x){
+                dequeue (q, &song_x);
+                enqueue (q, song_x);
+            }else if (i == y){
+                dequeue (q, &song_y);
+                enqueue (q, song_y);
+            }else{
+                dequeue (q, &temp);
+                enqueue (q, temp);
+            } 
+        }
+        for (int i = 1; i <= NbElmt; i++){
+            if (i == x){
+                dequeue (q, &temp);
+                enqueue (q, song_y);
+            }else if (i == y){
+                dequeue (q, &temp);
+                enqueue (q, song_x);
+            }else{
+                dequeue (q, &temp);
+                enqueue (q, temp);
+            }
+        }
+        displayQueue (*q);
+    }
 }
