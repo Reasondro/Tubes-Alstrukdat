@@ -4,20 +4,20 @@
 #include "list.h"
 
 // Implementasi fungsi untuk menampilkan daftar penyanyi
-void showSingerList(PenyanyiType penyanyiList[], int jumlahPenyanyi) {
+void showSingerList(ListPenyanyi penyanyiList, int jumlahPenyanyi) {
     printf("Daftar Penyanyi :\n");
     for (int i = 0; i < jumlahPenyanyi; i++) {
-        printf("%s\n", penyanyiList[i].penyanyi);
+        printf("%s\n", penyanyiList.Penyanyi[i].nama);
     }
 }
 
 // Implementasi fungsi untuk menampilkan daftar album dari penyanyi tertentu
-void showAlbumList(PenyanyiType penyanyiList[], int jumlahPenyanyi, char penyanyi[]) {
+void showAlbumList(ListPenyanyi penyanyiList, int jumlahPenyanyi, char penyanyi[]) {
     for (int i = 0; i < jumlahPenyanyi; i++) {
-        if (strcmp(penyanyiList[i].penyanyi, penyanyi) == 0) {
+        if (strcmp(penyanyiList.Penyanyi[i], penyanyi) == 0) {
             printf("Daftar Album oleh %s :\n", penyanyi);
-            for (int j = 0; j < jumlahAlbum; j++) {
-                printf("%s\n", penyanyiList[i].album[j].key);
+            for (int j = 0; j < penyanyiList.Penyanyi[i].album.JumlahAlbum; j++) {
+                printf("%s\n", penyanyiList.Penyanyi[i].album.AlbumKe[j].NamaAlbum);
             }
             break;
         }

@@ -116,10 +116,7 @@ void Play_Song(){
     char *chosen_album;
     char *id_chosen_lagu_string;
     int id_chosen_lagu;
-    printf("Daftar Penyanyi :\n");
-    // for (int i = 0; i < length_penyanyi; i++){
-    //     printf("%d. %s\n", i+1, Penyanyi[i])
-    // }
+    showSingerList()
     printf ("Masukkan Nama Penyanyi yang dipilih : ");
     readCommand();
     if (SearchList()){

@@ -59,7 +59,7 @@ typedef struct
 
 typedef struct
 {
-  PenyanyiType Penyanyi[3]; // ini prototipe
+  PenyanyiTypeRevisi Penyanyi[3]; // ini prototipe
 
 } ListPenyanyi;
 
