@@ -18,10 +18,6 @@ typedef struct tNode {
     SongType info;
     address next;
 } Node;
-typedef struct {
-    char nama[100];
-    address First;
-} List;
 
 /* Definisi list : */
 /* List kosong : First(L) = Nil */
@@ -34,13 +30,13 @@ typedef struct {
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
-boolean IsEmptyList(List L);
-/* Mengirim true jika list kosong */
+boolean IsEmptyList(Playlist L);
+/* Mengirim true jika Playlist kosong */
 
-/****************** PEMBUATAN LIST KOSONG ******************/
-void CreateEmpty(List *L);
+/****************** PEMBUATAN Playlist KOSONG ******************/
+void CreateEmpty(Playlist *L);
 /* I.S. sembarang             */
-/* F.S. Terbentuk list kosong */
+/* F.S. Terbentuk Playlist kosong */
 
 /****************** Manajemen Memori ******************/
 address Alokasi(SongType X);
@@ -53,94 +49,94 @@ void Dealokasi(address *P);
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian address P */
 
-/****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address Search(List L, SongType X);
-/* Mencari apakah ada elemen list dengan info(P)= X */
+/****************** PENCARIAN SEBUAH ELEMEN Playlist ******************/
+address Search(Playlist L, SongType X);
+/* Mencari apakah ada elemen Playlist dengan info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void InsVFirst(List *L, SongType X);
+void InsVFirst(Playlist *L, SongType X);
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
-void InsVLast(List *L, SongType X);
+void InsVLast(Playlist *L, SongType X);
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
-/* menambahkan elemen list di akhir: elemen terakhir yang baru */
+/* menambahkan elemen Playlist di akhir: elemen terakhir yang baru */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
 /*** PENGHAPUSAN ELEMEN ***/
-void DelVFirst(List *L, SongType *X);
-/* I.S. List L tidak kosong  */
-/* F.S. Elemen pertama list dihapus: nilai info disimpan pada X */
+void DelVFirst(Playlist *L, SongType *X);
+/* I.S. Playlist L tidak kosong  */
+/* F.S. Elemen pertama Playlist dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-dealokasi */
-void DelVLast(List *L, SongType *X);
-/* I.S. list tidak kosong */
-/* F.S. Elemen terakhir list dihapus: nilai info disimpan pada X */
+void DelVLast(Playlist *L, SongType *X);
+/* I.S. Playlist tidak kosong */
+/* F.S. Elemen terakhir Playlist dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen terakhir di-dealokasi */
 
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
-void InsertFirst(List *L, address P);
+void InsertFirst(Playlist *L, address P);
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
-void InsertAfter(List *L, address P, address Prec);
-/* I.S. Prec pastilah elemen list dan bukan elemen terakhir, */
+void InsertAfter(Playlist *L, address P, address Prec);
+/* I.S. Prec pastilah elemen Playlist dan bukan elemen terakhir, */
 /*      P sudah dialokasi  */
 /* F.S. Insert P sebagai elemen sesudah elemen beralamat Prec */
-void InsertLast(List *L, address P);
+void InsertLast(Playlist *L, address P);
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
 
 /*** PENGHAPUSAN SEBUAH ELEMEN ***/
-void DelFirst(List *L, address *P);
-/* I.S. List tidak kosong */
-/* F.S. P adalah alamat elemen pertama list sebelum penghapusan */
-/*      Elemen list berkurang satu (mungkin menjadi kosong) */
+void DelFirst(Playlist *L, address *P);
+/* I.S. Playlist tidak kosong */
+/* F.S. P adalah alamat elemen pertama Playlist sebelum penghapusan */
+/*      Elemen Playlist berkurang satu (mungkin menjadi kosong) */
 /* First element yg baru adalah suksesor elemen pertama yang lama */
-void DelP(List *L, SongType X);
+void DelP(Playlist *L, SongType X);
 /* I.S. Sembarang */
-/* F.S. Jika ada elemen list beraddress P, dengan info(P)=X  */
-/* Maka P dihapus dari list dan di-dealokasi */
-/* Jika tidak ada elemen list dengan info(P)=X, maka list tetap */
-/* List mungkin menjadi kosong karena penghapusan */
-void DelLast(List *L, address *P);
-/* I.S. List tidak kosong */
-/* F.S. P adalah alamat elemen terakhir list sebelum penghapusan  */
-/*      Elemen list berkurang satu (mungkin menjadi kosong) */
+/* F.S. Jika ada elemen Playlist beraddress P, dengan info(P)=X  */
+/* Maka P dihapus dari Playlist dan di-dealokasi */
+/* Jika tidak ada elemen Playlist dengan info(P)=X, maka Playlist tetap */
+/* Playlist mungkin menjadi kosong karena penghapusan */
+void DelLast(Playlist *L, address *P);
+/* I.S. Playlist tidak kosong */
+/* F.S. P adalah alamat elemen terakhir Playlist sebelum penghapusan  */
+/*      Elemen Playlist berkurang satu (mungkin menjadi kosong) */
 /* Last element baru adalah predesesor elemen terakhir yg lama, */
 /* jika ada */
-void DelAfter(List *L, address *Pdel, address Prec);
-/* I.S. List tidak kosong. Prec adalah anggota list  */
+void DelAfter(Playlist *L, address *Pdel, address Prec);
+/* I.S. Playlist tidak kosong. Prec adalah anggota Playlist  */
 /* F.S. Menghapus Next(Prec): */
-/*      Pdel adalah alamat elemen list yang dihapus  */
+/*      Pdel adalah alamat elemen Playlist yang dihapus  */
 
-/****************** PROSES SEMUA ELEMEN LIST ******************/
-void PrintInfo(List L);
-/* I.S. List mungkin kosong */
-/* F.S. Jika list tidak kosong, iai list dicetak ke kanan: [e1,e2,...,en] */
+/****************** PROSES SEMUA ELEMEN Playlist ******************/
+void PrintInfo(Playlist L);
+/* I.S. Playlist mungkin kosong */
+/* F.S. Jika Playlist tidak kosong, iai Playlist dicetak ke kanan: [e1,e2,...,en] */
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika list kosong : menulis [] */
+/* Jika Playlist kosong : menulis [] */
 /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
-int NbElmt(List L);
-/* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
+int NbElmt(Playlist L);
+/* Mengirimkan banyaknya elemen Playlist; mengirimkan 0 jika Playlist kosong */
 
-/****************** PROSES TERHADAP LIST ******************/
+/****************** PROSES TERHADAP Playlist ******************/
 
-void InversList(List *L);
+void InversList(Playlist *L);
 /* I.S. sembarang. */
-/* F.S. elemen list dibalik : */
+/* F.S. elemen Playlist dibalik : */
 /* Elemen terakhir menjadi elemen pertama, dan seterusnya. */
-/* Membalik elemen list, tanpa melakukan alokasi/dealokasi. */
+/* Membalik elemen Playlist, tanpa melakukan alokasi/dealokasi. */
 
-void Konkat1(List *L1, List *L2, List *L3);
+void Konkat1(Playlist *L1, Playlist *L2, Playlist *L3);
 /* I.S. L1 dan L2 sembarang */
 /* F.S. L1 dan L2 kosong, L3 adalah hasil konkatenasi L1 & L2 */
-/* Konkatenasi dua buah list : L1 dan L2    */
-/* menghasilkan L3 yang baru (dengan elemen list L1 dan L2) */
-/* dan L1 serta L2 menjadi list kosong.*/
+/* Konkatenasi dua buah Playlist : L1 dan L2    */
+/* menghasilkan L3 yang baru (dengan elemen Playlist L1 dan L2) */
+/* dan L1 serta L2 menjadi Playlist kosong.*/
 /* Tidak ada alokasi/dealokasi pada prosedur ini */
 
 #endif

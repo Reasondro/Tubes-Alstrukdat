@@ -163,7 +163,7 @@ void cmd_user(){
     }
 }
 
-void song_next (Queue *q, Stack *s){
+void Song_Next (Queue *q, Stack *s){
     QueueSongType next_song;
     dequeue (q, &next_song);
     Push (s, next_song);
@@ -171,7 +171,7 @@ void song_next (Queue *q, Stack *s){
     printf ("\"%s oleh \"%s\"", next_song.judul_lagu, next_song.penyanyi);
 }
 
-void song_previous(Queue *q, Stack *s){
+void Song_Previous(Queue *q, Stack *s){
     QueueSongType ccSong, prevSong, otherSong; 
     Pop(s, &ccSong);
     if (!(IsEmptyStack(*s))){ //Ada Riwayat lagu
@@ -191,30 +191,35 @@ void song_previous(Queue *q, Stack *s){
     printf ("\"%s\" oleh \"%s\"", prevSong.judul_lagu, prevSong.penyanyi);
 }
 
-void play_song(Queue *q, Stack *s){
+void Play_Song(Queue *q, Stack *s, PlayList *pl){
     char *chosen_penyanyi;
     char *chosen_album;
+    char *id_chosen_lagu_string;
     int id_chosen_lagu;
     printf("Daftar Penyanyi :\n");
     // for (int i = 0; i < length_penyanyi; i++){
-    //     printf("%s. %s\n", i+1, Penyanyi[i])
+    //     printf("%d. %s\n", i+1, Penyanyi[i])
     // }
-    printf ("Masukkan Nama Penaynyi yang dipilih : ");
-    scanf ("%s\n", &chosen_penyanyi);
+    printf ("Masukkan Nama Penyanyi yang dipilih : ");
+    readCommand();
     if (SearchList()){
+        WordToString(currentWord, chosen_penyanyi);
         printf ("Daftar Album oleh %s :\n", chosen_penyanyi);
         // for (int i = 0; i < length_album; i++){
-        //     printf("%s. %s\n", i+1, Penyanyi[i])
+        //     printf("%d. %s\n", i+1, Penyanyi[i])
         // }
         printf ("Masukkan Nama Album yang dipilih : ");
-        scanf ("%s\n", &chosen_album);
+        readCommand();
         if (IsMemberMap()){
+            WordToString(currentWord, chosen_album);
             printf ("Daftar Lagu Album %s oleh %s : \n", chosen_penyanyi, chosen_album);
             // for (int i = 0; i < length_lagu; i++){
-            //     printf("%s. %s\n", i+1, judul_lagu[i])
+            //     printf("%d. %s\n", i+1, judul_lagu[i])
             // }
             printf ("Masukkan ID Lagu yang dipilih : ");
-            scanf ("%d\n", &id_chosen_lagu);
+            readCommand();
+            WordToString (currentWord, id_chosen_lagu_string);
+            id_chosen_lagu = id_chosen_lagu_string - '0';
             if (id_chosen_lagu < set.count){
                 char chosen_lagu = lagu[id_chosen_lagu - 1];
                 QueueSongType added_song, otherSong;
@@ -234,9 +239,11 @@ void play_song(Queue *q, Stack *s){
     }
 }
 
-void play_playlist (Queue *q, Stack *s){
+Play_Playlist (Queue *q, Stack *s){
     playlist id_PlayList;
-    scanf("Mauskkan Id Playlist: %d\n", &id_PlayList);
+    printf("Masukkan Id Playlist: ");
+    readCommand();
+    id_Playlist = currentWord - '0';
     if (id_PlayList < NbEmlt(playlist)){
         QueueSongType otherSong;
         for (int i = 0; i < lengthQueue; i++){
@@ -246,11 +253,26 @@ void play_playlist (Queue *q, Stack *s){
             Pop (s, &otherSong);
         }
         for (int i = 0; i < length_playlist; i++){
-            Push()
+            Push(s, queue_song_dari_playlist);
         }
-    }   
+    } 
 }
 
+void playlist_add_song(List *L, QueueSongType song) {
+    address P = Alokasi(song.judul_lagu);
+    if (Search(*L, song.judul_lagu)==Nil) {
+        InsertLast(L, P);
+    } else Dealokasi(&P);
+}
+
+void playlist_add_album(List *L, IsiAlbum album) {
+    for (int i=0; i<album.DaftarLagu.JumlahLagu; i++) {
+        address P = Alokasi(album.DaftarLagu.Songs[i]);
+        if (Search(*L, album.DaftarLagu.Songs[i])==Nil) {
+            InsertLast(L, P);
+        } else Dealokasi(&P);
+    }
+}
 
 void Save()
 {

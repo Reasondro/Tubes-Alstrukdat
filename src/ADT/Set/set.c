@@ -3,13 +3,15 @@
 #include "../MesinKarakter_MesinKata/mesinkata.h"
 
 /* ********* Predikat Untuk test keadaan KOLEKSI ********* */
-boolean IsEmptySet(Set S){
+boolean IsEmptySet(Set S)
+{
     return (S.Count == Nil);
 }
 /* Mengirim true jika Set S kosong*/
 /* Ciri Set kosong : count bernilai Nil */
 
-boolean IsFullSet(Set S){
+boolean IsFullSet(Set S)
+{
     return (S.Count == MaxEl);
 }
 /* Mengirim true jika Set S penuh */

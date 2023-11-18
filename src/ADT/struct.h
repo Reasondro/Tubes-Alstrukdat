@@ -62,4 +62,15 @@ typedef struct
 
 } ListPenyanyi;
 
+typedef struct {
+    char nama[100];
+    address First;
+} Playlist; //ini playlist
+
+typedef struct {
+    int id;
+    Playlist playlist;
+    address next;
+} DaftarPlaylist;
+
 #endif
