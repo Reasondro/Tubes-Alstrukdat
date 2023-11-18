@@ -23,10 +23,10 @@ typedef struct
 #define IDX_TAIL(q) (q).idxTail
 #define Penyanyi_Head(q) (q).buffer[(q).idxHead].penyanyi
 #define Album_Head(q) (q).buffer[(q).idxHead].album
-#define Judul_Lagu_Head(q) (q).buffer[(q).idxHead].judul_lagu
+#define Judul_Lagu_Head(q) (q).buffer[(q).idxHead].judul_lagu.judul
 #define Penyanyi_Tail(q) (q).buffer[(q).idxTail].penyanyi
 #define Album_Tail(q) (q).buffer[(q).idxTail].album
-#define Judul_Lagu_Tail(q) (q).buffer[(q).idxTail].judul_lagu
+#define Judul_Lagu_Tail(q) (q).buffer[(q).idxTail].judul_lagu.judul
 
 /* *** Kreator *** */
 void CreateQueue(Queue *q);

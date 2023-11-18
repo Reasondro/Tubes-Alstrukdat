@@ -7,17 +7,17 @@ typedef char keytype;
 
 typedef struct
 {
-  char penyanyi[50];
-  char album[50];
-  SongType judul_lagu[100];
-} QueueSongType;
-
-typedef struct
-{
   char judul[100];
 } SongType;
 
 typedef SongType valuetype;
+
+typedef struct
+{
+  char penyanyi[50];
+  char album[50];
+  SongType judul_lagu;
+} QueueSongType;
 
 typedef struct
 {
