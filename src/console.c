@@ -462,5 +462,5 @@ void Queue_Clear(Queue *q){
     for (int i = 1; i <= NbElmt; i++){
         dequeue(q, &deleted);
     }
-    printf("Queue berhasil dikosongkan.\n")
+    printf("Queue berhasil dikosongkan.\n");
 }
