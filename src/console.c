@@ -91,7 +91,23 @@ Play_Playlist (Queue *q, Stack *s){
         for (int i = 0; i < length_playlist; i++){
             Push(s, queue_song_dari_playlist);
         }
-    }   
+    } 
+}
+
+void playlist_add_song(List *L, QueueSongType song) {
+    address P = Alokasi(song.judul_lagu);
+    if (Search(*L, song.judul_lagu)==Nil) {
+        InsertLast(L, P);
+    } else Dealokasi(&P);
+}
+
+void playlist_add_album(List *L, IsiAlbum album) {
+    for (int i=0; i<album.DaftarLagu.JumlahLagu; i++) {
+        address P = Alokasi(album.DaftarLagu.Songs[i]);
+        if (Search(*L, album.DaftarLagu.Songs[i])==Nil) {
+            InsertLast(L, P);
+        } else Dealokasi(&P);
+    }
 }
 
 void Save()

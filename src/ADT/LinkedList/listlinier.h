@@ -18,10 +18,6 @@ typedef struct tNode {
     SongType info;
     address next;
 } Node;
-typedef struct {
-    char nama[100];
-    address First;
-} List;
 
 /* Definisi list : */
 /* List kosong : First(L) = Nil */
