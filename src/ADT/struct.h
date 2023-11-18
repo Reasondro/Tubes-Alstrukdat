@@ -65,11 +65,11 @@ typedef struct
 typedef struct {
     char nama[100];
     address First;
-} List; //ini playlist
+} Playlist; //ini playlist
 
 typedef struct {
     int id;
-    List playlist;
+    Playlist playlist;
     address next;
 } DaftarPlaylist;
 
