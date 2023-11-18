@@ -27,7 +27,7 @@ void Song_Previous(Queue *q, Stack *s){
     }
 }
 
-void Play_Song(Queue *q, Stack *s, PlayList *pl){
+void Play_Song(Queue *q, Stack *s, Playlist *pl){
     char *chosen_penyanyi;
     char *chosen_album;
     char *id_chosen_lagu_string;
@@ -75,12 +75,14 @@ void Play_Song(Queue *q, Stack *s, PlayList *pl){
     }
 }
 
-Play_Playlist (Queue *q, Stack *s){
-    playlist id_PlayList;
+Play_Playlist (Queue *q, Stack *s, ){
+    char id_Playlist_string;
+    DaftarPlaylist dafplaylist;
     printf("Masukkan Id Playlist: ");
     readCommand();
-    id_Playlist = currentWord - '0';
-    if (id_PlayList < NbEmlt(playlist)){
+    WordToString(currentWord,&id_Playlist_string);
+    dafplaylist.id = id_Playlist_string - '0';
+    if (dafplaylist.id < NbEmlt(dafplaylist.playlist)){
         QueueSongType otherSong;
         for (int i = 0; i < lengthQueue; i++){
             dequeue (q, &otherSong);
@@ -94,14 +96,14 @@ Play_Playlist (Queue *q, Stack *s){
     } 
 }
 
-void playlist_add_song(List *L, QueueSongType song) {
+void playlist_add_song(Playlist *L, QueueSongType song) {
     address P = Alokasi(song.judul_lagu);
     if (Search(*L, song.judul_lagu)==Nil) {
         InsertLast(L, P);
     } else Dealokasi(&P);
 }
 
-void playlist_add_album(List *L, IsiAlbum album) {
+void playlist_add_album(Playlist *L, IsiAlbum album) {
     for (int i=0; i<album.DaftarLagu.JumlahLagu; i++) {
         address P = Alokasi(album.DaftarLagu.Songs[i]);
         if (Search(*L, album.DaftarLagu.Songs[i])==Nil) {
