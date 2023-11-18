@@ -12,8 +12,12 @@ void play_song(Queue *q, Stack *s);
 
 void play_playlist(Queue *q, Stack *s);//nunggu linked list;
 
-void playlist_create(List *L);
+void playlist_create(Playlist *L);
 
 void playlist_add_song(List *L);
 
 void Save();
+
+void playlist_add_song(Playlist *L, QueueSongType song);
+
+void playlist_add_album(Playlist *L, IsiAlbum album);
