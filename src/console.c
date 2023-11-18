@@ -96,6 +96,18 @@ Play_Playlist (Queue *q, Stack *s, ){
     } 
 }
 
+void playlist_create(Playlist *L){
+    CreateEmpty(&L);
+    STARTCOMMAND();
+    printf("\n");
+    if (stringLengthNoBlanks(&currentWord)>=3) {
+        WordtoString(currentWord, Nama(*L));
+        printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", Nama(*L));
+    } else {
+        printf("Minimal terdapat 3 karakter selain whitespace dalam nama playlist. Silakan coba lagi.");
+    }
+}
+
 void playlist_add_song(Playlist *L, QueueSongType song) {
     address P = Alokasi(song.judul_lagu);
     if (Search(*L, song.judul_lagu)==Nil) {
