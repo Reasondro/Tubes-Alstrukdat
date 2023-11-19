@@ -13,11 +13,11 @@
 
 #define Nil NULL
 
-typedef struct tNode *address;
-typedef struct tNode {
+typedef struct tSongPlay *address;
+typedef struct tSongPlay {
     QueueSongType info;
     address next;
-} Node;
+} SongPlay;
 
 /* Definisi list : */
 /* List kosong : First(L) = Nil */
@@ -39,7 +39,7 @@ void CreateEmpty(Playlist *L);
 /* F.S. Terbentuk Playlist kosong */
 
 /****************** Manajemen Memori ******************/
-address Alokasi(QueueSongType X);
+address Alokasi(char penyanyi[], char album[], char judul[]);
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka info(P)=X, Next(P)=Nil */

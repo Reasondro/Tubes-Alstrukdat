@@ -28,7 +28,7 @@ address Alokasi(char penyanyi[], char album[], char judul[])
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 {
-    address P = (address)malloc(1 * sizeof(Node));
+    address P = (address)malloc(1 * sizeof(SongPlay));
     if (P != Nil){
         stringCopy(&Info(P).album, &album);
         stringCopy(&Info(P).judul_lagu.judul, &judul);

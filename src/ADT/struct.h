@@ -3,6 +3,8 @@
 #ifndef struct_H
 #define struct_H
 
+#define penyanyimax 20
+#define albummax 20
 typedef char keytype;
 
 typedef struct
@@ -19,23 +21,11 @@ typedef struct
   SongType judul_lagu;
 } QueueSongType;
 
-typedef struct
-{
-  keytype key[50];
-  valuetype song;
-} AlbumType;
-
-typedef struct
-{
-  char penyanyi[100];
-  AlbumType album;
-} PenyanyiType;
-
 // revisi ak mulai dari sini
 
 typedef struct
 {
-  SongType Songs[10]; // misal max 10 lagu per album
+  SongType Songs[15]; // misal max 15 lagu per album
   int JumlahLagu;     // buat nentuin jumlah lagu misal butuh
 } SetSong;
 
@@ -46,7 +36,7 @@ typedef struct
 } IsiAlbum;
 typedef struct
 {
-  IsiAlbum AlbumKe[3]; // nah ini harusny udah map yang benar
+  IsiAlbum AlbumKe[albummax]; // nah ini harusny udah map yang benar
   int JumlahAlbum;
 } AlbumTypeRevisi;
 
@@ -58,19 +48,21 @@ typedef struct
 
 typedef struct
 {
-  PenyanyiType Penyanyi[3]; // ini prototipe
-
+  PenyanyiTypeRevisi Penyanyi[penyanyimax]; // ini udah bukan prototipe
 } ListPenyanyi;
 
+typedef struct tPlaylist *address;
 typedef struct {
     char nama[100];
     address First;
-} Playlist; //ini playlist
+} Playlist;
 
 typedef struct {
     int Capacity;
     Playlist *pl;
     int Neff;
 } DaftarPlaylist;
+
+// ges pusing ges tolong
 
 #endif
