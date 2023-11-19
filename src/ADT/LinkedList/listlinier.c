@@ -22,22 +22,21 @@ void CreateEmpty(Playlist *L)
 }
 
 /****************** Manajemen Memori ******************/
-address Alokasi(SongType X)
+address Alokasi(char penyanyi[], char album[], char judul[])
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 {
     address P = (address)malloc(1 * sizeof(Node));
-    if (P != Nil)
-    {
-        Info(P) = X;
+    if (P != Nil){
+        stringCopy(&Info(P).album, &album);
+        stringCopy(&Info(P).judul_lagu.judul, &judul);
+        stringCopy(&Info(P).penyanyi, &penyanyi);
         Next(P) = Nil;
         return P;
     }
-    {
-        return Nil;
-    }
+    else return Nil;
 }
 
 void Dealokasi(address *P)
@@ -49,65 +48,33 @@ void Dealokasi(address *P)
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN Playlist ******************/
-address Search(Playlist L, SongType X)
+address Search(Playlist L, QueueSongType X)
 /* Mencari apakah ada elemen Playlist dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 {
     address P;
     boolean bFound = false;
-
-    if (!IsEmptyList(L))
-    {
+    if (!IsEmptyList(L)){
         P = First(L);
-        while (!bFound && P != Nil)
-        {
-            if (IsSameString(X.judul, Info(P).judul))
-            {
+        while (!bFound && P != Nil){
+            if (IsSameString(&X.judul_lagu.judul, &Info(P).judul_lagu.judul)&&
+                IsSameString(&X.album, &Info(P).album)&&
+                IsSameString(&X.penyanyi, &Info(P).penyanyi)) {
                 bFound = true;
             }
-            else
-            {
-                P = Next(P);
-            }
+            else P = Next(P);
         }
-
-        if (bFound)
-        {
-            return P;
-        }
-        else
-        {
-            return Nil;
-        }
-    }
-    else
-    {
-        return Nil;
-    }
+    } return bFound;
 }
 
-/****************** PRIMITIF BERDASARKAN NILAI ******************/
-/*** PENAMBAHAN ELEMEN ***/
-void InsVFirst(Playlist *L, SongType X)
-/* I.S. L mungkin kosong */
-/* F.S. Melakukan alokasi sebuah elemen dan */
-/* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
-{
-    address P = Alokasi(X);
-    if (P != Nil)
-    {
-        InsertFirst(L, P);
-    }
-}
-
-void InsVLast(Playlist *L, SongType X)
+void InsVLast(Playlist *L, QueueSongType X)
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen Playlist di akhir: elemen terakhir yang baru */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 {
-    address P = Alokasi(X);
+    address P = Alokasi(X.penyanyi,X.album,X.judul_lagu.judul);
     if (P != Nil)
     {
         InsertLast(L, P);
@@ -115,7 +82,7 @@ void InsVLast(Playlist *L, SongType X)
 }
 
 /*** PENGHAPUSAN ELEMEN ***/
-void DelVFirst(Playlist *L, SongType *X)
+void DelVFirst(Playlist *L, QueueSongType *X)
 /* I.S. Playlist L tidak kosong  */
 /* F.S. Elemen pertama Playlist dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-dtpealokasi */
@@ -126,7 +93,7 @@ void DelVFirst(Playlist *L, SongType *X)
     Dealokasi(&P);
 }
 
-void DelVLast(Playlist *L, SongType *X)
+void DelVLast(Playlist *L, QueueSongType *X)
 /* I.S. Playlist tidak kosong */
 /* F.S. Elemen terakhir Playlist dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen terakhir di-dealokasi */
@@ -176,11 +143,7 @@ void InsertLast(Playlist *L, address P)
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
 {
     address Last;
-
-    if (IsEmptyList(*L))
-    {
-        InsertFirst(L, P);
-    }
+    if (IsEmptyList(*L)) InsertFirst(L, P);
     else
     {
         Last = First(*L);
@@ -204,48 +167,48 @@ void DelFirst(Playlist *L, address *P)
     Next(*P) = Nil;
 }
 
-void DelP(Playlist *L, SongType X)
-/* I.S. Sembarang */
-/* F.S. Jika ada elemen Playlist beraddress P, dengan Info(P)=X  */
-/* Maka P dihapus dari Playlist dan di-dealokasi */
-/* Jika tidak ada elemen Playlist dengan Info(P)=X, maka Playlist tetap */
-/* Playlist mungkin menjadi kosong karena penghapusan */
-{
-    address Prec;
-    address P;
-    boolean bFound = false;
+// void DelP(Playlist *L, QueueSongType X)
+// /* I.S. Sembarang */
+// /* F.S. Jika ada elemen Playlist beraddress P, dengan Info(P)=X  */
+// /* Maka P dihapus dari Playlist dan di-dealokasi */
+// /* Jika tidak ada elemen Playlist dengan Info(P)=X, maka Playlist tetap */
+// /* Playlist mungkin menjadi kosong karena penghapusan */
+// {
+//     address Prec;
+//     address P;
+//     boolean bFound = false;
 
-    if (!IsEmptyList(*L))
-    {
-        if (IsSameString(X.judul, Info(P).judul))
-        {
-            DelFirst(L, &P);
-            Dealokasi(&P);
-        }
-        else
-        {
-            P = First(*L);
-            while (!bFound && P != Nil)
-            {
-                if (IsSameString(X.judul, Info(P).judul))
-                {
-                    bFound = true;
-                }
-                else
-                {
-                    Prec = P;
-                    P = Next(P);
-                }
-            }
+//     if (!IsEmptyList(*L))
+//     {
+//         if (IsSameString(X.judul, Info(P).judul))
+//         {
+//             DelFirst(L, &P);
+//             Dealokasi(&P);
+//         }
+//         else
+//         {
+//             P = First(*L);
+//             while (!bFound && P != Nil)
+//             {
+//                 if (IsSameString(X.judul, Info(P).judul))
+//                 {
+//                     bFound = true;
+//                 }
+//                 else
+//                 {
+//                     Prec = P;
+//                     P = Next(P);
+//                 }
+//             }
 
-            if (bFound)
-            {
-                DelAfter(L, &P, Prec);
-                Dealokasi(&P);
-            }
-        }
-    }
-}
+//             if (bFound)
+//             {
+//                 DelAfter(L, &P, Prec);
+//                 Dealokasi(&P);
+//             }
+//         }
+//     }
+// }
 
 void DelLast(Playlist *L, address *P)
 /* I.S. Playlist tidak kosong */

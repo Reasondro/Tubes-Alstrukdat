@@ -68,9 +68,9 @@ typedef struct {
 } Playlist; //ini playlist
 
 typedef struct {
-    int id;
-    Playlist playlist;
-    address next;
+    int Capacity;
+    Playlist *pl;
+    int Neff;
 } DaftarPlaylist;
 
 #endif

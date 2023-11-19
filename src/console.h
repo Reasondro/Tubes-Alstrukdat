@@ -10,13 +10,11 @@ void song_previous(Queue *q, Stack *s);
 
 void play_song(Queue *q, Stack *s);
 
-void play_playlist(Queue *q, Stack *s);//nunggu linked list;
-
-void playlist_create(Playlist *L);
-
-void playlist_add_song(List *L);
+void play_playlist(Queue *q, Stack *s);
 
 void Save();
+
+void playlist_create();
 
 void playlist_add_song(Playlist *L, QueueSongType song);
 
