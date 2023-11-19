@@ -35,7 +35,7 @@ void STARTINPUT();
 
 void ADVINPUT();
 
-void STARTLOAD();
+void STARTLOAD(char *filename);
 
 void ADVLOAD();
 

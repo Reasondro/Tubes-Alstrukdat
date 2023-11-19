@@ -84,7 +84,8 @@ void WordToString(Word word, char *string);
 
 boolean IsSameString(char w1[], char w2[]);
 
-void STARTLINE();
+void STARTLINE(char *filename);
+
 void ADVLINE();
 void ignoreBlanksLine();
 

@@ -1,15 +1,28 @@
+#include "boolean.h"
+
 /* File : queue.h */
 /* Definisi ADT Queue dengan representasi array secara eksplisit dan alokasi statik */
 
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "../struct.h"
+// #include "../struct.h"
 
 #define IDX_UNDEF -1
 #define CAPACITY 100
 
 /* Definisi elemen dan address */
+
+typedef struct
+{
+        char judul[50];
+} SongType;
+typedef struct
+{
+        char penyanyi[50];
+        char album[50];
+        SongType judul_lagu;
+} QueueSongType;
 typedef struct
 {
         QueueSongType buffer[CAPACITY];
@@ -23,10 +36,10 @@ typedef struct
 #define IDX_TAIL(q) (q).idxTail
 #define Penyanyi_Head(q) (q).buffer[(q).idxHead].penyanyi
 #define Album_Head(q) (q).buffer[(q).idxHead].album
-#define Judul_Lagu_Head(q) (q).buffer[(q).idxHead].judul_lagu.judul
+#define Judul_Lagu_Head(q) (q).buffer[(q).idxHead].judul_lagu
 #define Penyanyi_Tail(q) (q).buffer[(q).idxTail].penyanyi
 #define Album_Tail(q) (q).buffer[(q).idxTail].album
-#define Judul_Lagu_Tail(q) (q).buffer[(q).idxTail].judul_lagu.judul
+#define Judul_Lagu_Tail(q) (q).buffer[(q).idxTail].judul_lagu
 
 /* *** Kreator *** */
 void CreateQueue(Queue *q);
@@ -37,13 +50,13 @@ void CreateQueue(Queue *q);
 /* Proses : Melakukan alokasi, membuat sebuah q kosong */
 
 /* ********* Prototype ********* */
-boolean isEmptyQueue(Queue q);
+boolean IsEmptyQueue(Queue q);
 /* Mengirim true jika q kosong: lihat definisi di atas */
-boolean isFullQueue(Queue q);
+boolean IsFullQueue(Queue q);
 /* Mengirim true jika tabel penampung elemen q sudah penuh */
 /* yaitu IDX_TAIL akan selalu di belakang IDX_HEAD dalam buffer melingkar*/
 
-int lengthQueue(Queue q);
+int LengthQueue(Queue Q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika q kosong. */
 
 /* *** Primitif Add/Delete *** */
@@ -59,7 +72,7 @@ void dequeue(Queue *q, QueueSongType *val);
         q mungkin kosong */
 
 /* *** Display Queue *** */
-void displayQueue(Queue q);
+void DisplayQueue(Queue q);
 /* Proses : Menuliskan isi Queue dengan traversal, Queue ditulis di antara kurung
    siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan
    karakter di depan, di tengah, atau di belakang, termasuk spasi dan enter */
