@@ -15,7 +15,7 @@
 
 typedef struct tNode *address;
 typedef struct tNode {
-    SongType info;
+    QueueSongType info;
     address next;
 } Node;
 
@@ -39,7 +39,7 @@ void CreateEmpty(Playlist *L);
 /* F.S. Terbentuk Playlist kosong */
 
 /****************** Manajemen Memori ******************/
-address Alokasi(SongType X);
+address Alokasi(QueueSongType X);
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka info(P)=X, Next(P)=Nil */
@@ -50,29 +50,25 @@ void Dealokasi(address *P);
 /* Melakukan dealokasi/pengembalian address P */
 
 /****************** PENCARIAN SEBUAH ELEMEN Playlist ******************/
-address Search(Playlist L, SongType X);
+address Search(Playlist L, QueueSongType X);
 /* Mencari apakah ada elemen Playlist dengan info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void InsVFirst(Playlist *L, SongType X);
-/* I.S. L mungkin kosong */
-/* F.S. Melakukan alokasi sebuah elemen dan */
-/* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
-void InsVLast(Playlist *L, SongType X);
+void InsVLast(Playlist *L, QueueSongType X);
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen Playlist di akhir: elemen terakhir yang baru */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
 /*** PENGHAPUSAN ELEMEN ***/
-void DelVFirst(Playlist *L, SongType *X);
+void DelVFirst(Playlist *L, QueueSongType *X);
 /* I.S. Playlist L tidak kosong  */
 /* F.S. Elemen pertama Playlist dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-dealokasi */
-void DelVLast(Playlist *L, SongType *X);
+void DelVLast(Playlist *L, QueueSongType *X);
 /* I.S. Playlist tidak kosong */
 /* F.S. Elemen terakhir Playlist dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen terakhir di-dealokasi */

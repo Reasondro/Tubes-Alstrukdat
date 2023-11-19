@@ -2,32 +2,15 @@
 
 Queue QueueOriginal;
 Stack StackOriginal;
-DaftarPlaylist PlayListOriginal;
+int InitialSize=10;
+DaftarPlaylist DP;
 
-void cmd_user(){
-    char START[] = "START";
-    char LOAD[] = "LOAD";
-    char LIST_DEFAULT[] = "LIST DEFAULT";
-    char LIST_PLAYLIST[] = "LIST PLAYLIST";
-    char PLAY_SONG[] = "PLAY SONG";
-    char PLAY_PLAYLIST[] = "PLAY PLAYLIST";
-    char QUEUE_SONG[] = "QUEUE SONG";
-    char QUEUE_PLAYLIST[] = "QUEUE PLAYLIST";
-    char QUEUE_SWAP[] = "QUEUE SWAP";
-    char QUEUE_REMOVE[] = "QUEUE REMOVE";
-    char QUEUE_CLEAR[] = "QUEUE CLEAR";
-    char SONG_NEXT[] = "SONG NEXT";
-    char SONG_PREVIOUS[] = "SONG PREVIOUS";
-    char PLAYLIST_CREATE[] = "PLAYLIST CREATE";
-    char PLAYLIST_ADD_SONG[] = "PLAYLIST ADD SONG";
-    char PLAYLIST_ADD_ALBUM[] = "PLAYLIST ADD ALBUM";
-    char PLAYLIST_SWAP[] = "PLAYLIST SWAP";
-    char PLAYLIST_REMOVE[] = "PLAYLIST REMOVE";
-    char PLAYLIST_DELETE[] = "PLAYLIST DELETE";
-    char STATUS[] = "STATUS";
-    char SAVE[] = "SAVE";
-    char QUIT[] = "QUIT";
-    char HELP[] = "HELP";
+void init_dafplay(){
+    DP.pl = (Playlist*) malloc (InitialSize*sizeof(Playlist));
+    DP.Neff = 0;
+    DP.Capacity = InitialSize;
+    if (DP.pl == Nil) init_playlist();
+} //harus dipanggil waktu start, tapi kalau load jangan
 
     readCommand();
     if (IsSameWord(currentWord, START) || IsSameWord(currentWord, LOAD)){        
@@ -81,6 +64,10 @@ void cmd_user(){
     }else{
         printf("Command tidak bisa dieksekusi!\n");
     }
+void realloc_dafplay(DaftarPlaylist DP){
+    while (DP.Neff>=DP.Capacity) {
+        DP.pl = (Playlist*) realloc(DP.pl, DP.Capacity+5 * sizeof(Playlist));
+    } DP.Capacity += 5;
 }
 
 void Song_Next (){
@@ -158,12 +145,11 @@ void Play_Song(){
 
 void Play_Playlist (){
     char id_Playlist_string;
-    DaftarPlaylist dafplaylist;
     printf("Masukkan Id Playlist: ");
     readCommand();
     WordToString(currentWord,&id_Playlist_string);
-    dafplaylist.id = id_Playlist_string - '0';
-    if (dafplaylist.id < NbEmlt(dafplaylist.playlist)){
+    DP.id = id_Playlist_string - '0';
+    if (DP.id < NbEmlt(DP.playlist)){
         QueueSongType otherSong;
         for (int i = 0; i < lengthQueue; i++){
             dequeue (&QueueOriginal, &otherSong);
@@ -179,22 +165,25 @@ void Play_Playlist (){
 }
 
 void playlist_create(){
-    CreateEmpty(&L);
     STARTCOMMAND();
     printf("\n");
+    printf("Masukkan nama playlist yang ingin dibuat : ");
+    printf("\n");
     if (stringLengthNoBlanks(&currentWord)>=3) {
-        WordtoString(currentWord, Nama(*L));
-        printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", Nama(*L));
+        if (DP.Neff>=DP.Capacity) realloc_dafplay(DP);
+        WordtoString(currentWord, DP.pl[DP.Neff].nama);
+        printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", DP.pl[DP.Neff].nama);
+        First(DP.pl[DP.Neff])=Nil;
+        DP.Neff++;
     } else {
         printf("Minimal terdapat 3 karakter selain whitespace dalam nama playlist. Silakan coba lagi.");
     }
 }
 
-void playlist_add_song() {
-    address P = Alokasi(song.judul_lagu);
-    if (Search(*L, song.judul_lagu)==Nil) {
-        InsertLast(L, P);
-    } else Dealokasi(&P);
+void playlist_add_song(Playlist *L, QueueSongType song) {
+    address P = Alokasi(song);
+    if (!Search(*L, song)) InsertLast(L, P);
+    else Dealokasi(&P);
 }
 
 void playlist_add_album(Playlist *L, IsiAlbum album) {

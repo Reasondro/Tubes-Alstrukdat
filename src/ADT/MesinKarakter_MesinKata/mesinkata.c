@@ -136,16 +136,16 @@ void readCommand()
     printf("Masukkan command: ");
     STARTCOMMAND();
 }
-
-int stringLength(char *string)
-{
-    int length = 0;
-    while (string[length] != '\0')
-    {
-        length++;
-    }
-    return length;
-}
+//? sementara piondah ke  mesin karatker.c
+// int stringLength(char *string)
+// {
+//     int length = 0;
+//     while (string[length] != '\0')
+//     {
+//         length++;
+//     }
+//     return length;
+// }
 
 int stringLengthNoBlanks(char *string)
 {
@@ -189,16 +189,34 @@ void printWord(Word word)
     printf("\n");
 }
 
-void stringCopy(char *string1, char *string2)
-{
-    int i = 0;
-    while (string2[i] != '\0')
-    {
-        string1[i] = string2[i];
-        i++;
-    }
-    string1[i] = '\0';
-}
+//? sementara piondah ke  mesin karatker.c
+// void stringCopy(char *string1, char *string2)
+// {
+//     int i = 0;
+//     while (string2[i] != '\0')
+//     {
+//         string1[i] = string2[i];
+//         i++;
+//     }
+//     string1[i] = '\0';
+// }
+//? sementara piondah ke  mesin karatker.c
+// void stringConcat(char *string1, char *string2)
+// {
+//     int i = 0;
+//     int j = 0;
+//     while (string1[i] != '\0')
+//     {
+//         i++;
+//     }
+//     while (string2[j] != '\0')
+//     {
+//         string1[i] = string2[j];
+//         i++;
+//         j++;
+//     }
+//     string1[i] = '\0';
+// }
 
 void WordToString(Word word, char *string)
 {
@@ -210,25 +228,25 @@ void WordToString(Word word, char *string)
     }
     string[i] = '\0';
 }
-
-boolean IsSameString(char w1[], char w2[])
-{
-    boolean IsSame = true;
-    if (stringLength(w1) != stringLength(w2))
-    {
-        IsSame = false;
-        return IsSame;
-    }
-    for (int i = 0; i < stringLength(w2); i++)
-    {
-        if (w2[i] != w1[i])
-        {
-            IsSame = false;
-            return IsSame;
-        }
-    }
-    return IsSame;
-}
+//? sementara piondah ke  mesin karatker.c
+// boolean IsSameString(char w1[], char w2[])
+// {
+//     boolean IsSame = true;
+//     if (stringLength(w1) != stringLength(w2))
+//     {
+//         IsSame = false;
+//         return IsSame;
+//     }
+//     for (int i = 0; i < stringLength(w2); i++)
+//     {
+//         if (w2[i] != w1[i])
+//         {
+//             IsSame = false;
+//             return IsSame;
+//         }
+//     }
+//     return IsSame;
+// }
 
 void ignoreBlanksLine()
 {
@@ -266,9 +284,9 @@ void ADVLINE()
     }
 }
 
-void STARTLINE()
+void STARTLINE(char *filename)
 {
-    STARTLOAD();
+    STARTLOAD(filename);
     ignoreBlanksLine();
     if (currentCharLoad == MARKLOAD)
     {
@@ -290,4 +308,15 @@ void displayLine(Line line) // somehow naming the function printLine will result
     }
 
     printf("\n");
+}
+
+void LineToString(Line line, char *string)
+{
+    int i = 0;
+    while (i < line.LengthLine)
+    {
+        string[i] = line.TabLine[i];
+        i++;
+    }
+    string[i] = '\0';
 }

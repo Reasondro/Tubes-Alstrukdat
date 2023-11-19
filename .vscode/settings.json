@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "*.html": "html",
+    "random": "c",
+    "SETMAP.C": "cpp",
+    "driverSETMAP.C": "cpp"
+  }
+}
