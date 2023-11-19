@@ -16,6 +16,8 @@ void Save();
 
 void playlist_create();
 
-void playlist_add_song(Playlist *L, QueueSongType song);
+void playlist_add_song();
 
-void playlist_add_album(Playlist *L, IsiAlbum album);
+void playlist_add_album();
+
+void AddtoPlayList(Playlist *pl, QueueSongType song);
