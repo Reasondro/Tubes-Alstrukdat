@@ -6,7 +6,6 @@
 #define stackt_H
 
 #include "boolean.h"
-#include "../struct.h"
 
 #define NilS -1
 #define MaxEl 100
@@ -19,7 +18,7 @@ typedef int addr; /* indeks tabel */
 typedef struct
 {
   QueueSongType T[MaxEl]; /* tabel penyimpan elemen */
-  addr TOP;            /* alamat TOP: elemen puncak */
+  addr TOP;               /* alamat TOP: elemen puncak */
 } Stack;
 /* Definisi stack S kosong : S.TOP = Nil */
 /* Elemen yang dipakai menyimpan nilai Stack T[0]..T[MaxEl-1] */
@@ -27,10 +26,10 @@ typedef struct
 /* S.T[(S.TOP)] untuk mengakses elemen TOP */
 /* S.TOP adalah alamat elemen TOP */
 
-#define        Top(S) (S).TOP
-#define	     Album(S) (S).T[(S).TOP].album
-#define   Penyanyi(S) (S).T[(S).TOP].penyanyi
-#define	Judul_Lagu(S) (S).T[(S).TOP].judul_lagu
+#define Top(S) (S).TOP
+#define Album(S) (S).T[(S).TOP].album
+#define Penyanyi(S) (S).T[(S).TOP].penyanyi
+#define Judul_Lagu(S) (S).T[(S).TOP].judul_lagu
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
