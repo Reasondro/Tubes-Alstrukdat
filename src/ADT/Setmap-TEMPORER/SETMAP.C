@@ -4,7 +4,7 @@
 // #include "mesinkarakter.c" // non comment hanya klao mo test
 // #include "mesinkata.c"
 
-typedef char keytype[50];
+typedef char keytype[20];
 
 // typedef struct
 // {
@@ -58,7 +58,7 @@ boolean IsMemberSet(SetSong S, SongType Song)
     return found;
 }
 
-void InsertSet(SongType Song, AlbumTypeRevisi *Album, keytype NamaAlbumDicari)
+void InsertSet(SongType Song, AlbumTypeRevisi *Album, char *NamaAlbumDicari)
 {
     int i = 0;
     boolean found = false;
@@ -79,11 +79,12 @@ void InsertSet(SongType Song, AlbumTypeRevisi *Album, keytype NamaAlbumDicari)
     {
         return;
     }
+
     stringCopy(Album->AlbumKe[i].DaftarLagu.Songs[Album->AlbumKe[i].DaftarLagu.JumlahLagu].judul, Song.judul);
     Album->AlbumKe[i].DaftarLagu.JumlahLagu++;
 }
 
-void DisplaySet(AlbumTypeRevisi Album, keytype NamaAlbumDicari)
+void DisplaySet(AlbumTypeRevisi Album, char *NamaAlbumDicari)
 {
     int i = 0;
     boolean found = false;
@@ -99,11 +100,18 @@ void DisplaySet(AlbumTypeRevisi Album, keytype NamaAlbumDicari)
             i++;
         }
     }
-
-    int j;
-    for (j = 0; j < Album.AlbumKe[i].DaftarLagu.JumlahLagu; j++)
+    if (found)
     {
-        printf("Lagu %d dari Album %s : %s\n", j + 1, Album.AlbumKe[i].NamaAlbum, Album.AlbumKe[i].DaftarLagu.Songs[j].judul);
+        printf("Daftar Lagu Album %s :\n", Album.AlbumKe[i].NamaAlbum);
+        int j;
+        for (j = 0; j < Album.AlbumKe[i].DaftarLagu.JumlahLagu; j++)
+        {
+            printf("    %d. %s\n", j + 1, Album.AlbumKe[i].DaftarLagu.Songs[j].judul);
+        }
+    }
+    else
+    {
+        printf("Tidak ada album bernama %s\n", NamaAlbumDicari);
     }
 }
 
@@ -119,7 +127,7 @@ boolean IsEmptyMap(AlbumTypeRevisi Album)
     return Album.JumlahAlbum == 0;
 }
 
-void InsertMap(AlbumTypeRevisi *Album, keytype NamaAlbumDicari)
+void InsertMap(AlbumTypeRevisi *Album, char *NamaAlbumDicari)
 {
     int i = 0;
     boolean found = false;
@@ -142,12 +150,55 @@ void InsertMap(AlbumTypeRevisi *Album, keytype NamaAlbumDicari)
     }
 }
 
-void DisplayMap(AlbumTypeRevisi Album)
+// void DisplayMap(AlbumTypeRevisi Album)
+// {
+//     int i;
+//     for (i = 0; i < Album.JumlahAlbum; i++)
+//     {
+//         printf("Album %d : %s\n", i + 1, Album.AlbumKe[i].NamaAlbum);
+//     }
+// }
+
+typedef struct
 {
-    int i;
-    for (i = 0; i < Album.JumlahAlbum; i++)
+    char nama[50];
+    AlbumTypeRevisi album; // sebagai map
+} PenyanyiTypeRevisi;
+
+typedef struct
+{
+    PenyanyiTypeRevisi Penyanyi[5]; // ini prototipe
+    int JumlahPenyanyi;
+} ListPenyanyi;
+
+void DisplayMap(ListPenyanyi L, char *PenyanyiDicari)
+{
+    int i = 0;
+    boolean found = false;
+
+    while (i < L.JumlahPenyanyi && !found)
     {
-        printf("Album %d : %s\n", i + 1, Album.AlbumKe[i].NamaAlbum);
+        if (IsSameString(L.Penyanyi[i].nama, PenyanyiDicari))
+        {
+            found = true;
+        }
+        else
+        {
+            i++;
+        }
+    }
+    if (found)
+    {
+        printf("Daftar Album oleh %s :\n", L.Penyanyi[i].nama);
+        int j = 0;
+        for (j = 0; j < L.Penyanyi[i].album.JumlahAlbum; j++)
+        {
+            printf("    %d. %s\n", j + 1, L.Penyanyi[i].album.AlbumKe[j].NamaAlbum);
+        }
+    }
+    else
+    {
+        printf("Tidak ada Penyanyi dengan nama tersebut\n");
     }
 }
 
@@ -171,15 +222,3 @@ boolean IsMemberMap(AlbumTypeRevisi Album, keytype NamaAlbumDicari)
 }
 
 // ------------------------------------------------------------
-
-typedef struct
-{
-    char nama[100];
-    AlbumTypeRevisi album; // sebagai map
-} PenyanyiTypeRevisi;
-
-typedef struct
-{
-    PenyanyiTypeRevisi Penyanyi[3]; // ini prototipe
-
-} ListPenyanyi;

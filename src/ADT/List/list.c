@@ -1,7 +1,26 @@
 #include <stdio.h>
 #include "list.h"
 
+void CreateEmptyListPenyanyi(ListPenyanyi *L)
+{
+    (*L).JumlahPenyanyi = 0;
+}
 
+void InsertPenyanyi(ListPenyanyi *L, PenyanyiTypeRevisi P)
+{
+    L->Penyanyi[L->JumlahPenyanyi] = P;
+    CreateEmptyMap(&(L->Penyanyi[L->JumlahPenyanyi].album));
+    L->JumlahPenyanyi++;
+}
+
+void DisplayListPenyanyi(ListPenyanyi L)
+{
+    printf("Daftar Penyanyi: \n");
+    for (int i = 0; i < L.JumlahPenyanyi; i++)
+    {
+        printf("    %d. %s\n", i + 1, L.Penyanyi[i].nama);
+    }
+}
 // /* ********** KONSTRUKTOR ********** */
 // /* Konstruktor: create list kosong */
 // List MakeList(){
