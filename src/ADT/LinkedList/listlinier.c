@@ -28,7 +28,7 @@ address Alokasi(char penyanyi[], char album[], char judul[])
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 {
-    address P = (address)malloc(1 * sizeof(Node));
+    address P = (address)malloc(1 * sizeof(SongPlay));
     if (P != Nil){
         stringCopy(&Info(P).album, &album);
         stringCopy(&Info(P).judul_lagu.judul, &judul);
@@ -155,17 +155,17 @@ void InsertLast(Playlist *L, address P)
     }
 }
 
-/*** PENGHAPUSAN SEBUAH ELEMEN ***/
-void DelFirst(Playlist *L, address *P)
-/* I.S. Playlist tidak kosong */
-/* F.S. P adalah alamat elemen pertama Playlist sebelum penghapusan */
-/*      Elemen Playlist berkurang satu (mungkin menjadi kosong) */
-/* First element yg baru adalah suksesor elemen pertama yang lama */
-{
-    *P = First(*L);
-    First(*L) = Next(First(*L));
-    Next(*P) = Nil;
-}
+// /*** PENGHAPUSAN SEBUAH ELEMEN ***/
+// void DelFirst(Playlist *L, address *P)
+// /* I.S. Playlist tidak kosong */
+// /* F.S. P adalah alamat elemen pertama Playlist sebelum penghapusan */
+// /*      Elemen Playlist berkurang satu (mungkin menjadi kosong) */
+// /* First element yg baru adalah suksesor elemen pertama yang lama */
+// {
+//     *P = First(*L);
+//     First(*L) = Next(First(*L));
+//     Next(*P) = Nil;
+// }
 
 // void DelP(Playlist *L, QueueSongType X)
 // /* I.S. Sembarang */

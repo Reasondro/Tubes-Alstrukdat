@@ -3,26 +3,38 @@
 #include <stdio.h>
 #include "list.h"
 
-// Implementasi fungsi untuk menampilkan daftar penyanyi
-void showSingerList(ListPenyanyi penyanyiList, int jumlahPenyanyi) {
-    printf("Daftar Penyanyi :\n");
-    for (int i = 0; i < jumlahPenyanyi; i++) {
-        printf("%s\n", penyanyiList.Penyanyi[i].nama);
-    }
+void CreateEmptyListPenyanyi(ListPenyanyi *L)
+{
+    (*L).JumlahPenyanyi = 0;
 }
 
-// Implementasi fungsi untuk menampilkan daftar album dari penyanyi tertentu
-void showAlbumList(ListPenyanyi penyanyiList, int jumlahPenyanyi, char penyanyi[]) {
-    for (int i = 0; i < jumlahPenyanyi; i++) {
-        if (strcmp(penyanyiList.Penyanyi[i], penyanyi) == 0) {
-            printf("Daftar Album oleh %s :\n", penyanyi);
-            for (int j = 0; j < penyanyiList.Penyanyi[i].album.JumlahAlbum; j++) {
-                printf("%s\n", penyanyiList.Penyanyi[i].album.AlbumKe[j].NamaAlbum);
-            }
-            break;
-        }
+void InsertPenyanyi(ListPenyanyi *L, PenyanyiTypeRevisi P)
+{
+    L->Penyanyi[L->JumlahPenyanyi] = P;
+    CreateEmptyMap(&(L->Penyanyi[L->JumlahPenyanyi].album));
+    L->JumlahPenyanyi++;
+}
+
+void DisplayListPenyanyi(ListPenyanyi L)
+{
+    printf("Daftar Penyanyi: \n");
+    for (int i = 0; i < L.JumlahPenyanyi; i++)
+    {
+        printf("    %d. %s\n", i + 1, L.Penyanyi[i].nama);
     }
 }
+// /* ********** KONSTRUKTOR ********** */
+// /* Konstruktor: create list kosong */
+// List MakeList(){
+//     List L;
+//     int i;
+//     for (i = 0; i < MaxEl; i++){
+//         strcpy(L.A[i].penyanyi, -9999);
+//     }
+//     return L;
+// }
+// /* I.S. sembarang */
+// /* F.S. Terbentuk list L kosong dengan kapasitas MaxEl */
 
 // Implementasi fungsi untuk menampilkan daftar lagu dari album tertentu
 void showSongList(AlbumType albumList[], int jumlahAlbum, char album[]) {

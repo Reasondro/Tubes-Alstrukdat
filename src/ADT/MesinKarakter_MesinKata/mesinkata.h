@@ -82,6 +82,8 @@ void stringCopy(char *string1, char *string2);
 
 void WordToString(Word word, char *string);
 
+int WordToInt(Word word);
+
 boolean IsSameString(char w1[], char w2[]);
 
 void STARTLINE(char *filename);

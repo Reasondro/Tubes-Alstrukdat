@@ -38,3 +38,5 @@ void playlist_add_album();
 void Save();
 
 void Status();
+
+void AddtoPlayList(Playlist *pl, QueueSongType song);

@@ -228,6 +228,19 @@ void WordToString(Word word, char *string)
     }
     string[i] = '\0';
 }
+
+int WordToInt(Word word)
+{
+    char *str;
+    WordToString(word, str);
+    int result = 0;
+    while (*str != '\0') {
+        result = result * 10 + (*str - '0');
+        str++;
+    }
+    return result;
+}
+
 //? sementara piondah ke  mesin karatker.c
 // boolean IsSameString(char w1[], char w2[])
 // {
