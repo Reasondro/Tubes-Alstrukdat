@@ -12,17 +12,6 @@
 #define CAPACITY 100
 
 /* Definisi elemen dan address */
-
-typedef struct
-{
-        char judul[50];
-} SongType;
-typedef struct
-{
-        char penyanyi[50];
-        char album[50];
-        SongType judul_lagu;
-} QueueSongType;
 typedef struct
 {
         QueueSongType buffer[CAPACITY];
