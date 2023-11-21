@@ -129,4 +129,6 @@ void Konkat1(Playlist *L1, Playlist *L2, Playlist *L3);
 /* dan L1 serta L2 menjadi Playlist kosong.*/
 /* Tidak ada alokasi/dealokasi pada prosedur ini */
 
+addressPlaylist AddressAtIndex(Playlist L, int idx);
+
 #endif

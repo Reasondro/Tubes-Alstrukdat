@@ -174,9 +174,9 @@ void Play_Playlist()
             Pop(&StackOriginal, &otherSong);
         }
         addressPlaylist p = DP.pl[id_Playlist].First;
-        stringCopy(currentPlaySong.penyanyi, p.info.penyanyi);
-        stringCopy(currentPlaySong.album, p.info.album);
-        stringCopy(currentPlaySong.judul_lagu.judul, p.info.judul_lagu.judul);
+        stringCopy(currentPlaySong.penyanyi, p->info.penyanyi);
+        stringCopy(currentPlaySong.album, p->info.album);
+        stringCopy(currentPlaySong.judul_lagu.judul, p->info.judul_lagu.judul);
         while (Next(p) != Nil)
         {
             p = Next(p);
@@ -410,8 +410,8 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
             else
             {
                 idxl2--;
-                address A = AddressAtIndex(DP.pl[idxplay], idxl1);
-                address B = AddressAtIndex(DP.pl[idxplay], idxl2);
+                addressPlaylist A = AddressAtIndex(DP.pl[idxplay], idxl1);
+                addressPlaylist B = AddressAtIndex(DP.pl[idxplay], idxl2);
                 Swap(&DP.pl[idxplay], idxl1, idxl2);
                 // belom
             }
@@ -435,11 +435,11 @@ void Save()
     SongType SongQueue;
     int jumlahQueue;
 
-    if (!isEmptyQueue(QueueOriginal))
+    if (!IsEmptyQueue(QueueOriginal))
     {
-        jumlahQueue = lengthQueue(QueueTemp);
+        jumlahQueue = LengthQueue(QueueTemp);
         fprintf(fptr, "%d\n", jumlahQueue);
-        for (i = 0; i < lengthQueue(QueueOriginal); i++)
+        for (i = 0; i < LengthQueue(QueueOriginal); i++)
         {
             dequeue(&QueueTemp, &SongQueue);
             fprintf(fptr, "%s;", SongQueue.penyanyi);
@@ -553,7 +553,7 @@ void Queue_Playlist()
     id_playlist = *id_playlist_string - '0';
     if (id_playlist < NbElmt(DP.pl[id_playlist]))
     {
-        address p = First(DP.pl[id_playlist]);
+        addressPlaylist p = (DP.pl[id_playlist].First);
         while (p != Nil)
         {
             enqueue(&QueueOriginal, p->info);
@@ -566,17 +566,17 @@ void Queue_Playlist()
 void Queue_Swap(int x, int y)
 {
     QueueSongType temp, song_x, song_y;
-    if (x > lengthQueue(QueueOriginal))
+    if (x > LengthQueue(QueueOriginal))
     {
         printf("Lagu dengan id ke %d tidak terdapat dalam queue!\n", x);
     }
-    else if (y > lengthQueue(QueueOriginal))
+    else if (y > LengthQueue(QueueOriginal))
     {
         printf("Lagu dengan id ke %d tidak terdapat dalam queue!\n", y);
     }
     else
     {
-        int NbElmt = lengthQueue(QueueOriginal);
+        int NbElmt = LengthQueue(QueueOriginal);
         for (int i = 1; i <= NbElmt; i++)
         {
             if (i == x)
@@ -620,7 +620,7 @@ void Queue_Swap(int x, int y)
 void Queue_Remove(int id)
 {
     QueueSongType temp, hapus;
-    int NbElmt = lengthQueue(QueueOriginal);
+    int NbElmt = LengthQueue(QueueOriginal);
     if (id > NbElmt)
     {
         printf("Lagu dengan urutan %d tidak ada.\n", id);
@@ -646,7 +646,7 @@ void Queue_Remove(int id)
 void Queue_Clear()
 {
     QueueSongType deleted;
-    int NbElmt = lengthQueue(QueueOriginal);
+    int NbElmt = LengthQueue(QueueOriginal);
     for (int i = 1; i <= NbElmt; i++)
     {
         dequeue(&QueueOriginal, &deleted);

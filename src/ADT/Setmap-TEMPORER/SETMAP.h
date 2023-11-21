@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 
-typedef char keytype[20];
+// typedef char keytype[20];
 
 void CreatEmptySet(SetSong *S);
 

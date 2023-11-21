@@ -29,14 +29,15 @@ addressPlaylist Alokasi(char penyanyi[], char album[], char judul[])
 /* Jika alokasi gagal, mengirimkan Nil */
 {
     addressPlaylist P = (addressPlaylist)malloc(1 * sizeof(SongPlay));
-    if (P != Nil){
-        stringCopy(&Info(P).album, &album);
-        stringCopy(&Info(P).judul_lagu.judul, &judul);
-        stringCopy(&Info(P).penyanyi, &penyanyi);
+    while (P == Nil) {
+        addressPlaylist P = (addressPlaylist)malloc(1 * sizeof(SongPlay));
+    } if (P != Nil){
+        stringCopy(Info(P).album, album);
+        stringCopy(Info(P).judul_lagu.judul, judul);
+        stringCopy(Info(P).penyanyi, penyanyi);
         Next(P) = Nil;
         return P;
     }
-    else return Nil;
 }
 
 void Dealokasi(addressPlaylist *P)
@@ -58,9 +59,9 @@ boolean Search(Playlist L, QueueSongType X)
     if (!IsEmptyList(L)){
         P = First(L);
         while (!bFound && P != Nil){
-            if (IsSameString(&X.judul_lagu.judul, &Info(P).judul_lagu.judul)&&
-                IsSameString(&X.album, &Info(P).album)&&
-                IsSameString(&X.penyanyi, &Info(P).penyanyi)) {
+            if (IsSameString(X.judul_lagu.judul, Info(P).judul_lagu.judul)&&
+                IsSameString(X.album, Info(P).album)&&
+                IsSameString(X.penyanyi, Info(P).penyanyi)) {
                 bFound = true;
             }
             else P = Next(P);
@@ -300,7 +301,7 @@ addressPlaylist AddressAtIndex(Playlist L, int idx)
 {
     addressPlaylist P;
     P = First(L);
-    if (IsEmpty(L)) return Nil;
+    if (IsEmptyList(L)) return Nil;
     for (int i=0; i<idx; i++){
         P = Next(P);
     }
