@@ -422,55 +422,56 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
     }
 }
 
-void Save()
-{
-    FILE *fptr; // inisisasi file
-    char SaveFile[100];
-    printf("Masukkan nama file: ");
-    scanf("%s", SaveFile);
-    fptr = fopen(SaveFile, "w");
+// save yang dulu ak comment dulu, lgi ak kerjani
+// void Save()
+// {
+//     FILE *fptr; // inisisasi file
+//     char SaveFile[100];
+//     printf("Masukkan nama file: ");
+//     scanf("%s", SaveFile);
+//     fptr = fopen(SaveFile, "w");
 
-    int i;
+//     int i;
 
-    Queue QueueTemp; // mulai prosedur save queue
-    CreateQueue(&QueueTemp);
-    CopyQueue(QueueOriginal, &QueueTemp);
-    SongType SongQueue;
-    int jumlahQueue;
+//     Queue QueueTemp; // mulai prosedur save queue
+//     CreateQueue(&QueueTemp);
+//     CopyQueue(QueueOriginal, &QueueTemp);
+//     SongType SongQueue;
+//     int jumlahQueue;
 
-    if (!IsEmptyQueue(QueueOriginal))
-    {
-        jumlahQueue = LengthQueue(QueueTemp);
-        fprintf(fptr, "%d\n", jumlahQueue);
-        for (i = 0; i < LengthQueue(QueueOriginal); i++)
-        {
-            dequeue(&QueueTemp, &SongQueue);
-            fprintf(fptr, "%s;", SongQueue.penyanyi);
-            fprintf(fptr, "%s;", SongQueue.album);
-            fprintf(fptr, "%s\n", SongQueue.judul_lagu);
-        }
-    }
+//     if (!IsEmptyQueue(QueueOriginal))
+//     {
+//         jumlahQueue = LengthQueue(QueueTemp);
+//         fprintf(fptr, "%d\n", jumlahQueue);
+//         for (i = 0; i < LengthQueue(QueueOriginal); i++)
+//         {
+//             dequeue(&QueueTemp, &SongQueue);
+//             fprintf(fptr, "%s;", SongQueue.penyanyi);
+//             fprintf(fptr, "%s;", SongQueue.album);
+//             fprintf(fptr, "%s\n", SongQueue.judul_lagu);
+//         }
+//     }
 
-    Stack StackTemp; // mulai prosedur save stack
-    CreateEmptyStack(&StackTemp);
-    CopyStack(StackOriginal, &StackTemp);
-    SongType SongStack;
-    int jumlahStack;
+//     Stack StackTemp; // mulai prosedur save stack
+//     CreateEmptyStack(&StackTemp);
+//     CopyStack(StackOriginal, &StackTemp);
+//     SongType SongStack;
+//     int jumlahStack;
 
-    if (!IsEmptyStack(StackOriginal))
-    {
-        jumlahStack = lengthStack(StackTemp);
-        fprintf(fptr, "%d\n", jumlahStack);
-        for (i = 0; i < lengthStack(StackOriginal); i++)
-        {
-            Pop(&StackTemp, &SongStack);
-            fprintf(fptr, "%s;", SongStack.penyanyi);
-            fprintf(fptr, "%s;", SongStack.album);
-            fprintf(fptr, "%s\n", SongStack.judul_lagu);
-        }
-    }
-    fclose(fptr);
-}
+//     if (!IsEmptyStack(StackOriginal))
+//     {
+//         jumlahStack = lengthStack(StackTemp);
+//         fprintf(fptr, "%d\n", jumlahStack);
+//         for (i = 0; i < lengthStack(StackOriginal); i++)
+//         {
+//             Pop(&StackTemp, &SongStack);
+//             fprintf(fptr, "%s;", SongStack.penyanyi);
+//             fprintf(fptr, "%s;", SongStack.album);
+//             fprintf(fptr, "%s\n", SongStack.judul_lagu);
+//         }
+//     }
+//     fclose(fptr);
+// }
 
 // masih bermasalah (mungkin)
 void Status()

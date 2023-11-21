@@ -168,6 +168,14 @@ void STARTLOAD(char *filename)
     stringCopy(filepath, dir);
     stringConcat(filepath, filename);
     pitaLoad = fopen(filepath, "r");
+    if (pitaLoad == NULL)
+    {
+        printf("Save file tidak ditemukan. WayangWave gagal dijalankan.\n");
+    }
+    else
+    {
+        printf("Save file %s berhasil dibaca. WayangWave berhasil dijalankan.\n", filename);
+    }
     ADVLOAD();
 }
 
