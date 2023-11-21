@@ -16,7 +16,8 @@ void init_dafplay()
     DP.pl = (Playlist *)malloc(InitialSize * sizeof(Playlist));
     DP.Neff = 0;
     DP.Capacity = InitialSize;
-    if (DP.pl == Nil) {
+    if (DP.pl == Nil)
+    {
         init_dafplay();
     }
 } // harus dipanggil waktu start, tapi kalau load jangan
@@ -199,15 +200,17 @@ void playlist_create()
     printf("\n");
     char temp;
     WordToString(currentWord, &temp);
-    if (stringLengthNoBlanks(&temp)>=3) 
+    if (stringLengthNoBlanks(&temp) >= 3)
     {
-        if (DP.Neff>=DP.Capacity) realloc_dafplay(DP);
+        if (DP.Neff >= DP.Capacity)
+            realloc_dafplay(DP);
         WordToString(currentWord, DP.pl[DP.Neff].nama);
         printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", DP.pl[DP.Neff].nama);
         First(DP.pl[DP.Neff]) = Nil;
         DP.Neff++;
     }
-    else{
+    else
+    {
         printf("Minimal terdapat 3 karakter selain whitespace dalam nama playlist. Silakan coba lagi.");
     }
 }
@@ -826,10 +829,10 @@ void cmd_user()
 }
 void Start()
 {
-    char StartFileName[40];
-    printf("Masukkan nama file: ");
-    readCommand();
-    WordToString(currentWord, StartFileName);
+    char StartFileName[40] = "save.txt";
+    // printf("Masukkan nama file: ");
+    // readCommand();
+    // WordToString(currentWord, StartFileName);
     STARTLINE(StartFileName);
 
     int jumlahPenyanyi, jumlahAlbum, jumlahLagu;
@@ -842,6 +845,9 @@ void Start()
 
     CreateQueue(&QueueOriginal);
     CreateEmptyStack(&StackOriginal);
+    stringCopy(currentPenyanyi.nama, "");
+    stringCopy(currentAlbum.AlbumKe[0].NamaAlbum, "");
+    stringCopy(currentSong.judul, "");
 
     int i, j, k, l, m, n;
     for (i = 0; i < jumlahPenyanyi; i++)
@@ -854,6 +860,7 @@ void Start()
         {
             currentPenyanyi.nama[j - 2] = currentLine.TabLine[j];
         }
+        // printf("testing -- %s\n", currentPenyanyi.nama);
         InsertPenyanyi(&DaftarPenyanyi, currentPenyanyi);
 
         for (m = 0; m < jumlahAlbum; m++)
@@ -861,10 +868,12 @@ void Start()
             ADVLINE(); // ini masuk album pertama kali untuk penyanyi ke i;
             jumlahLagu = currentLine.TabLine[0] - '0';
             stringCopy(currentAlbum.AlbumKe[0].NamaAlbum, "");
+            // printf("isi album origin %s\n", currentAlbum.AlbumKe[0].NamaAlbum);
             for (k = 2; k < currentLine.LengthLine; k++)
             {
                 currentAlbum.AlbumKe[0].NamaAlbum[k - 2] = currentLine.TabLine[k];
             }
+            // printf("testing -- %s\n", currentAlbum.AlbumKe[0].NamaAlbum);
             InsertMap(&(DaftarPenyanyi.Penyanyi[i].album), currentAlbum.AlbumKe[0].NamaAlbum);
 
             for (l = 0; l < jumlahLagu; l++)
@@ -880,8 +889,10 @@ void Start()
             }
         }
     }
+    printf("File konfigurasi aplikasi berhasil dibaca. WayangWave berhasil dijalankan.\n");
 }
 
+// ------------------------------------------------------------
 void Load()
 {
     char LoadFileName[40];
@@ -901,6 +912,9 @@ void Load()
 
     CreateQueue(&QueueOriginal);
     CreateEmptyStack(&StackOriginal);
+    stringCopy(currentPenyanyi.nama, "");
+    stringCopy(currentAlbum.AlbumKe[0].NamaAlbum, "");
+    stringCopy(currentSong.judul, "");
 
     int i, j, k, l, m, n;
     for (i = 0; i < jumlahPenyanyi; i++)
@@ -1082,5 +1096,40 @@ void Load()
     else
     {
         // printf("%c", currentLine.TabLine[0]); // isinya nanti habis ngerti playlist
+    }
+}
+
+void ListDefault(ListPenyanyi L)
+{
+
+    DisplayListPenyanyi(L);
+    printf("Ingin melihat album yang ada? (Y/N): ");
+    readCommand();
+    char namaPenyanyi[30];
+    char namaAlbum[30];
+    int idxPenyanyi;
+    if (IsSameWord(currentWord, "Y"))
+    {
+        printf("Pilih penyanyi untuk melihat album mereka:\n");
+        readCommand();
+        WordToString(currentWord, namaPenyanyi);
+        // printf("%s\n", namaPenyanyi);
+        // printf("BLACKPINK");
+        DisplayMap(L, namaPenyanyi);
+        printf("Ingin melihat lagu yang ada? (Y/N): ");
+        readCommand();
+        idxPenyanyi = SearchPenyanyi(L, namaPenyanyi);
+        if (IsSameWord(currentWord, "Y"))
+        {
+            printf("Pilih nama album dari penyanyi tersebut: ");
+            readCommand();
+            stringCopy(namaAlbum, "");
+            WordToString(currentWord, namaAlbum);
+            // printf("%s\n", DaftarPenyanyi.Penyanyi[1].album.AlbumKe[0].NamaAlbum);
+            DisplaySet(L.Penyanyi[idxPenyanyi].album, namaAlbum);
+        }
+    }
+    else if (IsSameWord(currentWord, "N")) // ini tinggal n keluar
+    {
     }
 }
