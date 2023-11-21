@@ -1,0 +1,68 @@
+#include "../boolean.h"
+
+#ifndef struct_H
+#define struct_H
+
+#define penyanyimax 20
+#define albummax 20
+typedef char keytype;
+
+typedef struct
+{
+  char judul[100];
+} SongType;
+
+typedef SongType valuetype;
+
+typedef struct
+{
+  char penyanyi[50];
+  char album[50];
+  SongType judul_lagu;
+} QueueSongType;
+
+// revisi ak mulai dari sini
+
+typedef struct
+{
+  SongType Songs[15]; // misal max 15 lagu per album
+  int JumlahLagu;     // buat nentuin jumlah lagu misal butuh
+} SetSong;
+
+typedef struct
+{
+  keytype NamaAlbum[50]; // nama album si penyanyinya sebagai key
+  SetSong DaftarLagu;    // kumpulan lagu dalam 1 album sebagai isi dari map
+} IsiAlbum;
+typedef struct
+{
+  IsiAlbum AlbumKe[albummax]; // nah ini harusny udah map yang benar
+  int JumlahAlbum;
+} AlbumTypeRevisi;
+
+typedef struct
+{
+  char nama[100];
+  AlbumTypeRevisi album; // sebagai map
+} PenyanyiTypeRevisi;
+
+typedef struct
+{
+  PenyanyiTypeRevisi Penyanyi[penyanyimax]; // ini udah bukan prototipe
+} ListPenyanyi;
+
+
+typedef struct {
+    char nama[100];
+    address First;
+} Playlist;
+
+typedef struct {
+    int Capacity;
+    Playlist *pl;
+    int Neff;
+} DaftarPlaylist;
+
+// ges pusing ges tolong
+
+#endif
