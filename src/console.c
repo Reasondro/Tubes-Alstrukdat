@@ -1,8 +1,9 @@
 #include "console.h"
 
 Queue QueueOriginal;
+QueueSongType currentPlaySong;
 Stack StackOriginal;
-int InitialSize=10;
+int InitialSize = 10;
 DaftarPlaylist DP;
 char CurrentPlaylist[30];
 int CountPlaylist = 0;
@@ -11,18 +12,22 @@ int ComeToPlaylist[5];
 ListPenyanyi DaftarPenyanyi;
 QueueSongType currentSong;
 
-void init_dafplay(){
-    DP.pl = (Playlist*) malloc (InitialSize*sizeof(Playlist));
+void init_dafplay()
+{
+    DP.pl = (Playlist *)malloc(InitialSize * sizeof(Playlist));
     DP.Neff = 0;
     DP.Capacity = InitialSize;
-    if (DP.pl == Nil) init_playlist();
-} //harus dipanggil waktu start, tapi kalau load jangan
+    if (DP.pl == Nil)
+        init_playlist();
+} // harus dipanggil waktu start, tapi kalau load jangan
 
-
-void realloc_dafplay(DaftarPlaylist DP){
-    while (DP.Neff>=DP.Capacity) {
-        DP.pl = (Playlist*) realloc(DP.pl, DP.Capacity+5 * sizeof(Playlist));
-    } DP.Capacity += 5;
+void realloc_dafplay(DaftarPlaylist DP)
+{
+    while (DP.Neff >= DP.Capacity)
+    {
+        DP.pl = (Playlist *)realloc(DP.pl, DP.Capacity + 5 * sizeof(Playlist));
+    }
+    DP.Capacity += 5;
 }
 
 void Song_Next (){
@@ -64,8 +69,8 @@ void Song_Previous(){
     if (!(IsSameString (CurrentPlaylist, ""))){
         CountPlaylist++;
     }
-    printf ("Memutar lagu selanjutnya\n");
-    printf ("\"%s\" oleh \"%s\"", prevSong.judul_lagu, prevSong.penyanyi);
+    printf("Memutar lagu selanjutnya\n");
+    printf("\"%s\" oleh \"%s\"", prevSong.judul_lagu, prevSong.penyanyi);
 }
 
 void Play_Song(){
@@ -89,7 +94,7 @@ void Play_Song(){
             DisplaySet(DaftarPenyanyi.Penyanyi[id_penyanyi].album, chosen_album);
             printf ("Masukkan ID Lagu yang dipilih : ");
             readCommand();
-            WordToString (currentWord, id_chosen_lagu_string);
+            WordToString(currentWord, id_chosen_lagu_string);
             id_chosen_lagu = id_chosen_lagu_string - '0';
             if (id_chosen_lagu < DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.JumlahLagu){
                 char *chosen_lagu;
@@ -149,24 +154,30 @@ void Play_Playlist (){
     }
 }
 
-void playlist_create(){
+void playlist_create()
+{
     printf("\n");
     printf("Masukkan nama playlist yang ingin dibuat : ");
     STARTCOMMAND();
     printf("\n");
-    if (stringLengthNoBlanks(&currentWord)>=3) {
-        if (DP.Neff>=DP.Capacity) realloc_dafplay(DP);
+    if (stringLengthNoBlanks(&currentWord) >= 3)
+    {
+        if (DP.Neff >= DP.Capacity)
+            realloc_dafplay(DP);
         WordtoString(currentWord, &DP.pl[DP.Neff].nama);
         printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", DP.pl[DP.Neff].nama);
-        First(DP.pl[DP.Neff])=Nil;
+        First(DP.pl[DP.Neff]) = Nil;
         DP.Neff++;
-    } else {
+    }
+    else
+    {
         printf("Minimal terdapat 3 karakter selain whitespace dalam nama playlist. Silakan coba lagi.");
     }
 }
 
 // GES JADI GES INI GESSSSSSSSSSSSS
-void playlist_add_song() {
+void playlist_add_song()
+{
     char penyanyi, album;
     boolean foundp = false, founda = false;
     printf("ini daftar penyanyi harusnya\n");
@@ -174,50 +185,73 @@ void playlist_add_song() {
     STARTCOMMAND();
     WordtoString(currentWord, &penyanyi);
     int idxp = 0, idxa = 0, idxl, idxplay;
-    while (!foundp && idxp<penyanyimax) {
-        if (IsSameString(LPenyu.Penyanyi[idxp].nama, penyanyi)) {
+    while (!foundp && idxp < penyanyimax)
+    {
+        if (IsSameString(LPenyu.Penyanyi[idxp].nama, penyanyi))
+        {
             foundp = true;
-        } else idxp++;
+        }
+        else
+            idxp++;
     }
-    if (!foundp) {
+    if (!foundp)
+    {
         printf("Penyanyi %s tidak ada dalam daftar. Silakan coba lagi.", penyanyi);
         return;
-    } else {
+    }
+    else
+    {
         printf("ini daftar album harusnya\n");
         printf("Masukkan Judul Album yang dipilih : ");
         STARTCOMMAND();
         WordtoString(currentWord, &album);
-        while (!founda && idxa < LPenyu.Penyanyi[idxp].album.JumlahAlbum) {
-            if (IsSameString(LPenyu.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, album)) {
+        while (!founda && idxa < LPenyu.Penyanyi[idxp].album.JumlahAlbum)
+        {
+            if (IsSameString(LPenyu.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, album))
+            {
                 founda = true;
-            } else idxa++;
+            }
+            else
+                idxa++;
         }
-        if (!founda) {
+        if (!founda)
+        {
             printf("Album %s tidak ada dalam daftar. Silakan coba lagi.", album);
             return;
-        } else {
+        }
+        else
+        {
             printf("ini daftar lagu harusnya\n");
             printf("Masukkan ID Lagu yang dipilih : ");
             STARTCOMMAND();
             idxl = WordToInt(currentWord);
-            if (!(idxl <= LPenyu.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.JumlahLagu && idxl > 0)) {
+            if (!(idxl <= LPenyu.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.JumlahLagu && idxl > 0))
+            {
                 printf("ID Lagu %d tidak valid. Silakan coba lagi", idxl);
                 return;
-            } else {
+            }
+            else
+            {
                 idxl--;
                 printf("ini daftar playlist harusnya\n");
                 printf("Masukkan ID Playlist yang dipilih : ");
                 STARTCOMMAND();
                 idxplay = WordToInt(currentWord);
-                if (!(idxplay <= DP.Neff && idxplay > 0)) {
+                if (!(idxplay <= DP.Neff && idxplay > 0))
+                {
                     printf("ID Playlist %d tidak valid. Silakan coba lagi", idxplay);
                     return;
-                } else {
+                }
+                else
+                {
                     idxplay--;
                     address P = Alokasi(penyanyi, album, LPenyu.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul);
-                    if (Search(DP.pl[idxplay], Info(P))) {
+                    if (Search(DP.pl[idxplay], Info(P)))
+                    {
                         printf("Lagu dengan judul “%s” pada album %s oleh penyanyi %s sudah ada dalam playlist %s.\n", LPenyu.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul, LPenyu.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, LPenyu.Penyanyi[idxp].nama, DP.pl[idxplay].nama);
-                    } else {
+                    }
+                    else
+                    {
                         AddtoPlayList(&DP.pl[idxplay], Info(P));
                         printf("Lagu dengan judul “%s” pada album %s oleh penyanyi %s berhasil ditambahkan ke dalam playlist %s.\n", LPenyu.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul, LPenyu.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, LPenyu.Penyanyi[idxp].nama, DP.pl[idxplay].nama);
                     }
@@ -240,7 +274,8 @@ void playlist_add_song() {
 //         }
 // }
 
-void playlist_add_album() {
+void playlist_add_album()
+{
     char penyanyi, album;
     boolean foundp = false, founda = false;
     printf("ini daftar penyanyi harusnya\n");
@@ -248,36 +283,53 @@ void playlist_add_album() {
     STARTCOMMAND();
     WordtoString(currentWord, &penyanyi);
     int idxp = 0, idxa = 0, idxplay;
-    while (!foundp && idxp<penyanyimax) {
-        if (IsSameString(LPenyu.Penyanyi[idxp].nama, penyanyi)) {
+    while (!foundp && idxp < penyanyimax)
+    {
+        if (IsSameString(LPenyu.Penyanyi[idxp].nama, penyanyi))
+        {
             foundp = true;
-        } else idxp++;
+        }
+        else
+            idxp++;
     }
-    if (!foundp) {
+    if (!foundp)
+    {
         printf("Penyanyi %s tidak ada dalam daftar. Silakan coba lagi.", penyanyi);
         return;
-    } else {
+    }
+    else
+    {
         printf("ini daftar album harusnya\n");
         printf("Masukkan Judul Album yang dipilih : ");
         STARTCOMMAND();
         WordtoString(currentWord, &album);
-        while (!founda && idxa < LPenyu.Penyanyi[idxp].album.JumlahAlbum) {
-            if (IsSameString(LPenyu.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, album)) {
+        while (!founda && idxa < LPenyu.Penyanyi[idxp].album.JumlahAlbum)
+        {
+            if (IsSameString(LPenyu.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, album))
+            {
                 founda = true;
-            } else idxa++;
+            }
+            else
+                idxa++;
         }
-        if (!founda) {
+        if (!founda)
+        {
             printf("Album %s tidak ada dalam daftar. Silakan coba lagi.", album);
             return;
-        } else {
+        }
+        else
+        {
             printf("ini daftar playlist harusnya\n");
             printf("Masukkan ID Playlist yang dipilih : ");
             STARTCOMMAND();
             idxplay = WordToInt(currentWord);
-            if (!(idxplay <= DP.Neff && idxplay > 0)) {
+            if (!(idxplay <= DP.Neff && idxplay > 0))
+            {
                 printf("ID Playlist %d tidak valid. Silakan coba lagi", idxplay);
                 return;
-            } else {
+            }
+            else
+            {
                 idxplay--;
                 // alokasi dulu tiap lagu di album sblm nambahin, cek apa semua lagu di album udh ada di playlist
                 // if (udah ada semua) {
