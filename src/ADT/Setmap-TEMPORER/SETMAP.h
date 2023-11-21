@@ -1,7 +1,10 @@
 
 
-#include "boolean.h"
-#include "struct.h"
+#include "../../boolean.h"
+#include "../struct.h"
+#include "../MesinKarakter_MesinKata/mesinkata.h"
+#include <stdio.h>
+
 
 typedef char keytype[20];
 

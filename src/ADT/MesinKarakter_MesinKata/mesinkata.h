@@ -4,7 +4,7 @@
 #ifndef __MESINKATA_H__
 #define __MESINKATA_H__
 
-#include "boolean.h"
+#include "../../boolean.h"
 
 #define NMax 100
 #define NMaxLoad 1000

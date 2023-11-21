@@ -9,7 +9,7 @@
 #include "../struct.h"
 #include <stdio.h>
 #include "stdlib.h"
-#include "..\MesinKarakter_MesinKata\mesinkata.h"
+#include "../MesinKarakter_MesinKata/mesinkata.h"
 
 #define Nil NULL
 

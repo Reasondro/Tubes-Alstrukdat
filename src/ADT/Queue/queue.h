@@ -1,4 +1,7 @@
-#include "boolean.h"
+#include "../../boolean.h"
+#include "../struct.h"
+#include "../MesinKarakter_MesinKata/mesinkata.h"
+#include <stdio.h>
 
 /* File : queue.h */
 /* Definisi ADT Queue dengan representasi array secara eksplisit dan alokasi statik */

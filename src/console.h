@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include "ADT\Setmap-TEMPORER\SETMAP.h"
-#include "ADT\Queue\queue.h"
-#include "ADT\Stack\stack.h"
-#include "ADT\LinkedList\listlinier.h"
-#include "ADT\MesinKarakter_MesinKata\mesinkata.h"
+#include "ADT/Queue/queue.h"
+#include "ADT/Setmap-TEMPORER/SETMAP.h"
+#include "ADT/Stack/stack.h"
+#include "ADT/LinkedList/listlinier.h"
+#include "ADT/MesinKarakter_MesinKata/mesinkata.h"
 
 void cmd_user();
 

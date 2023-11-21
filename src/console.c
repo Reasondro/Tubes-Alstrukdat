@@ -9,6 +9,7 @@ int CountPlaylist = 0;
 boolean sesi = false;
 int ComeToPlaylist[5];
 ListPenyanyi DaftarPenyanyi;
+QueueSongType currentSong;
 
 void init_dafplay(){
     DP.pl = (Playlist*) malloc (InitialSize*sizeof(Playlist));
@@ -26,22 +27,28 @@ void realloc_dafplay(DaftarPlaylist DP){
 
 void Song_Next (){
     QueueSongType next_song;
-    dequeue (&QueueOriginal, &next_song);
-    Push (&StackOriginal, next_song);
-    if (CountPlaylist != 0){
-        CountPlaylist--;
-        if (CountPlaylist == 0){
-            stringCopy(CurrentPlaylist, "");
+    if (!(IsEmptyQueue(QueueOriginal))){        
+        dequeue (&QueueOriginal, &next_song);
+        Push (&StackOriginal, next_song);
+        if (CountPlaylist != 0){
+            CountPlaylist--;
+            if (CountPlaylist == 0){
+                stringCopy(CurrentPlaylist, "");
+            }
         }
+        printf ("Memutar lagu selanjutnya\n");
+        printf ("\"%s oleh \"%s\"", next_song.judul_lagu, next_song.penyanyi);
+    }else{
+        printf("Antrean kosong.");
     }
-    printf ("Memutar lagu selanjutnya\n");
-    printf ("\"%s oleh \"%s\"", next_song.judul_lagu, next_song.penyanyi);
 }
 
 void Song_Previous(){
-    QueueSongType ccSong, prevSong, otherSong; 
+    QueueSongType ccSong, prevSong, otherSong;
     Pop(&StackOriginal, &ccSong);
-    if (!(IsEmptyStack(StackOriginal))){ //Ada Riwayat lagu
+    
+    //Ada Riwayat lagu
+    if (!(IsEmptyStack(StackOriginal))){ 
         Pop(&StackOriginal, &prevSong);
         Push (&StackOriginal, prevSong); //ccSong langsung masuk stack atau kaga
         Push (&StackOriginal, ccSong);
@@ -85,26 +92,32 @@ void Play_Song(){
             WordToString (currentWord, id_chosen_lagu_string);
             id_chosen_lagu = id_chosen_lagu_string - '0';
             if (id_chosen_lagu < DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.JumlahLagu){
-                QueueSongType added_song, otherSong;
                 char *chosen_lagu;
                 stringCopy (chosen_lagu, DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.Songs[id_chosen_lagu-1].judul);
+                QueueSongType added_song, otherSong;
                 for (int i = 0; i < LengthQueue(QueueOriginal); i++){
                     dequeue (&QueueOriginal, &otherSong);
                 }
                 while (!(IsEmptyStack)){
                     Pop (&StackOriginal, &otherSong);
                 }
-                added_song.penyanyi[0] = chosen_penyanyi[0];
-                added_song.album[0] = chosen_album[0];
-                added_song.judul_lagu.judul[0] = chosen_lagu[0];
+                stringCopy (added_song.penyanyi, chosen_penyanyi);
+                stringCopy (added_song.album, chosen_album);
+                stringCopy (added_song.judul_lagu.judul, chosen_lagu);
                 Push (&StackOriginal, added_song);
                 if (!(IsSameString(CurrentPlaylist, ""))){
                     stringCopy(CurrentPlaylist, "");
                     CountPlaylist = 0;
                 }
                 printf("Memutar lagu \"%s\" oleh \"%s\"", chosen_lagu, chosen_penyanyi);
+            }else{
+                printf("Tidak ada lagu dengan id %d", id_chosen_lagu);
             }
+        }else{
+            printf("Tidak ada Album \"%s\".", chosen_album);
         }
+    }else{
+        printf("Tidak ada Penyanyi \"%s\".", chosen_penyanyi);
     }
 }
 
@@ -131,7 +144,9 @@ void Play_Playlist (){
         }
         stringCopy(CurrentPlaylist, DP.pl[id_Playlist].nama);
         CountPlaylist = NbElmt(DP.pl[id_Playlist]);
-    } 
+    }else{
+        printf("Tidak ada Playlist dengan id %d", id_Playlist);
+    }
 }
 
 void playlist_create(){
@@ -354,50 +369,36 @@ void Queue_Song(){
     char *id_chosen_lagu_string;
     int id_chosen_lagu;
 
-    // Print List Statik Penyanyi
-    printf("Daftar Penyanyi :\n");
-    // for (int i = 0; i < length_penyanyi; i++){
-    //     printf("%d. %s\n", i+1, Penyanyi[i])
-    // }
-
     printf ("Masukkan Nama Penyanyi yang dipilih : ");
     readCommand();
+    int id_penyanyi, id_album;
     WordToString(currentWord, chosen_penyanyi);
-    if (SearchList()){
-
-        // print Map Album
-        printf ("Daftar Album oleh %s :\n", chosen_penyanyi);
-        // for (int i = 0; i < length_album; i++){
-        //     printf("%d. %s\n", i+1, Penyanyi[i])
-        // }
-
+    id_penyanyi = SearchPenyanyi(DaftarPenyanyi, chosen_penyanyi);
+    if (SearchPenyanyi != -1){
+        DisplayMap(DaftarPenyanyi, chosen_penyanyi);
         printf ("Masukkan Nama Album yang dipilih : ");
         readCommand();
-        WordToString(currentWord, chosen_album);
-        if (IsMemberMap()){
-
-            // print Set Lagu
-            printf ("Daftar Lagu Album %s oleh %s : \n", chosen_penyanyi, chosen_album);
-            // for (int i = 0; i < length_lagu; i++){
-            //     printf("%d. %s\n", i+1, judul_lagu[i])
-            // }
-
+        id_album = SearchAlbum(DaftarPenyanyi.Penyanyi[id_penyanyi], chosen_album);
+        if (id_album != -1){
+            WordToString(currentWord, chosen_album);
+            DisplaySet(DaftarPenyanyi.Penyanyi[id_penyanyi].album, chosen_album);
             printf ("Masukkan ID Lagu yang dipilih : ");
             readCommand();
             WordToString (currentWord, id_chosen_lagu_string);
-            id_chosen_lagu = id_chosen_lagu_string - '0';            
-            if (id_chosen_lagu < set.count){
-                char *chosen_lagu = lagu[id_chosen_lagu - 1];
-                QueueSongType added_song;
-                added_song.penyanyi[0] = chosen_penyanyi[0];
-                added_song.album[0] = chosen_album[0];
-                added_song.judul_lagu.judul[0] = chosen_lagu[0];
-                enqueue (&StackOriginal, added_song);
+            id_chosen_lagu = id_chosen_lagu_string - '0';
+            if (id_chosen_lagu < DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.JumlahLagu){
+                QueueSongType added_song, otherSong;
+                char *chosen_lagu;
+                stringCopy (chosen_lagu, DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.Songs[id_chosen_lagu-1].judul);
+                stringCopy (added_song.penyanyi, chosen_penyanyi);
+                stringCopy (added_song.album, chosen_album);
+                stringCopy (added_song.judul_lagu.judul, chosen_lagu);
+                Push (&StackOriginal, added_song);
                 if (!(IsSameString(CurrentPlaylist, ""))){
                     stringCopy(CurrentPlaylist, "");
                     CountPlaylist = 0;
                 }
-                printf("Berhasil menambahkan lagu \"%s\" oleh \"%s\" ke queue.\n", chosen_lagu, chosen_penyanyi);
+                printf("Berhasil menambahkan lagu \"%s\" oleh \"%s\" ke queue.", chosen_lagu, chosen_penyanyi);
             }
         }
     }
@@ -483,6 +484,26 @@ void Queue_Clear(){
     printf("Queue berhasil dikosongkan.\n");
 }
 
+void help(){
+    if (sesi){
+        printf("=====[ Menu Help WayangWave ]=====\n");
+        printf("1. START -> Untuk memulai Wayang Wave\n");
+        printf("2. LOAD -> Untuk membaca file save dan memulai Wayang Wave\n");
+        printf("3. LIST -> Untuk menampilkan daftar lagu atau playlist\n");
+        printf("4. PLAY -> Untuk memulai suatu lagu atau playlist\n");
+        printf("5. Queue -> Untuk menambah lagu atau playlist, menukar posisi antrean, menghapus lagu atau seluruh antrean\n");
+        printf("6. SONG -> Untuk navigasi lagu di antrean (Next dan Previous)");
+        printf("7. PLAYLIST -> untuk membuat, menambahkan lagu atau album, menukar lagu, menghapus lagu dalam playlist, serta menghapus playlist\n");
+        printf("8. STATUS -> Untuk menampilkan lagu yang sedang dimainkan, antrean lagu, playlist yang dimainkan\n");
+        printf("9. SAVE -> Untuk menyimpan state ke dalam file\n");
+        printf("10. QUIT -> Untuk keluar dari sesi\n");
+    }else{
+        printf("=====[ Menu Help WayangWave ]=====\n");
+        printf("1. START -> Untuk masuk sesi baru\n");
+        printf("2. LOAD -> Untuk memulai sesi berdasarkan file konfigurasi\n");
+    }
+}
+
 void cmd_user(){
     char START[] = "START";
     char LOAD[] = "LOAD";
@@ -508,68 +529,71 @@ void cmd_user(){
     char QUIT[] = "QUIT";
     char HELP[] = "HELP";
     readCommand();
-    if (IsSameWord(currentWord, START) || IsSameWord(currentWord, LOAD)){        
-        if (IsSameWord(currentWord, START)){
-            Start_Wayang_Wave();
-        }else{
-            loadFile();
-        }
-        sesi = true;
+    while (!(IsSameWord (currentWord, QUIT))){
         readCommand();
-        while (!(IsSameWord(currentWord, QUIT))){
-            if (IsSameWord(currentWord, START) || IsSameWord(currentWord, LOAD)){
-                printf("Command tidak bisa dieksekusi!\n");
-            }else if (IsSameWord(currentWord, LIST_DEFAULT)){
-
-            }else if (IsSameWord(currentWord, LIST_PLAYLIST)){
-
-            }else if (IsSameWord(currentWord, PLAY_SONG)){
-                play_song();
-            }else if (IsSameWord(currentWord, PLAY_PLAYLIST)){
-                play_playlist ();
-            }else if (IsSameWord(currentWord, QUEUE_SONG)){
-                Queue_Song ();
-            }else if (IsSameWord(currentWord, QUEUE_PLAYLIST)){
-                Queue_Playlist ();
-            }else if (IsSameWord(currentWord, QUEUE_SWAP)){
-                Queue_Swap ();
-            }else if (IsSameWord(currentWord, QUEUE_REMOVE)){
-                Queue_Remove ();
-            }else if (IsSameWord(currentWord, QUEUE_CLEAR)){
-                Queue_Clear();
-            }else if (IsSameWord(currentWord, SONG_NEXT)){
-                song_next ();
-            }else if (IsSameWord(currentWord, SONG_PREVIOUS)){
-                Song_Previous ();
-            }else if (IsSameWord(currentWord, PLAYLIST_CREATE)){
-                playlist_create (&QueueOriginal, &StackOriginal);
-            }else if (IsSameWord(currentWord, PLAYLIST_ADD_SONG)){
-                playlist_add_song (&QueueOriginal, &StackOriginal);
-            }else if (IsSameWord(currentWord, PLAYLIST_ADD_ALBUM)){
-                playlist_add_album (&QueueOriginal, &StackOriginal);
-            }else if (IsSameWord(currentWord, PLAYLIST_SWAP)){
-                playlist_swap (&QueueOriginal, &StackOriginal);
-            }else if (IsSameWord(currentWord, PLAYLIST_REMOVE)){
-                playlist_remove (&QueueOriginal, &StackOriginal);
-            }else if (IsSameWord(currentWord, PLAYLIST_DELETE)){
-                playlist_delete (&QueueOriginal, &StackOriginal);
-            }else if (IsSameWord(currentWord, STATUS)){
-                Status ();
-            }else if (IsSameWord(currentWord, SAVE)){
-                Save (&QueueOriginal, &StackOriginal);
-            }else if (IsSameWord(currentWord, HELP)){
-                help (&QueueOriginal, &StackOriginal);
+        if (IsSameWord(currentWord, START) || IsSameWord(currentWord, LOAD)){        
+            if (IsSameWord(currentWord, START)){
+                Start_Wayang_Wave();
             }else{
-                printf("Command tidak diketahui!\n");
+                loadFile();
             }
+            sesi = true;
             readCommand();
-        }
-    }else{
-        if (IsSameWord(currentWord, HELP)){
-            help();
-        }else{
-            printf("Command tidak bisa dieksekusi!\n");
+            while (!(IsSameWord(currentWord, QUIT))){
+                if (IsSameWord(currentWord, START) || IsSameWord(currentWord, LOAD)){
+                    printf("Command tidak bisa dieksekusi!\n");
+                }else if (IsSameWord(currentWord, LIST_DEFAULT)){
 
+                }else if (IsSameWord(currentWord, LIST_PLAYLIST)){
+
+                }else if (IsSameWord(currentWord, PLAY_SONG)){
+                    play_song();
+                }else if (IsSameWord(currentWord, PLAY_PLAYLIST)){
+                    play_playlist ();
+                }else if (IsSameWord(currentWord, QUEUE_SONG)){
+                    Queue_Song ();
+                }else if (IsSameWord(currentWord, QUEUE_PLAYLIST)){
+                    Queue_Playlist ();
+                }else if (IsSameWord(currentWord, QUEUE_SWAP)){
+                    Queue_Swap ();
+                }else if (IsSameWord(currentWord, QUEUE_REMOVE)){
+                    Queue_Remove ();
+                }else if (IsSameWord(currentWord, QUEUE_CLEAR)){
+                    Queue_Clear();
+                }else if (IsSameWord(currentWord, SONG_NEXT)){
+                    Song_Next ();
+                }else if (IsSameWord(currentWord, SONG_PREVIOUS)){
+                    Song_Previous ();
+                }else if (IsSameWord(currentWord, PLAYLIST_CREATE)){
+                    playlist_create (&QueueOriginal, &StackOriginal);
+                }else if (IsSameWord(currentWord, PLAYLIST_ADD_SONG)){
+                    playlist_add_song (&QueueOriginal, &StackOriginal);
+                }else if (IsSameWord(currentWord, PLAYLIST_ADD_ALBUM)){
+                    playlist_add_album (&QueueOriginal, &StackOriginal);
+                }else if (IsSameWord(currentWord, PLAYLIST_SWAP)){
+                    playlist_swap (&QueueOriginal, &StackOriginal);
+                }else if (IsSameWord(currentWord, PLAYLIST_REMOVE)){
+                    playlist_remove (&QueueOriginal, &StackOriginal);
+                }else if (IsSameWord(currentWord, PLAYLIST_DELETE)){
+                    playlist_delete (&QueueOriginal, &StackOriginal);
+                }else if (IsSameWord(currentWord, STATUS)){
+                    Status ();
+                }else if (IsSameWord(currentWord, SAVE)){
+                    Save (&QueueOriginal, &StackOriginal);
+                }else if (IsSameWord(currentWord, HELP)){
+                    help (&QueueOriginal, &StackOriginal);
+                }else{
+                    printf("Command tidak diketahui!\n");
+                }
+                readCommand();
+            }
+        }else{
+            sesi = false;
+            if (IsSameWord(currentWord, HELP)){
+                help();
+            }else{
+                printf("Command tidak bisa dieksekusi!\n");
+            }
         }
     }
 }

@@ -5,7 +5,9 @@
 #ifndef stackt_H
 #define stackt_H
 
-#include "boolean.h"
+#include "../../boolean.h"
+#include "../struct.h"
+#include "../MesinKarakter_MesinKata/mesinkata.h"
 
 #define NilS -1
 #define MaxEl 100

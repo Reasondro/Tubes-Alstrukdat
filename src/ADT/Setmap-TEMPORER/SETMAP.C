@@ -1,11 +1,5 @@
 
-
-#include "boolean.h"
 #include "SETMAP.h"
-#include "mesinkata.h"
-#include "struct.h"
-#include <stdio.h>
-
 //------------------------------
 
 void CreatEmptySet(SetSong *S)

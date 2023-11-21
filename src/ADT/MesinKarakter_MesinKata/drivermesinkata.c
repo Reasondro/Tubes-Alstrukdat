@@ -1,10 +1,7 @@
-#include "mesinkarakter.c"
-#include "mesinkata.c"
-#include "queue.c"
-#include "SETMAP.c"
-#include <stdio.h>
-#include <stdlib.h>
-#include "boolean.h"
+// #include "mesinkarakter.c"
+#include "mesinkata.h"
+#include "../queue/queue.h"
+#include "../Setmap-TEMPORER/SETMAP.h"
 
 void loadFile()
 {
