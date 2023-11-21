@@ -1,9 +1,7 @@
 {
-  "files.associations": {
-    "*.html": "html",
-    "random": "c",
-    "SETMAP.C": "cpp",
-    "driverSETMAP.C": "cpp",
-    "mesinkata.h": "c"
-  }
+    "files.associations": {
+        "SETMAP.C": "cpp",
+        "driverSETMAP.C": "cpp",
+        "mesinkata.h": "c"
+    }
 }
