@@ -42,7 +42,7 @@ void Song_Next (){
             }
         }
         printf ("Memutar lagu selanjutnya\n");
-        printf ("\"%s oleh \"%s\"", next_song.judul_lagu, next_song.penyanyi);
+        printf ("\"%s oleh \"%s\"", next_song.judul_lagu.judul, next_song.penyanyi);
     }else{
         printf("Antrean kosong.");
     }
@@ -62,7 +62,7 @@ void Song_Previous(){
     }
     Push(&StackOriginal, ccSong);
     enqueue (&QueueOriginal, ccSong);
-    for (int i = 0; i < lengthQueue (QueueOriginal); i++){
+    for (int i = 0; i < LengthQueue (QueueOriginal); i++){
         dequeue (&QueueOriginal, &otherSong);
         enqueue (&QueueOriginal, otherSong);
     }
@@ -70,7 +70,7 @@ void Song_Previous(){
         CountPlaylist++;
     }
     printf("Memutar lagu selanjutnya\n");
-    printf("\"%s\" oleh \"%s\"", prevSong.judul_lagu, prevSong.penyanyi);
+    printf("\"%s\" oleh \"%s\"", prevSong.judul_lagu.judul, prevSong.penyanyi);
 }
 
 void Play_Song(){
@@ -84,7 +84,7 @@ void Play_Song(){
     int id_penyanyi, id_album;
     WordToString(currentWord, chosen_penyanyi);
     id_penyanyi = SearchPenyanyi(DaftarPenyanyi, chosen_penyanyi);
-    if (SearchPenyanyi != -1){
+    if (id_penyanyi != -1){
         DisplayMap(DaftarPenyanyi, chosen_penyanyi);
         printf ("Masukkan Nama Album yang dipilih : ");
         readCommand();
@@ -400,16 +400,16 @@ void Status(){
     if (!(IsSameString(CurrentPlaylist, ""))){ 
         printf("Current Playlist: %s\n\n", CurrentPlaylist);
     }     
-    if (isEmptyStack(StackOriginal)){
+    if (IsEmptyStack(StackOriginal)){
         printf("Now Playing:\nNo songs have been played yet. Please search for a song to begin playback.\n\nQueue:\nYour queue is empty.\n");
     }else{
         Pop (&StackOriginal, &Now_Playing);
-        printf("Now Playing:\n%s - %s - %s\n\n", Now_Playing.penyanyi, Now_Playing.album, Now_Playing.judul_lagu);
+        printf("Now Playing:\n%s - %s - %s\n\n", Now_Playing.penyanyi, Now_Playing.album, Now_Playing.judul_lagu.judul);
         if (isEmptyQueue (QueueOriginal)){
             printf("Queue:\nYour queue is empty.\n");
         }else{
             for (i = 0; i < LengthQueue(QueueOriginal); i++){
-                printf("%d. %s - %s - %s", i+1, Antrean_Lagu.penyanyi, Antrean_Lagu.album, Antrean_Lagu.judul_lagu);
+                printf("%d. %s - %s - %s", i+1, Antrean_Lagu.penyanyi, Antrean_Lagu.album, Antrean_Lagu.judul_lagu.judul);
             }
         }
     }
@@ -426,7 +426,7 @@ void Queue_Song(){
     int id_penyanyi, id_album;
     WordToString(currentWord, chosen_penyanyi);
     id_penyanyi = SearchPenyanyi(DaftarPenyanyi, chosen_penyanyi);
-    if (SearchPenyanyi != -1){
+    if (id_penyanyi != -1){
         DisplayMap(DaftarPenyanyi, chosen_penyanyi);
         printf ("Masukkan Nama Album yang dipilih : ");
         readCommand();
@@ -462,7 +462,7 @@ void Queue_Playlist(){
     readCommand();
     WordToString(currentWord, id_playlist_string);
     id_playlist = id_playlist_string - '0';
-    if (id_playlist < NbEmlt(DP)){
+    if (id_playlist < NbElmt(DP.pl[id_playlist])){
         address p = First(DP.pl[id_playlist]);
         while (p != Nil){
             enqueue(&QueueOriginal, p->info);
@@ -504,7 +504,7 @@ void Queue_Swap(int x, int y){
                 enqueue (&QueueOriginal, temp);
             }
         }
-        printf("Lagu \"%s\" berhasil ditukar dengan \"%s\"", song_x, song_y);
+        printf("Lagu \"%s\" berhasil ditukar dengan \"%s\"", song_x.judul_lagu.judul, song_y.judul_lagu.judul);
         // displayQueue (QueueOriginal);
     }
 }
@@ -523,7 +523,7 @@ void Queue_Remove(int id){
                 enqueue (&QueueOriginal, temp);
             }
         }
-        printf("Lagu \"%s\" oleh \"%s\" telah dihapus dari queue!\n", hapus.judul_lagu, hapus.penyanyi);
+        printf("Lagu \"%s\" oleh \"%s\" telah dihapus dari queue!\n", hapus.judul_lagu.judul, hapus.penyanyi);
     }
 }
 
@@ -599,17 +599,17 @@ void cmd_user(){
                 }else if (IsSameWord(currentWord, LIST_PLAYLIST)){
 
                 }else if (IsSameWord(currentWord, PLAY_SONG)){
-                    play_song();
+                    Play_Song();
                 }else if (IsSameWord(currentWord, PLAY_PLAYLIST)){
-                    play_playlist ();
+                    Play_Playlist ();
                 }else if (IsSameWord(currentWord, QUEUE_SONG)){
                     Queue_Song ();
                 }else if (IsSameWord(currentWord, QUEUE_PLAYLIST)){
                     Queue_Playlist ();
                 }else if (IsSameWord(currentWord, QUEUE_SWAP)){
-                    Queue_Swap ();
+                    Queue_Swap (x, y);
                 }else if (IsSameWord(currentWord, QUEUE_REMOVE)){
-                    Queue_Remove ();
+                    Queue_Remove (id);
                 }else if (IsSameWord(currentWord, QUEUE_CLEAR)){
                     Queue_Clear();
                 }else if (IsSameWord(currentWord, SONG_NEXT)){
