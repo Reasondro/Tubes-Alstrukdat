@@ -54,6 +54,19 @@ void stringConcat(char *string1, char *string2)
     string1[i] = '\0';
 }
 
+boolean IsSameChar(char c1, char c2)
+{
+    boolean IsSame = true;
+
+    if (c1 != c2)
+    {
+        IsSame = false;
+        return IsSame;
+    }
+
+    return IsSame;
+}
+
 boolean IsSameString(char w1[], char w2[])
 {
     boolean IsSame = true;
