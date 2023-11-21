@@ -16,8 +16,9 @@ void init_dafplay()
     DP.pl = (Playlist *)malloc(InitialSize * sizeof(Playlist));
     DP.Neff = 0;
     DP.Capacity = InitialSize;
-    if (DP.pl == Nil)
-        init_playlist();
+    if (DP.pl == Nil) {
+        init_dafplay();
+    }
 } // harus dipanggil waktu start, tapi kalau load jangan
 
 void realloc_dafplay(DaftarPlaylist DP)
@@ -196,10 +197,8 @@ void playlist_create()
     printf("Masukkan nama playlist yang ingin dibuat : ");
     STARTCOMMAND();
     printf("\n");
-    if (stringLengthNoBlanks(&currentWord) >= 3)
-    {
-        if (DP.Neff >= DP.Capacity)
-            realloc_dafplay(DP);
+    if (stringLengthNoBlanks(WordToString(&currentWord))>=3) {
+        if (DP.Neff>=DP.Capacity) realloc_dafplay(DP);
         WordtoString(currentWord, &DP.pl[DP.Neff].nama);
         printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", DP.pl[DP.Neff].nama);
         First(DP.pl[DP.Neff]) = Nil;
@@ -381,19 +380,6 @@ void playlist_add_album()
             }
         }
     }
-}
-
-address AddressAtIndex(Playlist L, int idx)
-{
-    address P;
-    P = First(L);
-    if (IsEmpty(L))
-        return Nil;
-    for (int i = 0; i < idx; i++)
-    {
-        P = Next(P);
-    }
-    return P;
 }
 
 void playlist_swap(int idxplay, int idxl1, int idxl2)

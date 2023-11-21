@@ -295,57 +295,79 @@ int NbElmt(Playlist L)
     return cnt;
 }
 
-/****************** PROSES TERHADAP Playlist ******************/
-void InversList(Playlist *L)
-/* I.S. sembarang. */
-/* F.S. elemen Playlist dibalik : */
-/* Elemen terakhir menjadi elemen pertama, dan seterusnya. */
-/* Membalik elemen Playlist, tanpa melakukan alokasi/dealokasi. */
+
+address AddressAtIndex(Playlist L, int idx)
 {
     address P;
-    address Prec = Nil;
-    address Succ;
-
-    if (!IsEmptyList(*L))
-    {
-        P = First(*L);
-        while (P != Nil)
-        {
-            Succ = Next(P);
-            Next(P) = Prec;
-            Prec = P;
-            P = Succ;
-        }
-        First(*L) = Prec;
+    P = First(L);
+    if (IsEmpty(L)) return Nil;
+    for (int i=0; i<idx; i++){
+        P = Next(P);
     }
+    return P;
 }
 
-void Konkat1(Playlist *L1, Playlist *L2, Playlist *L3)
-/* I.S. L1 dan L2 sembarang */
-/* F.S. L1 dan L2 kosong, L3 adalah hasil konkatenasi L1 & L2 */
-/* Konkatenasi dua buah Playlist : L1 dan L2    */
-/* menghasilkan L3 yang baru (dengan elemen Playlist L1 dan L2) */
-/* dan L1 serta L2 menjadi Playlist kosong.*/
-/* Tidak ada alokasi/dealokasi pada prosedur ini */
-{
-    address Last1;
+void swap_tengah(Playlist L, int idx1, int idx2) {
+    address lagu1, lagu2, prev1, prev2, next1, next2;
+    lagu1 = AddressAtIndex(L, idx1);
+    lagu2 = AddressAtIndex(L, idx2);
+    prev1 = AddressAtIndex(L, idx1-1);
+    prev2 = AddressAtIndex(L, idx2-1);
+    next1 = Next(lagu1); next2 = Next(lagu2);
 
-    CreateEmpty(L3);
-    if (IsEmptyList(*L1))
-    {
-        First(*L3) = First(*L2);
-    }
-    else
-    {
-        First(*L3) = First(*L1);
-        Last1 = First(*L1);
-        while (Next(Last1) != Nil)
-        {
-            Last1 = Next(Last1);
-        }
-        Next(Last1) = First(*L2);
-    }
-
-    First(*L1) = Nil;
-    First(*L2) = Nil;
 }
+
+// /****************** PROSES TERHADAP Playlist ******************/
+// void InversList(Playlist *L)
+// /* I.S. sembarang. */
+// /* F.S. elemen Playlist dibalik : */
+// /* Elemen terakhir menjadi elemen pertama, dan seterusnya. */
+// /* Membalik elemen Playlist, tanpa melakukan alokasi/dealokasi. */
+// {
+//     address P;
+//     address Prec = Nil;
+//     address Succ;
+
+//     if (!IsEmptyList(*L))
+//     {
+//         P = First(*L);
+//         while (P != Nil)
+//         {
+//             Succ = Next(P);
+//             Next(P) = Prec;
+//             Prec = P;
+//             P = Succ;
+//         }
+//         First(*L) = Prec;
+//     }
+// }
+
+// void Konkat1(Playlist *L1, Playlist *L2, Playlist *L3)
+// /* I.S. L1 dan L2 sembarang */
+// /* F.S. L1 dan L2 kosong, L3 adalah hasil konkatenasi L1 & L2 */
+// /* Konkatenasi dua buah Playlist : L1 dan L2    */
+// /* menghasilkan L3 yang baru (dengan elemen Playlist L1 dan L2) */
+// /* dan L1 serta L2 menjadi Playlist kosong.*/
+// /* Tidak ada alokasi/dealokasi pada prosedur ini */
+// {
+//     address Last1;
+
+//     CreateEmpty(L3);
+//     if (IsEmptyList(*L1))
+//     {
+//         First(*L3) = First(*L2);
+//     }
+//     else
+//     {
+//         First(*L3) = First(*L1);
+//         Last1 = First(*L1);
+//         while (Next(Last1) != Nil)
+//         {
+//             Last1 = Next(Last1);
+//         }
+//         Next(Last1) = First(*L2);
+//     }
+
+//     First(*L1) = Nil;
+//     First(*L2) = Nil;
+// }

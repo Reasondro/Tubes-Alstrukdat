@@ -13,10 +13,10 @@
 
 #define Nil NULL
 
-typedef struct tSongPlay *address;
+typedef struct tSongPlay *addressListLinier;
 typedef struct tSongPlay {
     QueueSongType info;
-    address next;
+    addressListLinier next;
 } SongPlay;
 
 /* Definisi list : */
