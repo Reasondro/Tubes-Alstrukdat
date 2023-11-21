@@ -10,7 +10,6 @@ int CountPlaylist = 0;
 boolean sesi = false;
 int ComeToPlaylist[5];
 ListPenyanyi DaftarPenyanyi;
-QueueSongType currentSong;
 
 void init_dafplay()
 {
@@ -33,8 +32,11 @@ void realloc_dafplay(DaftarPlaylist DP)
 void Song_Next (){
     QueueSongType next_song;
     if (!(IsEmptyQueue(QueueOriginal))){        
+        Push (&StackOriginal, currentPlaySong);
         dequeue (&QueueOriginal, &next_song);
-        Push (&StackOriginal, next_song);
+        stringCopy (currentPlaySong.penyanyi, next_song.penyanyi);
+        stringCopy (currentPlaySong.album, next_song.album);
+        stringCopy (currentPlaySong.judul_lagu.judul, next_song.judul_lagu.judul);
         if (CountPlaylist != 0){
             CountPlaylist--;
             if (CountPlaylist == 0){
@@ -44,33 +46,34 @@ void Song_Next (){
         printf ("Memutar lagu selanjutnya\n");
         printf ("\"%s oleh \"%s\"", next_song.judul_lagu.judul, next_song.penyanyi);
     }else{
-        printf("Antrean kosong.");
+        printf("Queue kosong, memutar kembali lagu \"%s\" oleh \"%s\".", currentPlaySong.judul_lagu.judul, currentPlaySong.penyanyi);
     }
 }
 
 void Song_Previous(){
     QueueSongType ccSong, prevSong, otherSong;
-    Pop(&StackOriginal, &ccSong);
-    
-    //Ada Riwayat lagu
+
     if (!(IsEmptyStack(StackOriginal))){ 
         Pop(&StackOriginal, &prevSong);
-        Push (&StackOriginal, prevSong); //ccSong langsung masuk stack atau kaga
-        Push (&StackOriginal, ccSong);
-    }else{ // stacknya cuma ada ccSong -> playing cclagu dan cclagu taro ke stack
-        Push (&StackOriginal, ccSong);
-    }
-    Push(&StackOriginal, ccSong);
-    enqueue (&QueueOriginal, ccSong);
-    for (int i = 0; i < LengthQueue (QueueOriginal); i++){
-        dequeue (&QueueOriginal, &otherSong);
-        enqueue (&QueueOriginal, otherSong);
+        stringCopy (currentPlaySong.penyanyi, prevSong.penyanyi);
+        stringCopy (currentPlaySong.album, prevSong.album);
+        stringCopy (currentPlaySong.judul_lagu.judul, prevSong.judul_lagu.judul);
+        enqueue (&QueueOriginal, currentPlaySong);
+        for (int i = 0; i < LengthQueue (QueueOriginal); i++){
+            dequeue (&QueueOriginal, &otherSong);
+            enqueue (&QueueOriginal, otherSong);
+        }
+    }else{
+        stringCopy (prevSong.penyanyi, currentPlaySong.penyanyi);
+        stringCopy (prevSong.album, currentPlaySong.album);
+        stringCopy (prevSong.judul_lagu.judul, currentPlaySong.judul_lagu.judul);
+        Push (&StackOriginal, prevSong);
     }
     if (!(IsSameString (CurrentPlaylist, ""))){
         CountPlaylist++;
     }
-    printf("Memutar lagu selanjutnya\n");
-    printf("\"%s\" oleh \"%s\"", prevSong.judul_lagu.judul, prevSong.penyanyi);
+    printf("Memutar lagu sebelumnya\n");
+    printf("\"%s\" oleh \"%s\"\n", prevSong.judul_lagu.judul, prevSong.penyanyi);
 }
 
 void Play_Song(){
@@ -95,26 +98,25 @@ void Play_Song(){
             printf ("Masukkan ID Lagu yang dipilih : ");
             readCommand();
             WordToString(currentWord, id_chosen_lagu_string);
-            id_chosen_lagu = id_chosen_lagu_string - '0';
+            id_chosen_lagu = *id_chosen_lagu_string - '0';
             if (id_chosen_lagu < DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.JumlahLagu){
                 char *chosen_lagu;
                 stringCopy (chosen_lagu, DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.Songs[id_chosen_lagu-1].judul);
-                QueueSongType added_song, otherSong;
+                QueueSongType otherSong;
                 for (int i = 0; i < LengthQueue(QueueOriginal); i++){
                     dequeue (&QueueOriginal, &otherSong);
                 }
                 while (!(IsEmptyStack)){
                     Pop (&StackOriginal, &otherSong);
                 }
-                stringCopy (added_song.penyanyi, chosen_penyanyi);
-                stringCopy (added_song.album, chosen_album);
-                stringCopy (added_song.judul_lagu.judul, chosen_lagu);
-                Push (&StackOriginal, added_song);
+                stringCopy (currentPlaySong.penyanyi, chosen_penyanyi);
+                stringCopy (currentPlaySong.album, chosen_album);
+                stringCopy (currentPlaySong.judul_lagu.judul, chosen_lagu);
                 if (!(IsSameString(CurrentPlaylist, ""))){
                     stringCopy(CurrentPlaylist, "");
                     CountPlaylist = 0;
                 }
-                printf("Memutar lagu \"%s\" oleh \"%s\"", chosen_lagu, chosen_penyanyi);
+                printf("Memutar lagu \"%s\" oleh \"%s\"", currentPlaySong.judul_lagu.judul, currentPlaySong.penyanyi);
             }else{
                 printf("Tidak ada lagu dengan id %d", id_chosen_lagu);
             }
@@ -127,12 +129,12 @@ void Play_Song(){
 }
 
 void Play_Playlist (){
-    char id_Playlist_string;
+    char *id_Playlist_string;
     int id_Playlist;
     printf("Masukkan Id Playlist: ");
     readCommand();
     WordToString(currentWord,&id_Playlist_string);
-    id_Playlist = id_Playlist_string - '0';
+    id_Playlist = *id_Playlist_string - '0';
     if (id_Playlist < DP.Neff){
         QueueSongType otherSong;
         for (int i = 0; i < LengthQueue(QueueOriginal); i++){
@@ -142,7 +144,9 @@ void Play_Playlist (){
             Pop (&StackOriginal, &otherSong);
         }
         address p = DP.pl[id_Playlist].First;
-        Push(&StackOriginal, p->info);
+        stringCopy (currentPlaySong.penyanyi, p.info.penyanyi);
+        stringCopy (currentPlaySong.album, p.info.album);
+        stringCopy (currentPlaySong.judul_lagu.judul, p.info.judul_lagu.judul);
         while (Next(p) != Nil){
             p = Next(p);
             enqueue(&QueueOriginal, p->info);
@@ -393,7 +397,7 @@ void Save()
     fclose(fptr);
 }
 
-
+// masih bermasalah
 void Status(){
     QueueSongType Now_Playing, Antrean_Lagu;
     int i;
@@ -403,8 +407,7 @@ void Status(){
     if (IsEmptyStack(StackOriginal)){
         printf("Now Playing:\nNo songs have been played yet. Please search for a song to begin playback.\n\nQueue:\nYour queue is empty.\n");
     }else{
-        Pop (&StackOriginal, &Now_Playing);
-        printf("Now Playing:\n%s - %s - %s\n\n", Now_Playing.penyanyi, Now_Playing.album, Now_Playing.judul_lagu.judul);
+        printf("Now Playing:\n%s - %s - %s\n\n", currentPlaySong.penyanyi, currentPlaySong.album, currentPlaySong.judul_lagu.judul);
         if (isEmptyQueue (QueueOriginal)){
             printf("Queue:\nYour queue is empty.\n");
         }else{
@@ -437,15 +440,13 @@ void Queue_Song(){
             printf ("Masukkan ID Lagu yang dipilih : ");
             readCommand();
             WordToString (currentWord, id_chosen_lagu_string);
-            id_chosen_lagu = id_chosen_lagu_string - '0';
+            id_chosen_lagu = *id_chosen_lagu_string - '0';
             if (id_chosen_lagu < DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.JumlahLagu){
-                QueueSongType added_song, otherSong;
                 char *chosen_lagu;
                 stringCopy (chosen_lagu, DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.Songs[id_chosen_lagu-1].judul);
-                stringCopy (added_song.penyanyi, chosen_penyanyi);
-                stringCopy (added_song.album, chosen_album);
-                stringCopy (added_song.judul_lagu.judul, chosen_lagu);
-                Push (&StackOriginal, added_song);
+                stringCopy (currentPlaySong.penyanyi, chosen_penyanyi);
+                stringCopy (currentPlaySong.album, chosen_album);
+                stringCopy (currentPlaySong.judul_lagu.judul, chosen_lagu);
                 if (!(IsSameString(CurrentPlaylist, ""))){
                     stringCopy(CurrentPlaylist, "");
                     CountPlaylist = 0;
@@ -456,12 +457,13 @@ void Queue_Song(){
     }
 }
 
+// masih bermasalah di linked listnya
 void Queue_Playlist(){
     int id_playlist, i;
     char *id_playlist_string;
     readCommand();
     WordToString(currentWord, id_playlist_string);
-    id_playlist = id_playlist_string - '0';
+    id_playlist = *id_playlist_string - '0';
     if (id_playlist < NbElmt(DP.pl[id_playlist])){
         address p = First(DP.pl[id_playlist]);
         while (p != Nil){
@@ -505,7 +507,6 @@ void Queue_Swap(int x, int y){
             }
         }
         printf("Lagu \"%s\" berhasil ditukar dengan \"%s\"", song_x.judul_lagu.judul, song_y.judul_lagu.judul);
-        // displayQueue (QueueOriginal);
     }
 }
 
