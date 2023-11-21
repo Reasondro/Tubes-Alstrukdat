@@ -5,7 +5,7 @@ QueueSongType currentPlaySong;
 Stack StackOriginal;
 int InitialSize = 10;
 DaftarPlaylist DP;
-ListPenyanyi LPenyu;
+ListPenyanyi DaftarPenyanyi;
 
 void init_dafplay()
 {
