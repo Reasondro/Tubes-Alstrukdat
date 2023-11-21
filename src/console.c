@@ -472,7 +472,7 @@ void Save()
     fclose(fptr);
 }
 
-// masih bermasalah
+// masih bermasalah (mungkin)
 void Status()
 {
     QueueSongType Now_Playing, Antrean_Lagu;
@@ -481,7 +481,7 @@ void Status()
     {
         printf("Current Playlist: %s\n\n", CurrentPlaylist);
     }
-    if (IsEmptyStack(StackOriginal))
+    if (IsSameString(currentPlaySong.judul_lagu.judul, ""))
     {
         printf("Now Playing:\nNo songs have been played yet. Please search for a song to begin playback.\n\nQueue:\nYour queue is empty.\n");
     }
