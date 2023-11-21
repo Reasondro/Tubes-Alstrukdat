@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "stdlib.h"
 #include "../MesinKarakter_MesinKata/mesinkata.h"
+#include "../MesinKarakter_MesinKata/mesinkarakter.h"
 
 #define Nil NULL
 
@@ -130,5 +131,9 @@ void Konkat1(Playlist *L1, Playlist *L2, Playlist *L3);
 /* Tidak ada alokasi/dealokasi pada prosedur ini */
 
 addressPlaylist AddressAtIndex(Playlist L, int idx);
+
+void swap_tengah(Playlist L, int idx1, int idx2);
+
+void swap_pinggir(Playlist L, int idx1, int idx2);
 
 #endif

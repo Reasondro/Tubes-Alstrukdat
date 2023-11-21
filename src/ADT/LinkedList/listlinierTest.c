@@ -288,7 +288,6 @@ int NbElmt(Playlist L)
     return cnt;
 }
 
-
 addressPlaylist AddressAtIndex(Playlist L, int idx)
 {
     addressPlaylist P;
@@ -351,7 +350,7 @@ void swap_pinggir(Playlist L, int idx1, int idx2)
             Next(prev2) = lagu1;
             Next(lagu1) = next2;
             Next(lagu2) = next1;
-            First(L) = lagu2;
+            L.First = lagu2;
         }
         else if (idx2==NbElmt(L)-1) /* idx1==tengah */
         {
@@ -375,7 +374,7 @@ void swap_pinggir(Playlist L, int idx1, int idx2)
             lagu1 = First(L);
             lagu2 = Next(lagu1);
             next2 = Next(lagu2);
-            First(L)=lagu2;
+            L.First = lagu2;
             Next(lagu2) = lagu1;
             Next(lagu1) = next2;
         }
@@ -388,59 +387,131 @@ void swap_pinggir(Playlist L, int idx1, int idx2)
             InsertLast(&L, lagu1);
         }
     }
+    // printf("sampe2");
+    // PrintInfo(L);
 }
 
-// /****************** PROSES TERHADAP Playlist ******************/
-// void InversList(Playlist *L)
-// /* I.S. sembarang. */
-// /* F.S. elemen Playlist dibalik : */
-// /* Elemen terakhir menjadi elemen pertama, dan seterusnya. */
-// /* Membalik elemen Playlist, tanpa melakukan alokasi/dealokasi. */
-// {
-//     address P;
-//     address Prec = Nil;
-//     address Succ;
+boolean IsSameWord(Word w1, char w2[])
+{
+    boolean IsSame = true;
+    if (w1.Length != stringLength(w2))
+    {
+        IsSame = false;
+        return IsSame;
+    }
+    for (int i = 0; i < stringLength(w2); i++)
+    {
+        if (w2[i] != w1.TabWord[i])
+        {
+            IsSame = false;
+            return IsSame;
+        }
+    }
+    return IsSame;
+}
 
-//     if (!IsEmptyList(*L))
-//     {
-//         P = First(*L);
-//         while (P != Nil)
-//         {
-//             Succ = Next(P);
-//             Next(P) = Prec;
-//             Prec = P;
-//             P = Succ;
-//         }
-//         First(*L) = Prec;
-//     }
-// }
+void stringCopy(char *string1, char *string2)
+{
+    int panjang1 = stringLength(string1);
+    int i = 0;
+    while (string2[i] != '\0')
+    {
+        string1[i] = string2[i];
+        i++;
+    }
+    int j;
+    for (j = i; j < panjang1; j++)
+    {
+        string1[j] = '\0';
+    }
+}
 
-// void Konkat1(Playlist *L1, Playlist *L2, Playlist *L3)
-// /* I.S. L1 dan L2 sembarang */
-// /* F.S. L1 dan L2 kosong, L3 adalah hasil konkatenasi L1 & L2 */
-// /* Konkatenasi dua buah Playlist : L1 dan L2    */
-// /* menghasilkan L3 yang baru (dengan elemen Playlist L1 dan L2) */
-// /* dan L1 serta L2 menjadi Playlist kosong.*/
-// /* Tidak ada alokasi/dealokasi pada prosedur ini */
-// {
-//     address Last1;
+boolean IsSameString(char w1[], char w2[])
+{
+    boolean IsSame = true;
+    if (stringLength(w1) != stringLength(w2))
+    {
+        IsSame = false;
+        return IsSame;
+    }
+    for (int i = 0; i < stringLength(w2); i++)
+    {
+        if (w2[i] != w1[i])
+        {
+            IsSame = false;
+            return IsSame;
+        }
+    }
+    return IsSame;
+}
 
-//     CreateEmpty(L3);
-//     if (IsEmptyList(*L1))
-//     {
-//         First(*L3) = First(*L2);
-//     }
-//     else
-//     {
-//         First(*L3) = First(*L1);
-//         Last1 = First(*L1);
-//         while (Next(Last1) != Nil)
-//         {
-//             Last1 = Next(Last1);
-//         }
-//         Next(Last1) = First(*L2);
-//     }
+int stringLength(char *string)
+{
+    int length = 0;
+    while (string[length] != '\0')
+    {
+        length++;
+    }
+    return length;
+}
 
-//     First(*L1) = Nil;
-//     First(*L2) = Nil;
-// }
+void swaptest(Playlist L, int idxl1, int idxl2)
+{
+    if (!(idxl1 <= NbElmt(L) && idxl1 > 0))
+    {
+        printf("Tidak ada lagu dengan urutan %d di playlist ""fd""\n", idxl1);
+        return;
+    }
+    else
+    {
+        idxl1--;
+        if (!(idxl2 <= NbElmt(L) && idxl2 > 0))
+        {
+            printf("Tidak ada lagu dengan urutan %d di playlist ""fd""\n", idxl2);
+            return;
+        }
+        else
+        {
+            idxl2--;
+            
+            if (idxl1 == 0 || idxl1 == NbElmt(L)-1 || idxl2 == 0 || idxl2 == NbElmt(L)-1)
+            {
+                if (idxl1 < idxl2)
+                {
+                    swap_pinggir(L, idxl1, idxl2);
+                }
+                else
+                {
+                    swap_pinggir(L, idxl2, idxl1);
+                }
+            }
+            else
+            {
+                swap_tengah(L, idxl1, idxl2);
+            }
+        }
+    }
+}
+
+int main(){
+    Playlist L;
+    CreateEmpty(&L);
+    addressPlaylist a,s,d,f,g,h,k,l;
+    a=Alokasi("Billy","foto","lagu");
+    s=Alokasi("Bully","roti","coklat");
+    d=Alokasi("Ucok","aaaa","keju");
+    f=Alokasi("Udin","uuuu","stroberi");
+    g=Alokasi("Upin","iiii","kacang");
+    InsertLast(&L, a);
+    InsertLast(&L, s);
+    InsertLast(&L, d);
+    InsertLast(&L, f);
+    InsertLast(&L, g);
+    PrintInfo(L);
+    printf("di sini mulai swap\n");
+    int i,j;
+    scanf("%d", &i);
+    scanf("%d", &j);
+    swaptest(L, i, j);
+    PrintInfo(L);
+}

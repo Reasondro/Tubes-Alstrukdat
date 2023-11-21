@@ -391,7 +391,7 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
 {
     if (!(idxplay <= DP.Neff && idxplay > 0))
     {
-        printf("Tidak ada playlist dengan playlist ID %d", idxplay);
+        printf("Tidak ada playlist dengan playlist ID %d\n", idxplay);
         return;
     }
     else
@@ -399,7 +399,7 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
         idxplay--;
         if (!(idxl1 <= NbElmt(DP.pl[idxplay]) && idxl1 > 0))
         {
-            printf("Tidak ada lagu dengan urutan %d di playlist “%s”", idxl1, DP.pl[idxplay].nama);
+            printf("Tidak ada lagu dengan urutan %d di playlist ""%s""", idxl1, DP.pl[idxplay].nama);
             return;
         }
         else
@@ -407,7 +407,7 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
             idxl1--;
             if (!(idxl2 <= NbElmt(DP.pl[idxplay]) && idxl2 > 0))
             {
-                printf("Tidak ada lagu dengan urutan %d di playlist “%s”", idxl2, DP.pl[idxplay].nama);
+                printf("Tidak ada lagu dengan urutan %d di playlist ""%s""", idxl2, DP.pl[idxplay].nama);
                 return;
             }
             else
@@ -415,8 +415,21 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
                 idxl2--;
                 addressPlaylist A = AddressAtIndex(DP.pl[idxplay], idxl1);
                 addressPlaylist B = AddressAtIndex(DP.pl[idxplay], idxl2);
-                Swap(&DP.pl[idxplay], idxl1, idxl2);
-                // belom
+                if (idxl1 == 0 || idxl1 == NbElmt(DP.pl[idxplay])-1 || idxl2 == 0 || idxl2 == NbElmt(DP.pl[idxplay])-1)
+                {
+                    if (idxl1 < idxl2)
+                    {
+                        swap_pinggir(DP.pl[idxplay], idxl1, idxl2);
+                    }
+                    else
+                    {
+                        swap_pinggir(DP.pl[idxplay], idxl2, idxl1);
+                    }
+                }
+                else
+                {
+                    swap_tengah(DP.pl[idxplay], idxl1, idxl2);
+                }
             }
         }
     }
@@ -489,7 +502,7 @@ void Status()
     else
     {
         printf("Now Playing:\n%s - %s - %s\n\n", currentPlaySong.penyanyi, currentPlaySong.album, currentPlaySong.judul_lagu.judul);
-        if (isEmptyQueue(QueueOriginal))
+        if (IsEmptyQueue(QueueOriginal))
         {
             printf("Queue:\nYour queue is empty.\n");
         }
