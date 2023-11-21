@@ -23,13 +23,18 @@ int stringLength(char *string)
 }
 void stringCopy(char *string1, char *string2)
 {
+    int panjang1 = stringLength(string1);
     int i = 0;
     while (string2[i] != '\0')
     {
         string1[i] = string2[i];
         i++;
     }
-    string1[i] = '\0';
+    int j;
+    for (j = i; j < panjang1; j++)
+    {
+        string1[j] = '\0';
+    }
 }
 
 void stringConcat(char *string1, char *string2)
@@ -65,6 +70,24 @@ boolean IsSameString(char w1[], char w2[])
             return IsSame;
         }
     }
+    return IsSame;
+}
+
+boolean IsSameChar(char c1, char c2)
+{
+    boolean IsSame = true;
+    // if (stringLength(c1) != stringLength(c2))
+    // {
+    //     IsSame = false;
+    //     return IsSame;
+    // }
+
+    if (c1 != c2)
+    {
+        IsSame = false;
+        return IsSame;
+    }
+
     return IsSame;
 }
 

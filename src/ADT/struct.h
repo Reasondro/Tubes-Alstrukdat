@@ -1,12 +1,11 @@
 #include "../boolean.h"
 
-
 #ifndef struct_H
 #define struct_H
 
 #define penyanyimax 20
 #define albummax 20
-typedef char keytype[20];
+typedef char keytype[50];
 
 typedef struct
 {
@@ -32,8 +31,8 @@ typedef struct
 
 typedef struct
 {
-  keytype NamaAlbum; // nama album si penyanyinya sebagai key
-  SetSong DaftarLagu;    // kumpulan lagu dalam 1 album sebagai isi dari map
+  keytype NamaAlbum;  // nama album si penyanyinya sebagai key
+  SetSong DaftarLagu; // kumpulan lagu dalam 1 album sebagai isi dari map
 } IsiAlbum;
 typedef struct
 {
@@ -48,21 +47,23 @@ typedef struct
 } PenyanyiTypeRevisi;
 
 typedef struct tPlaylist *address;
-typedef struct {
-    char nama[100];
-    address First;
+typedef struct
+{
+  char nama[100];
+  address First;
 } Playlist;
 
-typedef struct {
-    int Capacity;
-    Playlist *pl;
-    int Neff;
+typedef struct
+{
+  int Capacity;
+  Playlist *pl;
+  int Neff;
 } DaftarPlaylist;
 
 typedef struct
 {
-    PenyanyiTypeRevisi Penyanyi[5];
-    int JumlahPenyanyi;
+  PenyanyiTypeRevisi Penyanyi[5];
+  int JumlahPenyanyi;
 } ListPenyanyi;
 
 // ges pusing ges tolong

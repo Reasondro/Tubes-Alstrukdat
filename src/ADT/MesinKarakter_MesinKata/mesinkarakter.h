@@ -43,6 +43,13 @@ void STARTLOAD(char *filename);
 void ADVLOAD();
 
 boolean IsEOP();
+
+int stringLength(char *string);
+void stringCopy(char *string1, char *string2);
+void stringConcat(char *string1, char *string2);
+boolean IsSameString(char w1[], char w2[]);
+boolean IsSameChar(char c1, char c2);
+
 // /* Mengirimkan true jika currentChar = MARK */
 
 #endif
