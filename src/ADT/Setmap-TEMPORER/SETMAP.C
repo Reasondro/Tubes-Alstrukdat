@@ -1,32 +1,10 @@
 
 
 #include "boolean.h"
-// #include "mesinkarakter.c" // non comment hanya klao mo test
-// #include "mesinkata.c"
-
-typedef char keytype[20];
-
-// typedef struct
-// {
-//     char judul[100];
-// } SongType;
-
-typedef struct
-{
-    SongType Songs[10]; // misal max 10 lagu per album
-    int JumlahLagu;     // buat nentuin jumlah lagu misal butuh
-} SetSong;
-
-typedef struct
-{
-    keytype NamaAlbum;  // nama album si penyanyinya sebagai key
-    SetSong DaftarLagu; // kumpulan lagu dalam 1 album sebagai isi dari map
-} IsiAlbum;
-typedef struct
-{
-    IsiAlbum AlbumKe[3]; // nah ini harusny udah map yang benar
-    int JumlahAlbum;
-} AlbumTypeRevisi;
+#include "SETMAP.h"
+#include "mesinkata.h"
+#include "struct.h"
+#include <stdio.h>
 
 //------------------------------
 
@@ -122,6 +100,38 @@ void CreateEmptyMap(AlbumTypeRevisi *Album)
     Album->JumlahAlbum = 0;
 }
 
+int SearchPenyanyi(ListPenyanyi LP, char *penyanyi_dicari){
+    int i;
+    boolean isfound = false;
+    for (i = 0; i < LP.JumlahPenyanyi; i++){
+        if (IsSameString (LP.Penyanyi[i].nama, penyanyi_dicari)){
+            isfound = true;
+            break;
+        }
+    }
+    if (isfound){
+        return i;
+    }else{
+        return -1;
+    }
+}
+
+int SearchAlbum(PenyanyiTypeRevisi P, char *album_dicari){
+    int i;
+    boolean isfound = false;
+    for (i = 0; i < P.album.JumlahAlbum; i++){
+        if (IsSameString (P.album.AlbumKe[i].NamaAlbum, album_dicari)){
+            isfound = true;
+            break;
+        }
+    }
+    if (isfound){
+        return i;
+    }else{
+        return -1;
+    }
+}
+
 boolean IsEmptyMap(AlbumTypeRevisi Album)
 {
     return Album.JumlahAlbum == 0;
@@ -158,18 +168,6 @@ void InsertMap(AlbumTypeRevisi *Album, char *NamaAlbumDicari)
 //         printf("Album %d : %s\n", i + 1, Album.AlbumKe[i].NamaAlbum);
 //     }
 // }
-
-typedef struct
-{
-    char nama[50];
-    AlbumTypeRevisi album; // sebagai map
-} PenyanyiTypeRevisi;
-
-typedef struct
-{
-    PenyanyiTypeRevisi Penyanyi[5]; // ini prototipe
-    int JumlahPenyanyi;
-} ListPenyanyi;
 
 void DisplayMap(ListPenyanyi L, char *PenyanyiDicari)
 {

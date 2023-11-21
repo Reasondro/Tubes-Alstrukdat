@@ -8,6 +8,7 @@ char CurrentPlaylist[30];
 int CountPlaylist = 0;
 boolean sesi = false;
 int ComeToPlaylist[5];
+ListPenyanyi DaftarPenyanyi;
 
 void init_dafplay(){
     DP.pl = (Playlist*) malloc (InitialSize*sizeof(Playlist));
@@ -66,34 +67,27 @@ void Play_Song(){
     char *id_chosen_lagu_string;
     int id_chosen_lagu;
 
-    // ngeprint List Statik Penyanyi
     printf ("Masukkan Nama Penyanyi yang dipilih : ");
     readCommand();
-    if (SearchList()){
-        WordToString(currentWord, chosen_penyanyi);
-
-        // ngeprint Map Album
-        printf ("Daftar Album oleh %s :\n", chosen_penyanyi);
-        // for (int i = 0; i < length_album; i++){
-        //     printf("%d. %s\n", i+1, Penyanyi[i])
-        // }
+    int id_penyanyi, id_album;
+    WordToString(currentWord, chosen_penyanyi);
+    id_penyanyi = SearchPenyanyi(DaftarPenyanyi, chosen_penyanyi);
+    if (SearchPenyanyi != -1){
+        DisplayMap(DaftarPenyanyi, chosen_penyanyi);
         printf ("Masukkan Nama Album yang dipilih : ");
         readCommand();
-        if (IsMemberMap()){
+        id_album = SearchAlbum(DaftarPenyanyi.Penyanyi[id_penyanyi], chosen_album);
+        if (id_album != -1){
             WordToString(currentWord, chosen_album);
-
-            // ngeprint Set Lagu
-            printf ("Daftar Lagu Album %s oleh %s : \n", chosen_penyanyi, chosen_album);
-            // for (int i = 0; i < length_lagu; i++){
-            //     printf("%d. %s\n", i+1, judul_lagu[i])
-            // }
+            DisplaySet(DaftarPenyanyi.Penyanyi[id_penyanyi].album, chosen_album);
             printf ("Masukkan ID Lagu yang dipilih : ");
             readCommand();
             WordToString (currentWord, id_chosen_lagu_string);
             id_chosen_lagu = id_chosen_lagu_string - '0';
-            if (id_chosen_lagu < jumlah_lagu_di_set){
+            if (id_chosen_lagu < DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.JumlahLagu){
                 QueueSongType added_song, otherSong;
-                char *chosen_lagu = lagu[id_chosen_lagu - 1];
+                char *chosen_lagu;
+                stringCopy (chosen_lagu, DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.Songs[id_chosen_lagu-1].judul);
                 for (int i = 0; i < LengthQueue(QueueOriginal); i++){
                     dequeue (&QueueOriginal, &otherSong);
                 }
@@ -130,9 +124,10 @@ void Play_Playlist (){
             Pop (&StackOriginal, &otherSong);
         }
         address p = DP.pl[id_Playlist].First;
-        while (p != Nil){
-            Push(&StackOriginal, p->info);
+        Push(&StackOriginal, p->info);
+        while (Next(p) != Nil){
             p = Next(p);
+            enqueue(&QueueOriginal, p->info);
         }
         stringCopy(CurrentPlaylist, DP.pl[id_Playlist].nama);
         CountPlaylist = NbElmt(DP.pl[id_Playlist]);

@@ -133,7 +133,7 @@ void STARTCOMMAND()
 
 void readCommand()
 {
-    printf("Masukkan command: ");
+    // printf("Masukkan command: ");
     STARTCOMMAND();
 }
 //? sementara piondah ke  mesin karatker.c

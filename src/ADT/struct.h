@@ -6,7 +6,7 @@
 
 #define penyanyimax 20
 #define albummax 20
-typedef char keytype;
+typedef char keytype[20];
 
 typedef struct
 {
@@ -32,7 +32,7 @@ typedef struct
 
 typedef struct
 {
-  keytype NamaAlbum[50]; // nama album si penyanyinya sebagai key
+  keytype NamaAlbum; // nama album si penyanyinya sebagai key
   SetSong DaftarLagu;    // kumpulan lagu dalam 1 album sebagai isi dari map
 } IsiAlbum;
 typedef struct
@@ -43,14 +43,9 @@ typedef struct
 
 typedef struct
 {
-  char nama[100];
+  char nama[50];
   AlbumTypeRevisi album; // sebagai map
 } PenyanyiTypeRevisi;
-
-typedef struct
-{
-  PenyanyiTypeRevisi Penyanyi[penyanyimax]; // ini udah bukan prototipe
-} ListPenyanyi;
 
 typedef struct tPlaylist *address;
 typedef struct {
@@ -63,6 +58,12 @@ typedef struct {
     Playlist *pl;
     int Neff;
 } DaftarPlaylist;
+
+typedef struct
+{
+    PenyanyiTypeRevisi Penyanyi[5];
+    int JumlahPenyanyi;
+} ListPenyanyi;
 
 // ges pusing ges tolong
 
