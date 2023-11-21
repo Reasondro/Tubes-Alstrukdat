@@ -46,11 +46,16 @@ typedef struct
   AlbumTypeRevisi album; // sebagai map
 } PenyanyiTypeRevisi;
 
-typedef struct tPlaylist *address;
+typedef struct tSongPlay *addressPlaylist;
+typedef struct tSongPlay {
+    QueueSongType info;
+    addressPlaylist next;
+} SongPlay;
+
 typedef struct
 {
   char nama[100];
-  address First;
+  addressPlaylist First;
 } Playlist;
 
 typedef struct

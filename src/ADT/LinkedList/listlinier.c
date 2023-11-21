@@ -22,13 +22,13 @@ void CreateEmpty(Playlist *L)
 }
 
 /****************** Manajemen Memori ******************/
-address Alokasi(char penyanyi[], char album[], char judul[])
+addressPlaylist Alokasi(char penyanyi[], char album[], char judul[])
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 {
-    address P = (address)malloc(1 * sizeof(SongPlay));
+    addressPlaylist P = (addressPlaylist)malloc(1 * sizeof(SongPlay));
     if (P != Nil){
         stringCopy(&Info(P).album, &album);
         stringCopy(&Info(P).judul_lagu.judul, &judul);
@@ -39,7 +39,7 @@ address Alokasi(char penyanyi[], char album[], char judul[])
     else return Nil;
 }
 
-void Dealokasi(address *P)
+void Dealokasi(addressPlaylist *P)
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian address P */
@@ -48,12 +48,12 @@ void Dealokasi(address *P)
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN Playlist ******************/
-address Search(Playlist L, QueueSongType X)
+boolean Search(Playlist L, QueueSongType X)
 /* Mencari apakah ada elemen Playlist dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 {
-    address P;
+    addressPlaylist P;
     boolean bFound = false;
     if (!IsEmptyList(L)){
         P = First(L);
@@ -74,7 +74,7 @@ void InsVLast(Playlist *L, QueueSongType X)
 /* menambahkan elemen Playlist di akhir: elemen terakhir yang baru */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 {
-    address P = Alokasi(X.penyanyi,X.album,X.judul_lagu.judul);
+    addressPlaylist P = Alokasi(X.penyanyi,X.album,X.judul_lagu.judul);
     if (P != Nil)
     {
         InsertLast(L, P);
@@ -87,7 +87,7 @@ void DelVFirst(Playlist *L, QueueSongType *X)
 /* F.S. Elemen pertama Playlist dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-dtpealokasi */
 {
-    address P = First(*L);
+    addressPlaylist P = First(*L);
     *X = Info(P);
     First(*L) = Next(P);
     Dealokasi(&P);
@@ -98,8 +98,8 @@ void DelVLast(Playlist *L, QueueSongType *X)
 /* F.S. Elemen terakhir Playlist dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen terakhir di-dealokasi */
 {
-    address P = First(*L);
-    address Prec = Nil;
+    addressPlaylist P = First(*L);
+    addressPlaylist Prec = Nil;
 
     while (Next(P) != Nil)
     {
@@ -121,15 +121,15 @@ void DelVLast(Playlist *L, QueueSongType *X)
 
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
-void InsertFirst(Playlist *L, address P)
+void InsertFirst(Playlist *L, addressPlaylist P)
 /* I.S. Sembarang, P sudah dialokasi  */
-/* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
+/* F.S. Menambahkan elemen ber-addressPlaylist P sebagai elemen pertama */
 {
     Next(P) = First(*L);
     First(*L) = P;
 }
 
-void InsertAfter(Playlist *L, address P, address Prec)
+void InsertAfter(Playlist *L, addressPlaylist P, addressPlaylist Prec)
 /* I.S. Prec pastilah elemen Playlist dan bukan elemen terakhir, */
 /*      P sudah dialokasi  */
 /* F.S. Insert P sebagai elemen sesudah elemen beralamat Prec */
@@ -138,11 +138,11 @@ void InsertAfter(Playlist *L, address P, address Prec)
     Next(Prec) = P;
 }
 
-void InsertLast(Playlist *L, address P)
+void InsertLast(Playlist *L, addressPlaylist P)
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
 {
-    address Last;
+    addressPlaylist Last;
     if (IsEmptyList(*L)) InsertFirst(L, P);
     else
     {
@@ -156,7 +156,7 @@ void InsertLast(Playlist *L, address P)
 }
 
 // /*** PENGHAPUSAN SEBUAH ELEMEN ***/
-// void DelFirst(Playlist *L, address *P)
+// void DelFirst(Playlist *L, addressPlaylist *P)
 // /* I.S. Playlist tidak kosong */
 // /* F.S. P adalah alamat elemen pertama Playlist sebelum penghapusan */
 // /*      Elemen Playlist berkurang satu (mungkin menjadi kosong) */
@@ -169,13 +169,13 @@ void InsertLast(Playlist *L, address P)
 
 // void DelP(Playlist *L, QueueSongType X)
 // /* I.S. Sembarang */
-// /* F.S. Jika ada elemen Playlist beraddress P, dengan Info(P)=X  */
+// /* F.S. Jika ada elemen Playlist beraddressPlaylist P, dengan Info(P)=X  */
 // /* Maka P dihapus dari Playlist dan di-dealokasi */
 // /* Jika tidak ada elemen Playlist dengan Info(P)=X, maka Playlist tetap */
 // /* Playlist mungkin menjadi kosong karena penghapusan */
 // {
-//     address Prec;
-//     address P;
+//     addressPlaylist Prec;
+//     addressPlaylist P;
 //     boolean bFound = false;
 
 //     if (!IsEmptyList(*L))
@@ -210,15 +210,15 @@ void InsertLast(Playlist *L, address P)
 //     }
 // }
 
-void DelLast(Playlist *L, address *P)
+void DelLast(Playlist *L, addressPlaylist *P)
 /* I.S. Playlist tidak kosong */
 /* F.S. P adalah alamat elemen terakhir Playlist sebelum penghapusan  */
 /*      Elemen Playlist berkurang satu (mungkin menjadi kosong) */
 /* Last element baru adalah predesesor elemen pertama yg lama, */
 /* jika ada */
 {
-    address Last = First(*L);
-    address PrecLast = Nil;
+    addressPlaylist Last = First(*L);
+    addressPlaylist PrecLast = Nil;
 
     while (Next(Last) != Nil)
     {
@@ -237,7 +237,7 @@ void DelLast(Playlist *L, address *P)
     }
 }
 
-void DelAfter(Playlist *L, address *Pdel, address Prec)
+void DelAfter(Playlist *L, addressPlaylist *Pdel, addressPlaylist Prec)
 /* I.S. Playlist tidak kosong. Prec adalah anggota Playlist  */
 /* F.S. Menghapus Next(Prec): */
 /*      Pdel adalah alamat elemen Playlist yang dihapus  */
@@ -255,7 +255,7 @@ void PrintInfo(Playlist L)
 /* Jika Playlist kosong : menulis [] */
 /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
 {
-    address P;
+    addressPlaylist P;
     boolean isFirst = true;
 
     printf("[");
@@ -280,7 +280,7 @@ int NbElmt(Playlist L)
 /* Mengirimkan banyaknya elemen Playlist; mengirimkan 0 jika Playlist kosong */
 {
     int cnt = 0;
-    address P;
+    addressPlaylist P;
 
     if (!IsEmptyList(L))
     {
@@ -296,9 +296,9 @@ int NbElmt(Playlist L)
 }
 
 
-address AddressAtIndex(Playlist L, int idx)
+addressPlaylist AddressAtIndex(Playlist L, int idx)
 {
-    address P;
+    addressPlaylist P;
     P = First(L);
     if (IsEmpty(L)) return Nil;
     for (int i=0; i<idx; i++){
@@ -308,7 +308,7 @@ address AddressAtIndex(Playlist L, int idx)
 }
 
 void swap_tengah(Playlist L, int idx1, int idx2) {
-    address lagu1, lagu2, prev1, prev2, next1, next2;
+    addressPlaylist lagu1, lagu2, prev1, prev2, next1, next2;
     lagu1 = AddressAtIndex(L, idx1);
     lagu2 = AddressAtIndex(L, idx2);
     prev1 = AddressAtIndex(L, idx1-1);

@@ -1,6 +1,6 @@
 /* File : listlinier.h */
 /* contoh ADT list berkait dengan representasi fisik pointer  */
-/* Representasi address dengan pointer */
+/* Representasi addressPlaylist dengan pointer */
 /* infotype adalah integer */
 
 #ifndef listlinier_H
@@ -13,16 +13,10 @@
 
 #define Nil NULL
 
-typedef struct tSongPlay *addressListLinier;
-typedef struct tSongPlay {
-    QueueSongType info;
-    addressListLinier next;
-} SongPlay;
-
 /* Definisi list : */
 /* List kosong : First(L) = Nil */
-/* Setiap elemen dengan address P dapat diacu Info(P), Next(P) */
-/* Elemen terakhir list : jika addressnya Last, maka Next(Last)=Nil */
+/* Setiap elemen dengan addressPlaylist P dapat diacu Info(P), Next(P) */
+/* Elemen terakhir list : jika addressPlaylistnya Last, maka Next(Last)=Nil */
 #define Info(P) (P)->info
 #define Next(P) (P)->next
 #define First(L) ((L).First)
@@ -39,20 +33,20 @@ void CreateEmpty(Playlist *L);
 /* F.S. Terbentuk Playlist kosong */
 
 /****************** Manajemen Memori ******************/
-address Alokasi(char penyanyi[], char album[], char judul[]);
-/* Mengirimkan address hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
+addressPlaylist Alokasi(char penyanyi[], char album[], char judul[]);
+/* Mengirimkan addressPlaylist hasil alokasi sebuah elemen */
+/* Jika alokasi berhasil, maka addressPlaylist tidak nil, dan misalnya */
 /* menghasilkan P, maka info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
-void Dealokasi(address *P);
+void Dealokasi(addressPlaylist *P);
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
-/* Melakukan dealokasi/pengembalian address P */
+/* Melakukan dealokasi/pengembalian addressPlaylist P */
 
 /****************** PENCARIAN SEBUAH ELEMEN Playlist ******************/
-address Search(Playlist L, QueueSongType X);
+boolean Search(Playlist L, QueueSongType X);
 /* Mencari apakah ada elemen Playlist dengan info(P)= X */
-/* Jika ada, mengirimkan address elemen tersebut. */
+/* Jika ada, mengirimkan addressPlaylist elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
@@ -75,36 +69,36 @@ void DelVLast(Playlist *L, QueueSongType *X);
 
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
-void InsertFirst(Playlist *L, address P);
+void InsertFirst(Playlist *L, addressPlaylist P);
 /* I.S. Sembarang, P sudah dialokasi  */
-/* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
-void InsertAfter(Playlist *L, address P, address Prec);
+/* F.S. Menambahkan elemen ber-addressPlaylist P sebagai elemen pertama */
+void InsertAfter(Playlist *L, addressPlaylist P, addressPlaylist Prec);
 /* I.S. Prec pastilah elemen Playlist dan bukan elemen terakhir, */
 /*      P sudah dialokasi  */
 /* F.S. Insert P sebagai elemen sesudah elemen beralamat Prec */
-void InsertLast(Playlist *L, address P);
+void InsertLast(Playlist *L, addressPlaylist P);
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
 
 /*** PENGHAPUSAN SEBUAH ELEMEN ***/
-void DelFirst(Playlist *L, address *P);
+void DelFirst(Playlist *L, addressPlaylist *P);
 /* I.S. Playlist tidak kosong */
 /* F.S. P adalah alamat elemen pertama Playlist sebelum penghapusan */
 /*      Elemen Playlist berkurang satu (mungkin menjadi kosong) */
 /* First element yg baru adalah suksesor elemen pertama yang lama */
 void DelP(Playlist *L, SongType X);
 /* I.S. Sembarang */
-/* F.S. Jika ada elemen Playlist beraddress P, dengan info(P)=X  */
+/* F.S. Jika ada elemen Playlist beraddressPlaylist P, dengan info(P)=X  */
 /* Maka P dihapus dari Playlist dan di-dealokasi */
 /* Jika tidak ada elemen Playlist dengan info(P)=X, maka Playlist tetap */
 /* Playlist mungkin menjadi kosong karena penghapusan */
-void DelLast(Playlist *L, address *P);
+void DelLast(Playlist *L, addressPlaylist *P);
 /* I.S. Playlist tidak kosong */
 /* F.S. P adalah alamat elemen terakhir Playlist sebelum penghapusan  */
 /*      Elemen Playlist berkurang satu (mungkin menjadi kosong) */
 /* Last element baru adalah predesesor elemen terakhir yg lama, */
 /* jika ada */
-void DelAfter(Playlist *L, address *Pdel, address Prec);
+void DelAfter(Playlist *L, addressPlaylist *Pdel, addressPlaylist Prec);
 /* I.S. Playlist tidak kosong. Prec adalah anggota Playlist  */
 /* F.S. Menghapus Next(Prec): */
 /*      Pdel adalah alamat elemen Playlist yang dihapus  */

@@ -35,8 +35,6 @@ void playlist_add_song();
 
 void playlist_add_album();
 
-address AddressAtIndex(Playlist L, int idx);
-
 void playlist_swap(int idxplay, int idxl1, int idxl2);
 
 void Save();
