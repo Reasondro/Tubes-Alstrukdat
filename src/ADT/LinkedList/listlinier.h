@@ -87,7 +87,7 @@ void DelFirst(Playlist *L, addressPlaylist *P);
 /* F.S. P adalah alamat elemen pertama Playlist sebelum penghapusan */
 /*      Elemen Playlist berkurang satu (mungkin menjadi kosong) */
 /* First element yg baru adalah suksesor elemen pertama yang lama */
-void DelP(Playlist *L, SongType X);
+void DelP(Playlist *L, QueueSongType X);
 /* I.S. Sembarang */
 /* F.S. Jika ada elemen Playlist beraddressPlaylist P, dengan info(P)=X  */
 /* Maka P dihapus dari Playlist dan di-dealokasi */

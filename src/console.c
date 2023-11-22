@@ -442,9 +442,59 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
     }
 }
 
+void playlist_remove(Playlist *L, int idxl)
+{
+    if (!(idxl <= NbElmt(*L) && idxl > 0))
+    {
+        printf("Tidak ada lagu dengan urutan %d di playlist ""%s""", idxl, (*L).nama);
+        return;
+    }
+    else
+    {
+        idxl--;
+        addressPlaylist lagu = AddressAtIndex(*L, idxl);
+        addressPlaylist X;
+        X = Alokasi(lagu->info.penyanyi,lagu->info.album,lagu->info.judul_lagu.judul);;
+        DelP(L, Info(X));
+        printf("Lagu %s oleh %s telah dihapus dari playlist %s!", X->info.judul_lagu.judul, X->info.penyanyi, (*L).nama);
+    }
+}
+
 void playlist_removesong(int idxplay, int idxl)
 {
+    if (!(idxplay <= DP.Neff && idxplay > 0))
+    {
+        printf("Tidak ada playlist dengan playlist ID %d\n", idxplay);
+        return;
+    }
+    else
+    {
+        idxplay--;
+        playlist_remove(&DP.pl[idxplay], idxl);
+    }
+}
 
+void playlist_delete()
+{
+    printf("ini daftar playlist harusnya\n");
+    int idxplay;
+    printf("Masukkan ID Playlist yang dipilih : ");
+    STARTCOMMAND();
+    idxplay = WordToInt(currentWord);
+    if (!(idxplay <= DP.Neff && idxplay > 0))
+    {
+        printf("Tidak ada playlist dengan ID %d dalam daftar playlist pengguna. Silakan coba lagi.", idxplay);
+        return;
+    }
+    else
+    {
+        idxplay--;
+        for (int i = idxplay-1; i < DP.Neff-1; i++)
+        {
+            DP.pl[i] = DP.pl[i+1];
+        }
+        printf("Playlist ID %d dengan judul %s berhasil dihapus.", idxplay, DP.pl[idxplay].nama);
+    }
 }
 
 // save yang dulu ak comment dulu, lgi ak kerjani
