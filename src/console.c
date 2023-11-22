@@ -7,6 +7,7 @@ int InitialSize = 10;
 DaftarPlaylist DP;
 char CurrentPlaylist[30];
 int CountPlaylist = 0;
+boolean mulai = true;
 boolean sesi = false;
 int ComeToPlaylist[5];
 ListPenyanyi DaftarPenyanyi;
@@ -31,32 +32,28 @@ void realloc_dafplay(DaftarPlaylist DP)
     DP.Capacity += 5;
 }
 
-void Song_Next()
-{
+void Song_Next (){
     QueueSongType next_song;
-    if (!(IsEmptyQueue(QueueOriginal)))
-    {
-        Push(&StackOriginal, currentPlaySong);
-        dequeue(&QueueOriginal, &next_song);
-        stringCopy(currentPlaySong.penyanyi, next_song.penyanyi);
-        stringCopy(currentPlaySong.album, next_song.album);
-        stringCopy(currentPlaySong.judul_lagu.judul, next_song.judul_lagu.judul);
-        if (CountPlaylist != 0)
-        {
+    if (!(IsEmptyQueue(QueueOriginal))){        
+        Push (&StackOriginal, currentPlaySong);
+        dequeue (&QueueOriginal, &next_song);
+        printf("%s", next_song.album);
+        stringCopy (currentPlaySong.penyanyi, next_song.penyanyi);
+        stringCopy (currentPlaySong.album, next_song.album);
+        stringCopy (currentPlaySong.judul_lagu.judul, next_song.judul_lagu.judul);
+        if (CountPlaylist != 0){
             CountPlaylist--;
-            if (CountPlaylist == 0)
-            {
+            if (CountPlaylist == 0){
                 stringCopy(CurrentPlaylist, "");
             }
         }
-        printf("Memutar lagu selanjutnya\n");
-        printf("\"%s oleh \"%s\"", next_song.judul_lagu.judul, next_song.penyanyi);
-    }
-    else
-    {
-        printf("Queue kosong, memutar kembali lagu \"%s\" oleh \"%s\".", currentPlaySong.judul_lagu.judul, currentPlaySong.penyanyi);
+        printf ("Memutar lagu selanjutnya\n");
+        printf ("\"%s oleh \"%s\"\n", next_song.judul_lagu.judul, next_song.penyanyi);
+    }else{
+        printf("Queue kosong, memutar kembali lagu \"%s\" oleh \"%s\".\n", currentPlaySong.judul_lagu.judul, currentPlaySong.penyanyi);
     }
 }
+
 
 void Song_Previous()
 {
@@ -65,11 +62,11 @@ void Song_Previous()
     if (!(IsEmptyStack(StackOriginal)))
     {
         Pop(&StackOriginal, &prevSong);
+        enqueue(&QueueOriginal, currentPlaySong);
         stringCopy(currentPlaySong.penyanyi, prevSong.penyanyi);
         stringCopy(currentPlaySong.album, prevSong.album);
         stringCopy(currentPlaySong.judul_lagu.judul, prevSong.judul_lagu.judul);
-        enqueue(&QueueOriginal, currentPlaySong);
-        for (int i = 0; i < LengthQueue(QueueOriginal); i++)
+        for (int i = 0; i < LengthQueue(QueueOriginal)-1; i++)
         {
             dequeue(&QueueOriginal, &otherSong);
             enqueue(&QueueOriginal, otherSong);
@@ -602,6 +599,9 @@ void Queue_Swap(int x, int y)
     else if (y > LengthQueue(QueueOriginal))
     {
         printf("Lagu dengan id ke %d tidak terdapat dalam queue!\n", y);
+    }else if (x == y)
+    {
+        printf("Tidak bisa menukar lagu yang sama");
     }
     else
     {
@@ -707,148 +707,157 @@ void help()
     }
 }
 
-void cmd_user()
-{
-    char START[] = "START";
-    char LOAD[] = "LOAD";
-    char LIST_DEFAULT[] = "LIST DEFAULT";
-    char LIST_PLAYLIST[] = "LIST PLAYLIST";
-    char PLAY_SONG[] = "PLAY SONG";
-    char PLAY_PLAYLIST[] = "PLAY PLAYLIST";
-    char QUEUE_SONG[] = "QUEUE SONG";
-    char QUEUE_PLAYLIST[] = "QUEUE PLAYLIST";
-    char QUEUE_SWAP[] = "QUEUE SWAP";
-    char QUEUE_REMOVE[] = "QUEUE REMOVE";
-    char QUEUE_CLEAR[] = "QUEUE CLEAR";
-    char SONG_NEXT[] = "SONG NEXT";
-    char SONG_PREVIOUS[] = "SONG PREVIOUS";
-    char PLAYLIST_CREATE[] = "PLAYLIST CREATE";
-    char PLAYLIST_ADD_SONG[] = "PLAYLIST ADD SONG";
-    char PLAYLIST_ADD_ALBUM[] = "PLAYLIST ADD ALBUM";
-    char PLAYLIST_SWAP[] = "PLAYLIST SWAP";
-    char PLAYLIST_REMOVE[] = "PLAYLIST REMOVE";
-    char PLAYLIST_DELETE[] = "PLAYLIST DELETE";
-    char STATUS[] = "STATUS";
-    char SAVE[] = "SAVE";
-    char QUIT[] = "QUIT";
-    char HELP[] = "HELP";
-    readCommand();
-    while (!(IsSameWord(currentWord, QUIT)))
-    {
+void invalid_command(){
+    boolean error = false;
+    boolean invalid = false;
+    if (!(sesi)){
+        if (IsSameWord(currentWord, "LIST")){
+            if(IsSameWord(currentWord, "DEFAULT")){
+                error = true;
+            }else if (IsSameWord(currentWord, "PLAYLIST")){
+                error = true;
+            }                
+        }else if (IsSameWord (currentWord, "PLAY")){
+            if (IsSameWord(currentWord, "SONG")){
+                error = true;
+            }else if (IsSameWord(currentWord, "PLAYLIST")){
+                error = true;
+            }
+        }else if(IsSameWord(currentWord, "QUEUE")){
+            if (IsSameWord(currentWord, "SONG")){
+                error = true;
+            }else if (IsSameWord(currentWord, "PLAYLIST")){
+                error = true;
+            }else if (IsSameWord(currentWord, "SWAP")){
+                error = true;
+            }else if (IsSameWord(currentWord, "REMOVE")){
+                error = true;
+            }else if(IsSameWord(currentWord, "CLEAR")){
+                error = true;
+            }
+        }else if (IsSameWord(currentWord, "SONG")){
+            if (IsSameWord(currentWord, "NEXT")){
+                error = true;
+            }else if (IsSameWord(currentWord, "PREVIOUS")){
+                error = true;
+            }
+        }else if (IsSameWord(currentWord, "PLAYLIST")){
+            if (IsSameWord(currentWord, "CREATE")){
+                error = true;
+            }else if(IsSameWord(currentWord, "ADD")){
+                if (IsSameWord(currentWord, "SONG")){
+                    error = true;
+                }else if (IsSameWord(currentWord, "ALBUM")){
+                    error = true;
+                }
+            }else if (IsSameWord(currentWord, "SWAP")){
+                error = true;
+            }else if(IsSameWord(currentWord, "REMOVE")){
+                error = true;
+            }else if(IsSameWord(currentWord, "DELETE")){
+                error = true;
+            }
+        }else if(IsSameWord(currentWord, "STATUS")){
+            error = true;
+        }else if(IsSameWord(currentWord, "SAVE")){
+            error = true;
+        }else if (IsSameWord(currentWord, "HELP")){
+            error = true;
+        }else if (IsSameWord(currentWord, "QUIT")){
+            error = true;
+        }else{
+            invalid = true;
+        }
+    }else{
+        if (IsSameWord(currentWord, "START") || IsSameWord(currentWord, "LOAD")){
+            error = true;
+        }else{
+            invalid = true;
+        }
+    }
+    if (invalid){
+        printf("COmmand tidak diketahui!");
+    }else if (error){
+        printf("Command tidak bisa dieksekusi!")
+    }
+}
+
+void cmd_user(){
+    while (mulai){
+        printf(">>> ");
         readCommand();
-        if (IsSameWord(currentWord, START) || IsSameWord(currentWord, LOAD))
-        {
-            if (IsSameWord(currentWord, START))
-            {
-                Start_Wayang_Wave();
-            }
-            else
-            {
-                loadFile();
-            }
-            sesi = true;
-            readCommand();
-            while (!(IsSameWord(currentWord, QUIT)))
-            {
-                if (IsSameWord(currentWord, START) || IsSameWord(currentWord, LOAD))
-                {
-                    printf("Command tidak bisa dieksekusi!\n");
-                }
-                else if (IsSameWord(currentWord, LIST_DEFAULT))
-                {
-                }
-                else if (IsSameWord(currentWord, LIST_PLAYLIST))
-                {
-                }
-                else if (IsSameWord(currentWord, PLAY_SONG))
-                {
+        if (sesi){
+            if (IsSameWord(currentWord, "LIST")){
+                if(IsSameWord(currentWord, "DEFAULT")){
+                    list_default();
+                }else if (IsSameWord(currentWord, "PLAYLIST")){
+                    list_playlist();
+                }                
+            }else if (IsSameWord (currentWord, "PLAY")){
+                if (IsSameWord(currentWord, "SONG")){
                     Play_Song();
-                }
-                else if (IsSameWord(currentWord, PLAY_PLAYLIST))
-                {
+                }else if (IsSameWord(currentWord, "PLAYLIST")){
                     Play_Playlist();
                 }
-                else if (IsSameWord(currentWord, QUEUE_SONG))
-                {
+            }else if(IsSameWord(currentWord, "QUEUE")){
+                if (IsSameWord(currentWord, "SONG")){
                     Queue_Song();
-                }
-                else if (IsSameWord(currentWord, QUEUE_PLAYLIST))
-                {
+                }else if (IsSameWord(currentWord, "PLAYLIST")){
                     Queue_Playlist();
-                }
-                else if (IsSameWord(currentWord, QUEUE_SWAP))
-                {
-                    Queue_Swap(x, y);
-                }
-                else if (IsSameWord(currentWord, QUEUE_REMOVE))
-                {
-                    Queue_Remove(id);
-                }
-                else if (IsSameWord(currentWord, QUEUE_CLEAR))
-                {
+                }else if (IsSameWord(currentWord, "SWAP")){
+                    Queue_Swap(1,2);
+                }else if (IsSameWord(currentWord, "REMOVE")){
+                    Queue_Remove(1);
+                }else if(IsSameWord(currentWord, "CLEAR")){
                     Queue_Clear();
                 }
-                else if (IsSameWord(currentWord, SONG_NEXT))
-                {
+            }else if (IsSameWord(currentWord, "SONG")){
+                if (IsSameWord(currentWord, "NEXT")){
                     Song_Next();
-                }
-                else if (IsSameWord(currentWord, SONG_PREVIOUS))
-                {
+                }else if (IsSameWord(currentWord, "PREVIOUS")){
                     Song_Previous();
                 }
-                else if (IsSameWord(currentWord, PLAYLIST_CREATE))
-                {
-                    playlist_create(&QueueOriginal, &StackOriginal);
+            }else if (IsSameWord(currentWord, "PLAYLIST")){
+                if (IsSameWord(currentWord, "CREATE")){
+                    playlist_create();
+                }else if(IsSameWord(currentWord, "ADD")){
+                    if (IsSameWord(currentWord, "SONG")){
+                        playlist_add_song();
+                    }else if (IsSameWord(currentWord, "ALBUM")){
+                        playlist_add_album();
+                    }
+                }else if (IsSameWord(currentWord, "SWAP")){
+                    playlist_swap(1, 1, 2);
+                }else if(IsSameWord(currentWord, "REMOVE")){
+                    playlist_removesong(1, 1);
+                }else if(IsSameWord(currentWord, "DELETE")){
+                    // playlist_delete();
+                    printf("DELETE");
                 }
-                else if (IsSameWord(currentWord, PLAYLIST_ADD_SONG))
-                {
-                    playlist_add_song(&QueueOriginal, &StackOriginal);
-                }
-                else if (IsSameWord(currentWord, PLAYLIST_ADD_ALBUM))
-                {
-                    playlist_add_album(&QueueOriginal, &StackOriginal);
-                }
-                else if (IsSameWord(currentWord, PLAYLIST_SWAP))
-                {
-                    playlist_swap(&QueueOriginal, &StackOriginal);
-                }
-                else if (IsSameWord(currentWord, PLAYLIST_REMOVE))
-                {
-                    playlist_remove(&QueueOriginal, &StackOriginal);
-                }
-                else if (IsSameWord(currentWord, PLAYLIST_DELETE))
-                {
-                    playlist_delete(&QueueOriginal, &StackOriginal);
-                }
-                else if (IsSameWord(currentWord, STATUS))
-                {
-                    Status();
-                }
-                else if (IsSameWord(currentWord, SAVE))
-                {
-                    Save(&QueueOriginal, &StackOriginal);
-                }
-                else if (IsSameWord(currentWord, HELP))
-                {
-                    help(&QueueOriginal, &StackOriginal);
-                }
-                else
-                {
-                    printf("Command tidak diketahui!\n");
-                }
-                readCommand();
-            }
-        }
-        else
-        {
-            sesi = false;
-            if (IsSameWord(currentWord, HELP))
-            {
+            }else if(IsSameWord(currentWord, "STATUS")){
+                Status();
+            }else if(IsSameWord(currentWord, "SAVE")){
+                Save(/*harusnya nama file*/);
+            }else if (IsSameWord(currentWord, "HELP")){
                 help();
+            }else if (IsSameWord(currentWord, "QUIT")){
+                // mulai = quit();
+                printf("quit");
+            }else{
+                invalid_command();
             }
-            else
-            {
-                printf("Command tidak bisa dieksekusi!\n");
+        }else{            
+            if (IsSameWord(currentWord, "QUIT")){
+                    // mulai = quit();
+                    printf("quit");
+            }else if (IsSameWord(currentWord, "START")){
+                start();
+            }else if (IsSameWord(currentWord, "LOAD")){
+                Load();
+            }else if(IsSameWord(currentWord, "HELP")){
+                help();
+            }else{
+                invalid_command();
             }
         }
     }
