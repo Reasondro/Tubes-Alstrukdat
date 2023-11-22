@@ -413,26 +413,38 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
             else
             {
                 idxl2--;
-                addressPlaylist A = AddressAtIndex(DP.pl[idxplay], idxl1);
-                addressPlaylist B = AddressAtIndex(DP.pl[idxplay], idxl2);
                 if (idxl1 == 0 || idxl1 == NbElmt(DP.pl[idxplay])-1 || idxl2 == 0 || idxl2 == NbElmt(DP.pl[idxplay])-1)
                 {
                     if (idxl1 < idxl2)
                     {
-                        swap_pinggir(DP.pl[idxplay], idxl1, idxl2);
+                        swap_pinggir(&DP.pl[idxplay], idxl1, idxl2);
+                        addressPlaylist lagu1 = AddressAtIndex(DP.pl[idxplay], idxl1);
+                        addressPlaylist lagu2 = AddressAtIndex(DP.pl[idxplay], idxl2);
+                        printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
                     }
                     else
                     {
-                        swap_pinggir(DP.pl[idxplay], idxl2, idxl1);
+                        swap_pinggir(&DP.pl[idxplay], idxl2, idxl1);
+                        addressPlaylist lagu1 = AddressAtIndex(DP.pl[idxplay], idxl1);
+                        addressPlaylist lagu2 = AddressAtIndex(DP.pl[idxplay], idxl2);
+                        printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
                     }
                 }
                 else
                 {
                     swap_tengah(DP.pl[idxplay], idxl1, idxl2);
+                    addressPlaylist lagu1 = AddressAtIndex(DP.pl[idxplay], idxl1);
+                    addressPlaylist lagu2 = AddressAtIndex(DP.pl[idxplay], idxl2);
+                    printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
                 }
             }
         }
     }
+}
+
+void playlist_removesong(int idxplay, int idxl)
+{
+
 }
 
 // save yang dulu ak comment dulu, lgi ak kerjani

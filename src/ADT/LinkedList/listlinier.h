@@ -134,6 +134,6 @@ addressPlaylist AddressAtIndex(Playlist L, int idx);
 
 void swap_tengah(Playlist L, int idx1, int idx2);
 
-void swap_pinggir(Playlist L, int idx1, int idx2);
+void swap_pinggir(Playlist *L, int idx1, int idx2);
 
 #endif

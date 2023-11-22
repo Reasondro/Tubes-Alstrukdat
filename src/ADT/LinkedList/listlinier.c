@@ -329,38 +329,38 @@ void swap_tengah(Playlist L, int idx1, int idx2)
     }
 }
 
-void swap_pinggir(Playlist L, int idx1, int idx2)
+void swap_pinggir(Playlist *L, int idx1, int idx2)
 {
     if (idx2-idx1 != 1)
     {
-        if (idx1==0 && idx2==NbElmt(L)-1)
+        if (idx1==0 && idx2==NbElmt(*L)-1)
         {
             addressPlaylist lagu1, lagu2;
-            DelFirst(&L, &lagu1);
-            DelLast(&L, &lagu2);
-            InsertFirst(&L, lagu2);
-            InsertLast(&L, lagu1);
+            DelFirst(L, &lagu1);
+            DelLast(L, &lagu2);
+            InsertFirst(L, lagu2);
+            InsertLast(L, lagu1);
         }
         else if (idx1==0) /* idx2==tengah */
         {
             addressPlaylist lagu1, lagu2, prev2, next1, next2;
-            lagu1 = First(L);
-            lagu2 = AddressAtIndex(L, idx2);
-            prev2 = AddressAtIndex(L, idx2-1);
+            lagu1 = First(*L);
+            lagu2 = AddressAtIndex(*L, idx2);
+            prev2 = AddressAtIndex(*L, idx2-1);
             next2 = Next(lagu2); next1 = Next(lagu1);
             Next(prev2) = lagu1;
             Next(lagu1) = next2;
             Next(lagu2) = next1;
-            First(L) = lagu2;
+            First(*L) = lagu2;
         }
-        else if (idx2==NbElmt(L)-1) /* idx1==tengah */
+        else if (idx2==NbElmt(*L)-1) /* idx1==tengah */
         {
             addressPlaylist lagu1, lagu2, prev1, prev2, next1;
-            lagu1 = AddressAtIndex(L, idx1);
-            prev1 = AddressAtIndex(L, idx1-1);
-            prev2 = AddressAtIndex(L, idx2-1);
+            lagu1 = AddressAtIndex(*L, idx1);
+            prev1 = AddressAtIndex(*L, idx1-1);
+            prev2 = AddressAtIndex(*L, idx2-1);
             next1 = Next(lagu1);
-            DelLast(&L, &lagu2);
+            DelLast(L, &lagu2);
             Next(prev2) = lagu1;
             Next(lagu1) = Nil;
             Next(prev1) = lagu2;
@@ -372,20 +372,20 @@ void swap_pinggir(Playlist L, int idx1, int idx2)
         if (idx1==0) /* idx2==1 */
         {
             addressPlaylist lagu1, lagu2, prev2, next2;
-            lagu1 = First(L);
+            lagu1 = First(*L);
             lagu2 = Next(lagu1);
             next2 = Next(lagu2);
-            First(L)=lagu2;
+            First(*L)=lagu2;
             Next(lagu2) = lagu1;
             Next(lagu1) = next2;
         }
-        else if (idx2==NbElmt(L)-1) /* idx1==akhir-1 */
+        else if (idx2==NbElmt(*L)-1) /* idx1==akhir-1 */
         {
             addressPlaylist lagu1, lagu2;
-            DelLast(&L, &lagu2);
-            DelLast(&L, &lagu1);
-            InsertLast(&L, lagu2);
-            InsertLast(&L, lagu1);
+            DelLast(L, &lagu2);
+            DelLast(L, &lagu1);
+            InsertLast(L, lagu2);
+            InsertLast(L, lagu1);
         }
     }
 }
