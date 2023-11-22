@@ -193,9 +193,30 @@ boolean IsSameWord(Word w1, char w2[])
     return IsSame;
 }
 
+boolean IsDuplicateWord(Word w1, Word w2)
+{
+    boolean IsSame = true;
+    if (w1.Length != w2.Length)
+    {
+        IsSame = false;
+        return IsSame;
+    }
+    int len = w2.Length;
+
+    for (int i = 0; i < len; i++)
+    {
+        if (w2.TabWord[i] != w1.TabWord[i])
+        {
+            IsSame = false;
+            return IsSame;
+        }
+    }
+    return IsSame;
+}
+
 void printWord(Word word)
 {
-    int len = LengthWord(word);
+    int len = word.Length;
     for (int i = 0; i < len; i++)
     {
         printf("%c", word.TabWord[i]);
