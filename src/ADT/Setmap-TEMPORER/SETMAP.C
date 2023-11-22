@@ -4,34 +4,34 @@
 // #include "mesinkata.c"
 
 // ----------------- REVISI REVISI REVISI ---------------------
-typedef struct
-{
-    Word Songs[10]; // misal max 10 lagu per album
-    int JumlahLagu; // buat nentuin jumlah lagu misal butuh
-} SetSongRevisi;
+// typedef struct
+// {
+//     Word Songs[10]; // misal max 10 lagu per album
+//     int JumlahLagu; // buat nentuin jumlah lagu misal butuh
+// } SetSongRevisi;
 
-typedef struct
-{
-    Word NamaAlbum;           // nama album si penyanyinya sebagai key
-    SetSongRevisi DaftarLagu; // kumpulan lagu dalam 1 album sebagai isi dari map
-} IsiAlbumRevisi;
-typedef struct
-{
-    IsiAlbumRevisi AlbumKe[4]; // nah ini harusny udah map yang benar
-    int JumlahAlbum;
-} AlbumTypeRevisi2;
+// typedef struct
+// {
+//     Word NamaAlbum;           // nama album si penyanyinya sebagai key
+//     SetSongRevisi DaftarLagu; // kumpulan lagu dalam 1 album sebagai isi dari map
+// } IsiAlbumRevisi;
+// typedef struct
+// {
+//     IsiAlbumRevisi AlbumKe[4]; // nah ini harusny udah map yang benar
+//     int JumlahAlbum;
+// } AlbumTypeRevisi2;
 
-typedef struct
-{
-    Word nama;
-    AlbumTypeRevisi2 album; // sebagai map
-} PenyanyiTypeRevisi2;
+// typedef struct
+// {
+//     Word nama;
+//     AlbumTypeRevisi2 album; // sebagai map
+// } PenyanyiTypeRevisi2;
 
-typedef struct
-{
-    PenyanyiTypeRevisi2 Penyanyi[5]; // ini prototipe
-    int JumlahPenyanyi;
-} ListPenyanyiRevisi;
+// typedef struct
+// {
+//     PenyanyiTypeRevisi2 Penyanyi[5]; // ini prototipe
+//     int JumlahPenyanyi;
+// } ListPenyanyiRevisi;
 //-------------------------------------------------
 // ! jan lupa
 void CreatEmptySet(SetSongRevisi *S)
