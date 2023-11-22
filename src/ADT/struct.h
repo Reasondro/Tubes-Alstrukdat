@@ -65,7 +65,7 @@ typedef struct
 
 typedef struct
 {
-  char nama[100];
+  Word nama;
   AlbumTypeRevisi album; // sebagai map
 } PenyanyiTypeRevisi;
 
@@ -91,7 +91,7 @@ typedef struct
 
 typedef struct
 {
-  PenyanyiTypeRevisi Penyanyi[5];
+  PenyanyiTypeRevisi Penyanyi[penyanyimax];
   int JumlahPenyanyi;
 } ListPenyanyi;
 
