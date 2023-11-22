@@ -214,14 +214,14 @@ void playlist_create()
     printf("Masukkan nama playlist yang ingin dibuat : ");
     STARTCOMMAND();
     printf("\n");
-    char temp;
-    WordToString(currentWord, &temp);
-    if (stringLengthNoBlanks(&temp) >= 3)
+    Word temp;
+    CopasWord(&temp, currentWord);
+    if (WordLengthNoBlanks(temp) >= 3)
     {
         if (DP.Neff >= DP.Capacity)
             realloc_dafplay(DP);
-        WordToString(currentWord, DP.pl[DP.Neff].nama);
-        printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", DP.pl[DP.Neff].nama);
+        CopasWord(&(DP.pl[DP.Neff].nama), currentWord);
+        printf("Playlist %s berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", DP.pl[DP.Neff].nama);
         First(DP.pl[DP.Neff]) = Nil;
         DP.Neff++;
     }
@@ -233,16 +233,16 @@ void playlist_create()
 
 void playlist_add_song()
 {
-    char penyanyi, album;
+    Word penyanyi, album;
     boolean foundp = false, founda = false;
     printf("ini daftar penyanyi harusnya\n");
     printf("Masukkan Nama Penyanyi yang dipilih : ");
     STARTCOMMAND();
-    WordToString(currentWord, &penyanyi);
+    CopasWord(&penyanyi, currentWord);
     int idxp = 0, idxa = 0, idxl, idxplay;
     while (!foundp && idxp < penyanyimax)
     {
-        if (IsSameString(DaftarPenyanyi.Penyanyi[idxp].nama, &penyanyi))
+        if (IsDuplicateWord(DaftarPenyanyi.Penyanyi[idxp].nama, penyanyi))
         {
             foundp = true;
         }
@@ -259,10 +259,10 @@ void playlist_add_song()
         printf("ini daftar album harusnya\n");
         printf("Masukkan Judul Album yang dipilih : ");
         STARTCOMMAND();
-        WordToString(currentWord, &album);
+        CopasWord(&album, currentWord);
         while (!founda && idxa < DaftarPenyanyi.Penyanyi[idxp].album.JumlahAlbum)
         {
-            if (IsSameString(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, &album))
+            if (IsDuplicateWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, &album))
             {
                 founda = true;
             }

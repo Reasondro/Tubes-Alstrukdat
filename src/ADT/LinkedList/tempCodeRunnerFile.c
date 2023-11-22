@@ -1,0 +1,1 @@
+address Alokasi(char penyanyi[], char album[], char judul[])

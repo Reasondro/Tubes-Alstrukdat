@@ -34,7 +34,7 @@ void CreateEmpty(Playlist *L);
 /* F.S. Terbentuk Playlist kosong */
 
 /****************** Manajemen Memori ******************/
-addressPlaylist Alokasi(char penyanyi[], char album[], char judul[]);
+addressPlaylist Alokasi(Word penyanyi, Word album, Word judul);
 /* Mengirimkan addressPlaylist hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka addressPlaylist tidak nil, dan misalnya */
 /* menghasilkan P, maka info(P)=X, Next(P)=Nil */
@@ -45,25 +45,25 @@ void Dealokasi(addressPlaylist *P);
 /* Melakukan dealokasi/pengembalian addressPlaylist P */
 
 /****************** PENCARIAN SEBUAH ELEMEN Playlist ******************/
-boolean Search(Playlist L, QueueSongType X);
+boolean Search(Playlist L, QueueSongTypeRevisi X);
 /* Mencari apakah ada elemen Playlist dengan info(P)= X */
 /* Jika ada, mengirimkan addressPlaylist elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void InsVLast(Playlist *L, QueueSongType X);
+void InsVLast(Playlist *L, QueueSongTypeRevisi X);
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen Playlist di akhir: elemen terakhir yang baru */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
 /*** PENGHAPUSAN ELEMEN ***/
-void DelVFirst(Playlist *L, QueueSongType *X);
+void DelVFirst(Playlist *L, QueueSongTypeRevisi *X);
 /* I.S. Playlist L tidak kosong  */
 /* F.S. Elemen pertama Playlist dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-dealokasi */
-void DelVLast(Playlist *L, QueueSongType *X);
+void DelVLast(Playlist *L, QueueSongTypeRevisi *X);
 /* I.S. Playlist tidak kosong */
 /* F.S. Elemen terakhir Playlist dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen terakhir di-dealokasi */
@@ -87,7 +87,7 @@ void DelFirst(Playlist *L, addressPlaylist *P);
 /* F.S. P adalah alamat elemen pertama Playlist sebelum penghapusan */
 /*      Elemen Playlist berkurang satu (mungkin menjadi kosong) */
 /* First element yg baru adalah suksesor elemen pertama yang lama */
-void DelP(Playlist *L, QueueSongType X);
+void DelP(Playlist *L, QueueSongTypeRevisi X);
 /* I.S. Sembarang */
 /* F.S. Jika ada elemen Playlist beraddressPlaylist P, dengan info(P)=X  */
 /* Maka P dihapus dari Playlist dan di-dealokasi */

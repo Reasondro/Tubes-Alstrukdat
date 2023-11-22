@@ -22,7 +22,7 @@ void CreateEmpty(Playlist *L)
 }
 
 /****************** Manajemen Memori ******************/
-addressPlaylist Alokasi(char penyanyi[], char album[], char judul[])
+addressPlaylist Alokasi(Word penyanyi, Word album, Word judul)
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
@@ -32,9 +32,9 @@ addressPlaylist Alokasi(char penyanyi[], char album[], char judul[])
     while (P == Nil) {
         addressPlaylist P = (addressPlaylist)malloc(1 * sizeof(SongPlay));
     } if (P != Nil){
-        stringCopy(Info(P).album, album);
-        stringCopy(Info(P).judul_lagu.judul, judul);
-        stringCopy(Info(P).penyanyi, penyanyi);
+        CopasWord(&album, Info(P).album);
+        CopasWord(&judul, Info(P).judul_lagu);
+        CopasWord(&penyanyi, Info(P).penyanyi);
         Next(P) = Nil;
         return P;
     }
@@ -49,7 +49,7 @@ void Dealokasi(addressPlaylist *P)
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN Playlist ******************/
-boolean Search(Playlist L, QueueSongType X)
+boolean Search(Playlist L, QueueSongTypeRevisi X)
 /* Mencari apakah ada elemen Playlist dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
@@ -59,9 +59,9 @@ boolean Search(Playlist L, QueueSongType X)
     if (!IsEmptyList(L)){
         P = First(L);
         while (!bFound && P != Nil){
-            if (IsSameString(X.judul_lagu.judul, Info(P).judul_lagu.judul)&&
-                IsSameString(X.album, Info(P).album)&&
-                IsSameString(X.penyanyi, Info(P).penyanyi)) {
+            if (IsDuplicateWord(X.judul_lagu, Info(P).judul_lagu)&&
+                IsDuplicateWord(X.album, Info(P).album)&&
+                IsDuplicateWord(X.penyanyi, Info(P).penyanyi)) {
                 bFound = true;
             }
             else P = Next(P);
@@ -69,13 +69,13 @@ boolean Search(Playlist L, QueueSongType X)
     } return bFound;
 }
 
-void InsVLast(Playlist *L, QueueSongType X)
+void InsVLast(Playlist *L, QueueSongTypeRevisi X)
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen Playlist di akhir: elemen terakhir yang baru */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 {
-    addressPlaylist P = Alokasi(X.penyanyi,X.album,X.judul_lagu.judul);
+    addressPlaylist P = Alokasi(X.penyanyi,X.album,X.judul_lagu);
     if (P != Nil)
     {
         InsertLast(L, P);
@@ -83,7 +83,7 @@ void InsVLast(Playlist *L, QueueSongType X)
 }
 
 /*** PENGHAPUSAN ELEMEN ***/
-void DelVFirst(Playlist *L, QueueSongType *X)
+void DelVFirst(Playlist *L, QueueSongTypeRevisi *X)
 /* I.S. Playlist L tidak kosong  */
 /* F.S. Elemen pertama Playlist dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-dtpealokasi */
@@ -94,7 +94,7 @@ void DelVFirst(Playlist *L, QueueSongType *X)
     Dealokasi(&P);
 }
 
-void DelVLast(Playlist *L, QueueSongType *X)
+void DelVLast(Playlist *L, QueueSongTypeRevisi *X)
 /* I.S. Playlist tidak kosong */
 /* F.S. Elemen terakhir Playlist dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen terakhir di-dealokasi */
@@ -168,7 +168,7 @@ void DelFirst(Playlist *L, addressPlaylist *P)
     Next(*P) = Nil;
 }
 
-void DelP(Playlist *L, QueueSongType X)
+void DelP(Playlist *L, QueueSongTypeRevisi X)
 /* I.S. Sembarang */
 /* F.S. Jika ada elemen Playlist beraddressPlaylist P, dengan Info(P)=X  */
 /* Maka P dihapus dari Playlist dan di-dealokasi */
@@ -181,9 +181,9 @@ void DelP(Playlist *L, QueueSongType X)
     
     if (!IsEmptyList(*L))
     {
-        if (IsSameString(X.judul_lagu.judul, Info(P).judul_lagu.judul)&&
-            IsSameString(X.album, Info(P).album)&&
-            IsSameString(X.penyanyi, Info(P).penyanyi))
+        if (IsDuplicateWord(X.judul_lagu, Info(P).judul_lagu)&&
+            IsDuplicateWord(X.album, Info(P).album)&&
+            IsDuplicateWord(X.penyanyi, Info(P).penyanyi))
         {
             DelFirst(L, &P);
             Dealokasi(&P);
@@ -194,9 +194,9 @@ void DelP(Playlist *L, QueueSongType X)
             P = Next(P);
             while (!bFound && P != Nil)
             {
-                if (IsSameString(X.judul_lagu.judul, Info(P).judul_lagu.judul)&&
-                    IsSameString(X.album, Info(P).album)&&
-                    IsSameString(X.penyanyi, Info(P).penyanyi))
+                if (IsDuplicateWord(X.judul_lagu, Info(P).judul_lagu)&&
+                    IsDuplicateWord(X.album, Info(P).album)&&
+                    IsDuplicateWord(X.penyanyi, Info(P).penyanyi))
                 {
                     bFound = true;
                 }
@@ -268,11 +268,16 @@ void PrintInfo(Playlist L)
         P = First(L);
         while (P != Nil)
         {
-            printf("%s, %s, %s\n", Info(P).penyanyi,Info(P).album,Info(P).judul_lagu.judul);
+            printWord(Info(P).penyanyi);
+            printf(", ");
+            printWord(Info(P).album);
+            printf(", ");
+            printWord(Info(P).judul_lagu);
+            printf("\n");
             P = Next(P);
         }
     }
-    printf("]");
+    printf("\n");
 }
 int NbElmt(Playlist L)
 /* Mengirimkan banyaknya elemen Playlist; mengirimkan 0 jika Playlist kosong */
