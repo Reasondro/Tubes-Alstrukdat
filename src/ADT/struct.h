@@ -3,6 +3,8 @@
 #ifndef struct_H
 #define struct_H
 
+#define NMax 100
+#define NMaxLoad 1000
 #define penyanyimax 20
 #define albummax 20
 typedef char keytype[50];
@@ -91,6 +93,12 @@ typedef struct
   PenyanyiTypeRevisi Penyanyi[5];
   int JumlahPenyanyi;
 } ListPenyanyi;
+
+typedef struct
+{
+  QueueSongTypeRevisi T[MaxEl]; /* tabel penyimpan elemen */
+  int TOP;               /* alamat TOP: elemen puncak */
+} StackRevisi;
 
 // ges pusing ges tolong
 

@@ -38,11 +38,14 @@ void Push(StackRevisi *S, QueueSongTypeRevisi X)
     {
         Top(*S)++;
     }
+    // printf("%s", (*S).T[(*S).TOP].penyanyi.TabWord);
+    // printf("%s", X.penyanyi.TabWord);
     // Penyanyi(*S) = X.penyanyi; // ini yang sebelumny ga dipake gara" sekarang kita make string bukan char
-    CopasWord(Penyanyi(*S), X.penyanyi); // jadi harus strcpy buat nerima input string
+    CopasWord(&(S->T[S->TOP].penyanyi), X.penyanyi); // jadi harus strcpy buat nerima input string
+    // printf("%s", (*S).T[(*S).TOP].penyanyi);
 
     // Album(*S) = X.album;    // sama kaya di atas
-    CopasWord(Album(*S), X.album); // fix sama kaya di atas
+    CopasWord(&(S->T[S->TOP].album), X.album); // fix sama kaya di atas
 
     // Judul_Lagu(*S) = X.judul_lagu; // sama kaya di atas
     CopasWord(&(S->T[S->TOP].judul_lagu), X.judul_lagu); // fix sama kaya di atas
@@ -54,13 +57,15 @@ void Pop(StackRevisi *S, QueueSongTypeRevisi *X)
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
 {
     // (*X).penyanyi = Penyanyi(*S); // ini yang sebelumny ga dipake gara" sekarang kita make string bukan char
-    stringCopy(&(X->penyanyi), Penyanyi(*S)); // jadi harus strcpy buat nerima input string
-
+    // printf("%s", (*S).T[(*S).TOP].penyanyi);
+    CopasWord(&(X->penyanyi), S->T[S->TOP].penyanyi); // jadi harus strcpy buat nerima input string
+    // printf("%s", X->penyanyi);
     // (*X).album = Album(*S); // sama kaya di atas
-    stringCopy(&(X->album), Album(*S)); // fix sama kaya di atas
-
+    CopasWord(&(X->album), S->T[S->TOP].album); // fix sama kaya di atas
+    // printf("%s", X->album);
     // (*X).judul_lagu = Judul_Lagu(*S); // sama kaya di atas
-    stringCopy(&(X->judul_lagu), &(S->T[S->TOP].judul_lagu)); // fix sama kaya di atas
+    CopasWord(&(X->judul_lagu), (S->T[S->TOP].judul_lagu)); // fix sama kaya di atas
+    // printf("%s", X->judul_lagu);
     Top(*S)--;
 }
 
@@ -117,9 +122,12 @@ void displayStack(StackRevisi S)
         for (int i = 0; i < length; i++)
         {
             Pop(&StackTemp, &temp);
-            printf("%s;", temp.penyanyi);
-            printf("%s;", temp.album);
-            printf("%s\n", temp.judul_lagu);
+            printWord(temp.penyanyi);
+            printf(";");
+            printWord(temp.album);
+            printf(";");
+            printWord(temp.judul_lagu);
+            printf("\n");
         }
     }
 }

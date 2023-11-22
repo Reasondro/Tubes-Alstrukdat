@@ -12,22 +12,10 @@
 #define NilS -1
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
-
-typedef int addr; /* indeks tabel */
+/* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
-typedef struct
-{
-  QueueSongType T[MaxEl]; /* tabel penyimpan elemen */
-  addr TOP;               /* alamat TOP: elemen puncak */
-} Stack;
-
-typedef struct
-{
-  QueueSongType T[MaxEl]; /* tabel penyimpan elemen */
-  addr TOP;               /* alamat TOP: elemen puncak */
-} StackRevisi;
 /* Definisi stack S kosong : S.TOP = Nil */
 /* Elemen yang dipakai menyimpan nilai Stack T[0]..T[MaxEl-1] */
 /* Jika S adalah Stack maka akses elemen : */
@@ -35,9 +23,6 @@ typedef struct
 /* S.TOP adalah alamat elemen TOP */
 
 #define Top(S) (S).TOP
-#define Album(S) (S).T[(S).TOP].album
-#define Penyanyi(S) (S).T[(S).TOP].penyanyi
-#define Judul_Lagu(S) (S).T[(S).TOP].judul_lagu
 
 // /* ************ Prototype ************ */
 // /* *** Konstruktor/Kreator *** */
