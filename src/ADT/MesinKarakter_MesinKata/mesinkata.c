@@ -70,6 +70,18 @@ void ADVWORD()
     }
 }
 
+int LengthWord(Word w1)
+{
+    int i = 0;
+    int count = 0;
+    while (w1.TabWord[i] != '\0')
+    {
+        count++;
+        i++;
+    }
+    return count;
+}
+
 void CopyWord()
 /* Mengakuisisi kata, menyimpan dalam currentWord
    I.S. : currentChar adalah karakter pertama dari kata
@@ -88,6 +100,19 @@ void CopyWord()
         ADV();
     }
     currentWord.Length = i - 1;
+}
+
+void CopasWord(Word *Dest, Word Src)
+{
+    // int len = LengthWord(Src);
+    int len = Src.Length;
+    int i;
+    Dest->Length = 0;
+    for (i = 0; i < len; i++)
+    {
+        Dest->TabWord[i] = Src.TabWord[i];
+        Dest->Length++;
+    }
 }
 
 void CopyCommand()
@@ -135,16 +160,6 @@ void readCommand()
     // printf("Masukkan command: ");
     STARTCOMMAND();
 }
-//? sementara piondah ke  mesin karatker.c
-// int stringLength(char *string)
-// {
-//     int length = 0;
-//     while (string[length] != '\0')
-//     {
-//         length++;
-//     }
-//     return length;
-// }
 
 int stringLengthNoBlanks(char *string)
 {
@@ -180,42 +195,12 @@ boolean IsSameWord(Word w1, char w2[])
 
 void printWord(Word word)
 {
-    for (int i = 0; i < word.Length; i++)
+    int len = LengthWord(word);
+    for (int i = 0; i < len; i++)
     {
         printf("%c", word.TabWord[i]);
     }
-
-    printf("\n");
 }
-
-//? sementara piondah ke  mesin karatker.c
-// void stringCopy(char *string1, char *string2)
-// {
-//     int i = 0;
-//     while (string2[i] != '\0')
-//     {
-//         string1[i] = string2[i];
-//         i++;
-//     }
-//     string1[i] = '\0';
-// }
-//? sementara piondah ke  mesin karatker.c
-// void stringConcat(char *string1, char *string2)
-// {
-//     int i = 0;
-//     int j = 0;
-//     while (string1[i] != '\0')
-//     {
-//         i++;
-//     }
-//     while (string2[j] != '\0')
-//     {
-//         string1[i] = string2[j];
-//         i++;
-//         j++;
-//     }
-//     string1[i] = '\0';
-// }
 
 void WordToString(Word word, char *string)
 {
@@ -228,37 +213,17 @@ void WordToString(Word word, char *string)
     string[i] = '\0';
 }
 
-int WordToInt(Word word)
+void stringToWord(char *string1, Word *word1)
 {
-    char *str;
-    WordToString(word, str);
-    int result = 0;
-    while (*str != '\0') {
-        result = result * 10 + (*str - '0');
-        str++;
+    int i = 0;
+    word1->Length = 0;
+    while (string1[i] != '\0')
+    {
+        word1->TabWord[i] = string1[i];
+        i++;
+        word1->Length++;
     }
-    return result;
 }
-
-//? sementara piondah ke  mesin karatker.c
-// boolean IsSameString(char w1[], char w2[])
-// {
-//     boolean IsSame = true;
-//     if (stringLength(w1) != stringLength(w2))
-//     {
-//         IsSame = false;
-//         return IsSame;
-//     }
-//     for (int i = 0; i < stringLength(w2); i++)
-//     {
-//         if (w2[i] != w1[i])
-//         {
-//             IsSame = false;
-//             return IsSame;
-//         }
-//     }
-//     return IsSame;
-// }
 
 void ignoreBlanksLine()
 {
@@ -289,6 +254,7 @@ void ADVLINE()
     if (currentCharLoad == MARKLOAD)
     {
         EndLine = true;
+        CopyLine();
     }
     else
     {

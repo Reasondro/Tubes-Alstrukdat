@@ -53,7 +53,7 @@ void ADVWORD();
           currentChar adalah karakter pertama dari kata berikutnya, mungkin MARK
           Jika currentChar = MARK, EndWord = true.
    Proses : Akuisisi kata menggunakan procedure SalinWord */
-
+int LengthWord(Word w1);
 void CopyWord();
 /* Mengakuisisi kata, menyimpan dalam currentWord
    I.S. : currentChar adalah karakter pertama dari kata
@@ -61,7 +61,7 @@ void CopyWord();
           currentChar = BLANK atau currentChar = MARK;
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
-
+void CopasWord(Word *Dest, Word Src);
 void STARTCOMMAND();
 
 void ADVCOMMAND();
@@ -81,7 +81,7 @@ void printWord(Word word);
 void stringCopy(char *string1, char *string2);
 
 void WordToString(Word word, char *string);
-
+void stringToWord(char *string1, Word *word1);
 int WordToInt(Word word);
 
 boolean IsSameString(char w1[], char w2[]);

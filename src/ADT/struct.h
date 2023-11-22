@@ -21,6 +21,13 @@ typedef struct
   SongType judul_lagu;
 } QueueSongType;
 
+typedef struct
+{
+  Word penyanyi;
+  Word album;
+  Word judul_lagu;
+} QueueSongTypeRevisi;
+
 // revisi ak mulai dari sini
 
 typedef struct
@@ -47,9 +54,10 @@ typedef struct
 } PenyanyiTypeRevisi;
 
 typedef struct tSongPlay *addressPlaylist;
-typedef struct tSongPlay {
-    QueueSongType info;
-    addressPlaylist next;
+typedef struct tSongPlay
+{
+  QueueSongType info;
+  addressPlaylist next;
 } SongPlay;
 
 typedef struct

@@ -168,48 +168,53 @@ void DelFirst(Playlist *L, addressPlaylist *P)
     Next(*P) = Nil;
 }
 
-// void DelP(Playlist *L, QueueSongType X)
-// /* I.S. Sembarang */
-// /* F.S. Jika ada elemen Playlist beraddressPlaylist P, dengan Info(P)=X  */
-// /* Maka P dihapus dari Playlist dan di-dealokasi */
-// /* Jika tidak ada elemen Playlist dengan Info(P)=X, maka Playlist tetap */
-// /* Playlist mungkin menjadi kosong karena penghapusan */
-// {
-//     addressPlaylist Prec;
-//     addressPlaylist P;
-//     boolean bFound = false;
+void DelP(Playlist *L, QueueSongType X)
+/* I.S. Sembarang */
+/* F.S. Jika ada elemen Playlist beraddressPlaylist P, dengan Info(P)=X  */
+/* Maka P dihapus dari Playlist dan di-dealokasi */
+/* Jika tidak ada elemen Playlist dengan Info(P)=X, maka Playlist tetap */
+/* Playlist mungkin menjadi kosong karena penghapusan */
+{
+    addressPlaylist Prec;
+    addressPlaylist P = First(*L);
+    boolean bFound = false;
+    
+    if (!IsEmptyList(*L))
+    {
+        if (IsSameString(X.judul_lagu.judul, Info(P).judul_lagu.judul)&&
+            IsSameString(X.album, Info(P).album)&&
+            IsSameString(X.penyanyi, Info(P).penyanyi))
+        {
+            DelFirst(L, &P);
+            Dealokasi(&P);
+        }
+        else
+        {
+            Prec = P;
+            P = Next(P);
+            while (!bFound && P != Nil)
+            {
+                if (IsSameString(X.judul_lagu.judul, Info(P).judul_lagu.judul)&&
+                    IsSameString(X.album, Info(P).album)&&
+                    IsSameString(X.penyanyi, Info(P).penyanyi))
+                {
+                    bFound = true;
+                }
+                else
+                {
+                    Prec = P;
+                    P = Next(P);
+                }
+            }
 
-//     if (!IsEmptyList(*L))
-//     {
-//         if (IsSameString(X.judul, Info(P).judul))
-//         {
-//             DelFirst(L, &P);
-//             Dealokasi(&P);
-//         }
-//         else
-//         {
-//             P = First(*L);
-//             while (!bFound && P != Nil)
-//             {
-//                 if (IsSameString(X.judul, Info(P).judul))
-//                 {
-//                     bFound = true;
-//                 }
-//                 else
-//                 {
-//                     Prec = P;
-//                     P = Next(P);
-//                 }
-//             }
-
-//             if (bFound)
-//             {
-//                 DelAfter(L, &P, Prec);
-//                 Dealokasi(&P);
-//             }
-//         }
-//     }
-// }
+            if (bFound)
+            {
+                DelAfter(L, &P, Prec);
+                Dealokasi(&P);
+            }
+        }
+    }
+}
 
 void DelLast(Playlist *L, addressPlaylist *P)
 /* I.S. Playlist tidak kosong */
@@ -267,7 +272,7 @@ void PrintInfo(Playlist L)
             P = Next(P);
         }
     }
-    printf("]");
+    printf("batas\n");
 }
 int NbElmt(Playlist L)
 /* Mengirimkan banyaknya elemen Playlist; mengirimkan 0 jika Playlist kosong */
@@ -505,6 +510,26 @@ void swaptest(Playlist *L, int idxl1, int idxl2)
     }
 }
 
+void playlist_removesong(Playlist *L, int idxl)
+{
+        if (!(idxl <= NbElmt(*L) && idxl > 0))
+        {
+            printf("Tidak ada lagu dengan urutan %d di playlist ""fd""", idxl);
+            return;
+        }
+        else
+        {
+            idxl--;
+            addressPlaylist lagu = AddressAtIndex(*L, idxl);
+            addressPlaylist X;
+            X = Alokasi(lagu->info.penyanyi,lagu->info.album,lagu->info.judul_lagu.judul);;
+            DelP(L, Info(X));
+            // printf("%s,%s,%s\n",X->info.penyanyi,X->info.album,X->info.judul_lagu.judul);
+            printf("Lagu %s oleh %s telah dihapus dari playlist fd!", X->info.judul_lagu.judul, X->info.penyanyi);
+        }
+}
+
+
 int main(){
     Playlist L;
     CreateEmpty(&L);
@@ -520,11 +545,10 @@ int main(){
     InsertLast(&L, f);
     InsertLast(&L, g);
     PrintInfo(L);
-    printf("di sini mulai swap\n");
+    printf("di sini mulai remove\n");
     int i,j;
     scanf("%d", &i);
-    scanf("%d", &j);
-    swaptest(&L, i, j);
-    printf("kfdjljsfl\n");
+    playlist_removesong(&L,i);
+    printf("\n");
     PrintInfo(L);
 }
