@@ -10,7 +10,7 @@ int CountPlaylist = 0;
 boolean mulai = true;
 boolean sesi = false;
 int ComeToPlaylist[5];
-ListPenyanyi DaftarPenyanyi;
+ListPenyanyiRevisi DaftarPenyanyi;
 
 void init_dafplay()
 {
@@ -37,33 +37,24 @@ void Song_Next (){
     if (!(IsEmptyQueue(QueueOriginal))){        
         Push (&StackOriginal, currentPlaySong);
         dequeue (&QueueOriginal, &next_song);
-        printf("%s", next_song.album);
         CopasWord (&(currentPlaySong.penyanyi), next_song.penyanyi);
         CopasWord (&(currentPlaySong.album), next_song.album);
         CopasWord (&(currentPlaySong.judul_lagu), next_song.judul_lagu);
-        if (CountPlaylist != 0){
+        if (CountPlaylist == 0){
+            CurrentPlaylist.Length = 0;
+        }else{
             CountPlaylist--;
-            if (CountPlaylist == 0){
-                CopasWord(CurrentPlaylist, "");
-            }
         }
         printf ("Memutar lagu selanjutnya\n");
-        printf("\"");
-        printWord(next_song.judul_lagu);
-        printf("\" oleh ");
-        printf("\"");
-        printWord(next_song.penyanyi);
-        printf("\".\n");
     }else{
-
-        printf("Queue kosong, memutar kembali lagu ");
-        printf("\"");
-        printWord(currentPlaySong.judul_lagu);
-        printf("\" oleh ");
-        printf("\"");
-        printWord(currentPlaySong.penyanyi);
-        printf("\".\n");
+        printf("Queue kosong, memutar kembali lagu\n");
     }
+    printf("\"");
+    printWord(currentPlaySong.judul_lagu);
+    printf("\" oleh ");
+    printf("\"");
+    printWord(currentPlaySong.penyanyi);
+    printf("\".\n");
 }
 
 
@@ -91,10 +82,11 @@ void Song_Previous()
         CopasWord(&prevSong.judul_lagu, currentPlaySong.judul_lagu);
         Push(&StackOriginal, prevSong);
     }
-    if (!(IsSameString(CurrentPlaylist, "")))
-    {
-        CountPlaylist++;
+    
+    if (CurrentPlaylist.Length != 0){
+        CurrentPlaylist.Length++;
     }
+
     printf("Memutar lagu sebelumnya\n");
     printf("\"");
     printWord(prevSong.judul_lagu);
@@ -143,11 +135,7 @@ void Play_Song()
                 CopasWord(&currentPlaySong.penyanyi, chosen_penyanyi);
                 CopasWord(&currentPlaySong.album, chosen_album);
                 CopasWord(&currentPlaySong.judul_lagu, chosen_lagu);
-                if (!(IsSameString(CurrentPlaylist, "")))
-                {
-                    CopasWord(CurrentPlaylist, "");
-                    CountPlaylist = 0;
-                }
+                CountPlaylist++;
                 printf("Memutar lagu ");
                 printf("\"");
                 printWord(currentPlaySong.judul_lagu);
@@ -193,13 +181,13 @@ void Play_Playlist()
         addressPlaylist p = DP.pl[id_Playlist].First;
         CopasWord(&currentPlaySong.penyanyi, p->info.penyanyi);
         CopasWord(&currentPlaySong.album, p->info.album);
-        CopasWord(&currentPlaySong.judul_lagu.judul, p->info.judul_lagu.judul);
+        CopasWord(&currentPlaySong.judul_lagu, p->info.judul_lagu);
         while (Next(p) != Nil)
         {
             p = Next(p);
             enqueue(&QueueOriginal, p->info);
         }
-        CopasWord(CurrentPlaylist, DP.pl[id_Playlist].nama);
+        CopasWord(&CurrentPlaylist, DP.pl[id_Playlist].nama);
         CountPlaylist = NbElmt(DP.pl[id_Playlist]);
     }
     else
@@ -262,7 +250,7 @@ void playlist_add_song()
         CopasWord(&album, currentWord);
         while (!founda && idxa < DaftarPenyanyi.Penyanyi[idxp].album.JumlahAlbum)
         {
-            if (IsDuplicateWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, &album))
+            if (IsDuplicateWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, album))
             {
                 founda = true;
             }
@@ -308,11 +296,28 @@ void playlist_add_song()
                     else
                     {
                         QueueSongTypeRevisi X;
-                        stringCopy(X.album, &album);
-                        stringCopy(X.judul_lagu.judul, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul);
-                        stringCopy(X.penyanyi, &penyanyi);
+                        // stringCopy(X.album, &album);
+                        // stringCopy(X.judul_lagu.judul, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul);
+                        // stringCopy(X.penyanyi, &penyanyi);
+                        // stringCopy(X.album, &album);
+                        // stringCopy(X.judul_lagu.judul, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul);
+                        // stringCopy(X.penyanyi, &penyanyi);
                         InsVLast(&DP.pl[idxplay], X);
-                        printf("Lagu dengan judul “%s” pada album %s oleh penyanyi %s berhasil ditambahkan ke dalam playlist %s.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DaftarPenyanyi.Penyanyi[idxp].nama, DP.pl[idxplay].nama);
+                        // printf("Lagu dengan judul “%s” pada album %s oleh penyanyi %s berhasil ditambahkan ke dalam playlist %s.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DaftarPenyanyi.Penyanyi[idxp].nama, DP.pl[idxplay].nama);
+                        printf("Lagu dengan judul ");
+                        printf("\"");
+                        printWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]);
+                        printf("\" pada album \"");
+                        printWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum);
+                        printf("\" oleh penyanyi \"");
+                        printWord(DaftarPenyanyi.Penyanyi[idxp].nama);
+                        printf("\" berhasil ditambahkan ke dalam playlist \"");
+                        printWord(DP.pl[idxplay].nama);
+                        printf("\".\n");
+
+
+
+                        
                     }
                 }
             }

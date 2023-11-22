@@ -4,6 +4,7 @@
 #include "ADT/Stack/stack.h"
 #include "ADT/LinkedList/listlinier.h"
 #include "ADT/MesinKarakter_MesinKata/mesinkata.h"
+#include "struct.h"
 
 void cmd_user();
 

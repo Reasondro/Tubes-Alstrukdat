@@ -1,4 +1,6 @@
-
+#include "../MesinKarakter_MesinKata/mesinkata.h"
+#include "struct.h"
+#include <stdio.h>
 
 // #include "mesinkarakter.c" // non comment hanya klao mo test
 // #include "mesinkata.c"
@@ -34,7 +36,7 @@
 // } ListPenyanyiRevisi;
 //-------------------------------------------------
 // ! jan lupa
-void CreatEmptySet(SetSongRevisi *S)
+void CreateEmptySet(SetSongRevisi *S)
 {
     S->JumlahLagu = 0;
 }
@@ -199,7 +201,7 @@ void InsertMap(AlbumTypeRevisi2 *Album, Word NamaAlbumDicari)
     {
         CopasWord(&(Album->AlbumKe[Album->JumlahAlbum].NamaAlbum), NamaAlbumDicari);
         Album->JumlahAlbum++;
-        CreatEmptySet(&(Album->AlbumKe[Album->JumlahAlbum].DaftarLagu));
+        CreateEmptySet(&(Album->AlbumKe[Album->JumlahAlbum].DaftarLagu));
     }
 }
 
