@@ -1,7 +1,7 @@
 #include "console.h"
 
-Queue QueueOriginal;
-QueueSongType currentPlaySong;
+QueueRevisi QueueOriginal;
+QueueSongTypeRevisi currentPlaySong;
 Stack StackOriginal;
 int InitialSize = 10;
 DaftarPlaylist DP;
@@ -33,7 +33,7 @@ void realloc_dafplay(DaftarPlaylist DP)
 }
 
 void Song_Next (){
-    QueueSongType next_song;
+    QueueSongTypeRevisi next_song;
     if (!(IsEmptyQueue(QueueOriginal))){        
         Push (&StackOriginal, currentPlaySong);
         dequeue (&QueueOriginal, &next_song);
@@ -57,7 +57,7 @@ void Song_Next (){
 
 void Song_Previous()
 {
-    QueueSongType ccSong, prevSong, otherSong;
+    QueueSongTypeRevisi ccSong, prevSong, otherSong;
 
     if (!(IsEmptyStack(StackOriginal)))
     {
@@ -117,7 +117,7 @@ void Play_Song()
             {
                 char *chosen_lagu;
                 stringCopy(chosen_lagu, DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.Songs[id_chosen_lagu - 1].judul);
-                QueueSongType otherSong;
+                QueueSongTypeRevisi otherSong;
                 for (int i = 0; i < LengthQueue(QueueOriginal); i++)
                 {
                     dequeue(&QueueOriginal, &otherSong);
@@ -162,7 +162,7 @@ void Play_Playlist()
     id_Playlist = *id_Playlist_string - '0';
     if (id_Playlist < DP.Neff)
     {
-        QueueSongType otherSong;
+        QueueSongTypeRevisi otherSong;
         for (int i = 0; i < LengthQueue(QueueOriginal); i++)
         {
             dequeue(&QueueOriginal, &otherSong);
@@ -288,7 +288,7 @@ void playlist_add_song()
                     }
                     else
                     {
-                        QueueSongType X;
+                        QueueSongTypeRevisi X;
                         stringCopy(X.album, &album);
                         stringCopy(X.judul_lagu.judul, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul);
                         stringCopy(X.penyanyi, &penyanyi);
@@ -548,7 +548,7 @@ void playlist_delete()
 // masih bermasalah (mungkin)
 void Status()
 {
-    QueueSongType Now_Playing, Antrean_Lagu;
+    QueueSongTypeRevisi Now_Playing, Antrean_Lagu;
     int i;
     if (!(IsSameString(CurrentPlaylist, "")))
     {
@@ -641,7 +641,7 @@ void Queue_Playlist()
 
 void Queue_Swap(int x, int y)
 {
-    QueueSongType temp, song_x, song_y;
+    QueueSongTypeRevisi temp, song_x, song_y;
     if (x > LengthQueue(QueueOriginal))
     {
         printf("Lagu dengan id ke %d tidak terdapat dalam queue!\n", x);
@@ -698,7 +698,7 @@ void Queue_Swap(int x, int y)
 
 void Queue_Remove(int id)
 {
-    QueueSongType temp, hapus;
+    QueueSongTypeRevisi temp, hapus;
     int NbElmt = LengthQueue(QueueOriginal);
     if (id > NbElmt)
     {
@@ -724,7 +724,7 @@ void Queue_Remove(int id)
 
 void Queue_Clear()
 {
-    QueueSongType deleted;
+    QueueSongTypeRevisi deleted;
     int NbElmt = LengthQueue(QueueOriginal);
     for (int i = 1; i <= NbElmt; i++)
     {
@@ -1089,7 +1089,7 @@ void Load()
         queueCount = currentLine.TabLine[0] - '0';
         ADVLINE();
 
-        QueueSongType tempQST;
+        QueueSongTypeRevisi tempQST;
 
         int o;
         for (o = 0; o < queueCount; o++)
@@ -1136,7 +1136,7 @@ void Load()
         stackCount = currentLine.TabLine[0] - '0';
         ADVLINE();
 
-        QueueSongType tempSST;
+        QueueSongTypeRevisi tempSST;
 
         int o;
         for (o = 0; o < stackCount; o++)

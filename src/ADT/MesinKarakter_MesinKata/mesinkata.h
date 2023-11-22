@@ -5,24 +5,12 @@
 #define __MESINKATA_H__
 
 #include "../../boolean.h"
+#include "../struct.h"
 
 #define NMax 100
 #define NMaxLoad 1000
 #define BLANK ' '
 #define ENTER '\n'
-
-typedef struct
-{
-   char TabWord[NMax]; /* container penyimpan kata, indeks yang dipakai [0..NMax-1] */
-   int Length;
-} Word;
-
-typedef struct
-{
-   char TabLine[NMaxLoad];
-   int LengthLine;
-   /* data */
-} Line;
 
 /* State Mesin Kata */
 extern boolean EndWord;

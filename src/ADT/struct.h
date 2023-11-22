@@ -9,6 +9,19 @@ typedef char keytype[50];
 
 typedef struct
 {
+   char TabWord[NMax]; /* container penyimpan kata, indeks yang dipakai [0..NMax-1] */
+   int Length;
+} Word;
+
+typedef struct
+{
+   char TabLine[NMaxLoad];
+   int LengthLine;
+   /* data */
+} Line;
+
+typedef struct
+{
   char judul[100];
 } SongType;
 
@@ -18,7 +31,7 @@ typedef struct
 {
   char penyanyi[50];
   char album[50];
-  SongType judul_lagu;
+  Word judul_lagu;
 } QueueSongType;
 
 typedef struct

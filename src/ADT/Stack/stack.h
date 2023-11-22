@@ -22,6 +22,12 @@ typedef struct
   QueueSongType T[MaxEl]; /* tabel penyimpan elemen */
   addr TOP;               /* alamat TOP: elemen puncak */
 } Stack;
+
+typedef struct
+{
+  QueueSongType T[MaxEl]; /* tabel penyimpan elemen */
+  addr TOP;               /* alamat TOP: elemen puncak */
+} StackRevisi;
 /* Definisi stack S kosong : S.TOP = Nil */
 /* Elemen yang dipakai menyimpan nilai Stack T[0]..T[MaxEl-1] */
 /* Jika S adalah Stack maka akses elemen : */
@@ -33,39 +39,39 @@ typedef struct
 #define Penyanyi(S) (S).T[(S).TOP].penyanyi
 #define Judul_Lagu(S) (S).T[(S).TOP].judul_lagu
 
-/* ************ Prototype ************ */
-/* *** Konstruktor/Kreator *** */
-void CreateEmptyStack(Stack *S);
-/* I.S. sembarang; */
-/* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
-/* jadi indeksnya antara 0..MaxEl-1 (inklusif) */
-/* Ciri stack kosong : TOP bernilai Nil */
+// /* ************ Prototype ************ */
+// /* *** Konstruktor/Kreator *** */
+// void CreateEmptyStack(Stack *S);
+// /* I.S. sembarang; */
+// /* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
+// /* jadi indeksnya antara 0..MaxEl-1 (inklusif) */
+// /* Ciri stack kosong : TOP bernilai Nil */
 
-/* ************ Predikat Untuk test keadaan KOLEKSI ************ */
-boolean IsEmptyStack(Stack S);
-/* Mengirim true jika Stack kosong: lihat definisi di atas */
-boolean IsFullStack(Stack S);
-/* Mengirim true jika tabel penampung nilai elemen stack penuh */
+// /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
+// boolean IsEmptyStack(Stack S);
+// /* Mengirim true jika Stack kosong: lihat definisi di atas */
+// boolean IsFullStack(Stack S);
+// /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 
-/* ************ Menambahkan sebuah elemen ke Stack ************ */
-void Push(Stack *S, QueueSongType X);
-/* Menambahkan X sebagai elemen Stack S. */
-/* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
-/* F.S. TOP bertambah 1, X menjadi TOP yang baru, */
+// /* ************ Menambahkan sebuah elemen ke Stack ************ */
+// void Push(Stack *S, QueueSongTypeRevisi X);
+// /* Menambahkan X sebagai elemen Stack S. */
+// /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
+// /* F.S. TOP bertambah 1, X menjadi TOP yang baru, */
 
-/* ************ Menghapus sebuah elemen Stack ************ */
-void Pop(Stack *S, QueueSongType *X);
-/* Menghapus X dari Stack S. */
-/* I.S. S  tidak mungkin kosong */
-/* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
+// /* ************ Menghapus sebuah elemen Stack ************ */
+// void Pop(Stack *S, QueueSongTypeRevisi *X);
+// /* Menghapus X dari Stack S. */
+// /* I.S. S  tidak mungkin kosong */
+// /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
 
-int lengthStack(Stack S);
+// int lengthStack(Stack S);
 
-void displayStack(Stack S);
-/* Menampilkan isi stack */
-/* I.S. S mungkin kosong */
-/* F.S. Isi stack ditampilkan ke layar */
+// void displayStack(Stack S);
+// /* Menampilkan isi stack */
+// /* I.S. S mungkin kosong */
+// /* F.S. Isi stack ditampilkan ke layar */
 
-void CopyStack(Stack Sin, Stack *Sout);
+// void CopyStack(Stack Sin, Stack *Sout);
 
 #endif
