@@ -7,6 +7,8 @@
 #define NMaxLoad 1000
 #define penyanyimax 20
 #define albummax 20
+#define NilS -1
+#define MaxEl 100
 typedef char keytype[50];
 
 typedef struct
@@ -21,13 +23,6 @@ typedef struct
    int LengthLine;
    /* data */
 } Line;
-
-typedef struct
-{
-  char judul[100];
-} SongType;
-
-typedef SongType valuetype;
 
 typedef struct
 {
@@ -47,7 +42,7 @@ typedef struct
 
 typedef struct
 {
-  SongType Songs[15]; // misal max 15 lagu per album
+  Word Songs[15]; // misal max 15 lagu per album
   int JumlahLagu;     // buat nentuin jumlah lagu misal butuh
 } SetSong;
 
