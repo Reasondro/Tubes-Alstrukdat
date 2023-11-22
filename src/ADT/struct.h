@@ -7,6 +7,7 @@
 #define NMaxLoad 1000
 #define penyanyimax 20
 #define albummax 20
+#define MaxEl 100
 typedef char keytype[50];
 
 typedef struct

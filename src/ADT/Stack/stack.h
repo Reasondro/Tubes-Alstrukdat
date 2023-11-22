@@ -10,7 +10,7 @@
 #include "../MesinKarakter_MesinKata/mesinkata.h"
 
 #define NilS -1
-#define MaxEl 100
+
 /* Nil adalah stack dengan elemen kosong . */
 /* indeks tabel */
 

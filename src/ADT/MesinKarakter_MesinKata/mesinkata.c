@@ -174,6 +174,18 @@ int stringLengthNoBlanks(char *string)
     return length - lenBlank;
 }
 
+int WordLengthNoBlanks(Word kata)
+{
+    int length = kata.Length;
+    int lenBlank = 0, i=0;
+    for (i=0;i<length;i++)
+    {
+        if (kata.TabWord[i] == BLANK)
+            lenBlank++;
+    }
+    return length - lenBlank;
+}
+
 boolean IsSameWord(Word w1, char w2[])
 {
     boolean IsSame = true;

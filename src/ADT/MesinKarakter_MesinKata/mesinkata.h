@@ -72,6 +72,10 @@ int WordToInt(Word word);
 
 boolean IsSameString(char w1[], char w2[]);
 
+boolean IsDuplicateWord(Word w1, Word w2);
+
+int WordLengthNoBlanks(Word kata);
+
 void STARTLINE(char *filename);
 
 void ADVLINE();

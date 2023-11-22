@@ -197,7 +197,7 @@ void playlist_create()
     printf("\n");
     Word temp;
     CopasWord(&temp, currentWord);
-    if (stringLengthNoBlanks(&temp) >= 3)
+    if (WordLengthNoBlanks(temp) >= 3)
     {
         if (DP.Neff >= DP.Capacity)
             realloc_dafplay(DP);
