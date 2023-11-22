@@ -5,8 +5,8 @@
 
 #define NMax 100
 #define NMaxLoad 1000
-#define penyanyimax 20
-#define albummax 20
+#define penyanyimax 15
+#define albummax 10
 #define NilS -1
 #define MaxEl 100
 
@@ -43,7 +43,7 @@ typedef struct
 } IsiAlbumRevisi;
 typedef struct
 {
-  IsiAlbumRevisi AlbumKe[4]; // nah ini harusny udah map yang benar
+  IsiAlbumRevisi AlbumKe[albummax]; // nah ini harusny udah map yang benar
   int JumlahAlbum;
 } AlbumTypeRevisi2;
 
@@ -55,7 +55,7 @@ typedef struct
 
 typedef struct
 {
-  PenyanyiTypeRevisi2 Penyanyi[5]; // ini prototipe
+  PenyanyiTypeRevisi2 Penyanyi[penyanyimax]; // ini prototipe
   int JumlahPenyanyi;
 } ListPenyanyiRevisi;
 
