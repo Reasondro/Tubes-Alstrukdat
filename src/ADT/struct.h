@@ -64,20 +64,20 @@ typedef struct
 
 typedef struct
 {
-  char nama[50];
+  char nama[100];
   AlbumTypeRevisi album; // sebagai map
 } PenyanyiTypeRevisi;
 
 typedef struct tSongPlay *addressPlaylist;
 typedef struct tSongPlay
 {
-  QueueSongType info;
+  QueueSongTypeRevisi info;
   addressPlaylist next;
 } SongPlay;
 
 typedef struct
 {
-  char nama[100];
+  Word nama;
   addressPlaylist First;
 } Playlist;
 

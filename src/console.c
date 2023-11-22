@@ -195,14 +195,14 @@ void playlist_create()
     printf("Masukkan nama playlist yang ingin dibuat : ");
     STARTCOMMAND();
     printf("\n");
-    char temp;
-    WordToString(currentWord, &temp);
+    Word temp;
+    CopasWord(&temp, currentWord);
     if (stringLengthNoBlanks(&temp) >= 3)
     {
         if (DP.Neff >= DP.Capacity)
             realloc_dafplay(DP);
-        WordToString(currentWord, DP.pl[DP.Neff].nama);
-        printf("Playlist %c berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", DP.pl[DP.Neff].nama);
+        CopasWord(&(DP.pl[DP.Neff].nama), currentWord);
+        printf("Playlist %s berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", DP.pl[DP.Neff].nama);
         First(DP.pl[DP.Neff]) = Nil;
         DP.Neff++;
     }
