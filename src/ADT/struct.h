@@ -5,7 +5,22 @@
 
 #define penyanyimax 20
 #define albummax 20
-typedef char keytype[20];
+#define NMax 100
+#define NMaxLoad 1000
+typedef char keytype[50];
+
+typedef struct
+{
+   char TabWord[NMax]; /* container penyimpan kata, indeks yang dipakai [0..NMax-1] */
+   int Length;
+} Word;
+
+typedef struct
+{
+   char TabLine[NMaxLoad];
+   int LengthLine;
+   /* data */
+} Line;
 
 typedef struct
 {
@@ -46,9 +61,29 @@ typedef struct
   AlbumTypeRevisi album; // sebagai map
 } PenyanyiTypeRevisi;
 
+typedef struct tSongPlay *addressPlaylist;
+typedef struct tSongPlay
+{
+  QueueSongTypeRevisi info;
+  addressPlaylist next;
+} SongPlay;
+
 typedef struct
 {
-  PenyanyiTypeRevisi Penyanyi[penyanyimax];
+  Word nama;
+  addressPlaylist First;
+} Playlist;
+
+typedef struct
+{
+  int Capacity;
+  Playlist *pl;
+  int Neff;
+} DaftarPlaylist;
+
+typedef struct
+{
+  PenyanyiTypeRevisi Penyanyi[5];
   int JumlahPenyanyi;
 } ListPenyanyi;
 
