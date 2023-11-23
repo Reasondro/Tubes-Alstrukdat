@@ -177,8 +177,8 @@ int stringLengthNoBlanks(char *string)
 int WordLengthNoBlanks(Word kata)
 {
     int length = kata.Length;
-    int lenBlank = 0, i=0;
-    for (i=0;i<length;i++)
+    int lenBlank = 0, i = 0;
+    for (i = 0; i < length; i++)
     {
         if (kata.TabWord[i] == BLANK)
             lenBlank++;
@@ -330,4 +330,12 @@ void LineToString(Line line, char *string)
         i++;
     }
     string[i] = '\0';
+}
+
+void FPRINTWORD(FILE *fptr, Word W)
+{
+    for (int i = 0; i < W.Length; i++)
+    {
+        fprintf(fptr, "%c", W.TabWord[i]);
+    }
 }
