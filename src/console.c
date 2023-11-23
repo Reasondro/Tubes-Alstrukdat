@@ -213,7 +213,7 @@ void playlist_create()
 {
     printf("\n");
     printf("Masukkan nama playlist yang ingin dibuat : ");
-    STARTCOMMAND();
+    readCommand();
     printf("\n");
     Word temp;
     CopasWord(&temp, currentWord);
@@ -235,11 +235,22 @@ void playlist_create()
     }
 }
 
+void DisplayDP(DaftarPlaylist depe, int idxplay)
+{
+    printf("Daftar Playlist: \n");
+    for (int i = 0; i < depe.Neff; i++)
+    {
+        printf("    %d.", i + 1);
+        printWord(depe.pl[i].nama);
+        printf("\n");
+    }
+}
+
 void playlist_add_song()
 {
     Word penyanyi, album;
     boolean foundp = false, founda = false;
-    printf("ini daftar penyanyi harusnya\n");
+    DisplayListPenyanyi(DaftarPenyanyi);
     printf("Masukkan Nama Penyanyi yang dipilih : ");
     STARTCOMMAND();
     CopasWord(&penyanyi, currentWord);
@@ -262,7 +273,7 @@ void playlist_add_song()
     }
     else
     {
-        printf("ini daftar album harusnya\n");
+        DisplayMap(DaftarPenyanyi, penyanyi);
         printf("Masukkan Judul Album yang dipilih : ");
         STARTCOMMAND();
         CopasWord(&album, currentWord);
@@ -284,7 +295,7 @@ void playlist_add_song()
         }
         else
         {
-            printf("ini daftar lagu harusnya\n");
+            DisplaySet(DaftarPenyanyi.Penyanyi[idxp].album, album);
             printf("Masukkan ID Lagu yang dipilih : ");
             STARTCOMMAND();
             idxl = *(currentWord.TabWord) - '0';
@@ -296,7 +307,7 @@ void playlist_add_song()
             else
             {
                 idxl--;
-                printf("ini daftar playlist harusnya\n");
+                DisplayDP(DP,idxplay);
                 printf("Masukkan ID Playlist yang dipilih : ");
                 STARTCOMMAND();
                 idxplay = *(currentWord.TabWord) - '0';
@@ -347,7 +358,7 @@ void playlist_add_album()
 {
     Word penyanyi, album;
     boolean foundp = false, founda = false;
-    printf("ini daftar penyanyi harusnya\n");
+    DisplayListPenyanyi(DaftarPenyanyi);
     printf("Masukkan Nama Penyanyi yang dipilih : ");
     STARTCOMMAND();
     CopasWord(&penyanyi, currentWord);
@@ -372,7 +383,7 @@ void playlist_add_album()
     }
     else
     {
-        printf("ini daftar album harusnya\n");
+        DisplayMap(DaftarPenyanyi, penyanyi);
         printf("Masukkan Judul Album yang dipilih : ");
         STARTCOMMAND();
         CopasWord(&album, currentWord);
@@ -1550,7 +1561,7 @@ void invalid_command()
     }
     if (invalid)
     {
-        printf("COmmand tidak diketahui!\n");
+        printf("Command tidak diketahui!\n");
     }
     else if (error)
     {
@@ -1586,17 +1597,19 @@ void cmd_user()
             else if (IsSameWord(currentWord, "testing"))
             {
                 // ListDefault(DaftarPenyanyi);
-                printWord(DaftarPenyanyi.Penyanyi[0].nama);
-                printf("\n");
-                printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].NamaAlbum);
-                printf("\n");
-                // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[1].NamaAlbum);
-                printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[0]);
-                printf("\n");
-                printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[1]);
-                printf("\n");
-                printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[2]);
-                printf("\n");
+                // printWord(DaftarPenyanyi.Penyanyi[0].nama);
+                // printf("\n");
+                // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].NamaAlbum);
+                // printf("\n");
+                // // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[1].NamaAlbum);
+                // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[0]);
+                // printf("\n");
+                // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[1]);
+                // printf("\n");
+                // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[2]);
+                // printf("\n");
+                init_dafplay();
+                playlist_create();
 
                 // printWord(DaftarPenyanyi.Penyanyi[2].nama);
                 // printf("\n");
@@ -1608,6 +1621,10 @@ void cmd_user()
             else if (IsSameWord(currentWord, "CEK"))
             {
                 ListDefault(DaftarPenyanyi);
+            }
+            else if (IsSameWord(currentWord, "playlistsong"))
+            {
+                playlist_add_song();
             }
             else if (IsSameWord(currentWord, "PLAY"))
             {
