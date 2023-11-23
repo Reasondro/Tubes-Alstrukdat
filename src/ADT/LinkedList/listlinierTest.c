@@ -542,11 +542,11 @@ int main(){
     addressPlaylist a,s,d,f,g,h,k,l;
     Word wbil;
     stringToWord("billy1",&wbil);
-    a=Alokasi("1Billy","foto","lagu");
-    s=Alokasi("2Bully","roti","coklat");
-    d=Alokasi("3Ucok","aaaa","keju");
-    f=Alokasi("4Udin","uuuu","stroberi");
-    g=Alokasi("5Upin","iiii","kacang");
+    // a=Alokasi("1Billy","foto","lagu");
+    // s=Alokasi("2Bully","roti","coklat");
+    // d=Alokasi("3Ucok","aaaa","keju");
+    // f=Alokasi("4Udin","uuuu","stroberi");
+    // g=Alokasi("5Upin","iiii","kacang");
     InsertLast(&L, a);
     InsertLast(&L, s);
     InsertLast(&L, d);

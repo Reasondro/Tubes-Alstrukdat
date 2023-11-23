@@ -308,7 +308,7 @@ void playlist_add_song()
                     }
                     else
                     {
-                        InsVLast(&DP.pl[idxplay], Info(P));
+                        InsertLast(&(DP.pl[idxplay]), P);
                         // printf("Lagu dengan judul “%s” pada album %s oleh penyanyi %s berhasil ditambahkan ke dalam playlist %s.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DaftarPenyanyi.Penyanyi[idxp].nama, DP.pl[idxplay].nama);
                         printf("Lagu dengan judul ");
                         printf("\"");
@@ -334,11 +334,11 @@ void playlist_add_album()
     printf("ini daftar penyanyi harusnya\n");
     printf("Masukkan Nama Penyanyi yang dipilih : ");
     STARTCOMMAND();
-    WordToString(currentWord, &penyanyi);
+    CopasWord(&penyanyi, currentWord);
     int idxp = 0, idxa = 0, idxplay;
     while (!foundp && idxp < penyanyimax)
     {
-        if (IsSameString(DaftarPenyanyi.Penyanyi[idxp].nama, &penyanyi))
+        if (IsDuplicateWord(DaftarPenyanyi.Penyanyi[idxp].nama, penyanyi))
         {
             foundp = true;
         }
@@ -359,10 +359,10 @@ void playlist_add_album()
         printf("ini daftar album harusnya\n");
         printf("Masukkan Judul Album yang dipilih : ");
         STARTCOMMAND();
-        WordToString(currentWord, &album);
+        CopasWord(&album, currentWord);
         while (!founda && idxa < DaftarPenyanyi.Penyanyi[idxp].album.JumlahAlbum)
         {
-            if (IsSameString(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, &album))
+            if (IsDuplicateWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, album))
             {
                 founda = true;
             }
@@ -398,7 +398,7 @@ void playlist_add_album()
                     P = Alokasi(penyanyi, album, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]);
                     if (!Search(DP.pl[idxplay], Info(P)))
                     {
-                        InsertLast(&DP.pl[idxplay], P);
+                        InsertLast(&(DP.pl[idxplay]), P);
                         count++;
                     }
                     idxl++;
@@ -463,7 +463,7 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
                 {
                     if (idxl1 < idxl2)
                     {
-                        swap_pinggir(&DP.pl[idxplay], idxl1, idxl2);
+                        swap_pinggir(&(DP.pl[idxplay]), idxl1, idxl2);
                         addressPlaylist lagu1 = AddressAtIndex(DP.pl[idxplay], idxl1);
                         addressPlaylist lagu2 = AddressAtIndex(DP.pl[idxplay], idxl2);
                         // printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
@@ -477,7 +477,7 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
                     }
                     else
                     {
-                        swap_pinggir(&DP.pl[idxplay], idxl2, idxl1);
+                        swap_pinggir(&(DP.pl[idxplay]), idxl2, idxl1);
                         addressPlaylist lagu1 = AddressAtIndex(DP.pl[idxplay], idxl1);
                         addressPlaylist lagu2 = AddressAtIndex(DP.pl[idxplay], idxl2);
                         // printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
@@ -513,7 +513,7 @@ void playlist_remove(Playlist *L, int idxl)
 {
     if (!(idxl <= NbElmt(*L) && idxl > 0))
     {
-        printf("Tidak ada lagu dengan urutan %d di playlist ""%s""", idxl, (*L).nama);
+        printf("Tidak ada lagu dengan urutan %d di playlist \"%s\"", idxl, (*L).nama);
         return;
     }
     else
@@ -544,7 +544,7 @@ void playlist_removesong(int idxplay, int idxl)
     else
     {
         idxplay--;
-        playlist_remove(&DP.pl[idxplay], idxl);
+        playlist_remove(&(DP.pl[idxplay]), idxl);
     }
 }
 
