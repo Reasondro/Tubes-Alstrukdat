@@ -905,7 +905,6 @@ void help()
     }
 }
 
-
 void Start()
 {
     char StartFileName[40] = "../save/save.txt";
@@ -1688,11 +1687,15 @@ void cmd_user()
             }
             else if (IsSameWord(currentWord, "LOAD"))
             {
-                // Load();
+                Load();
             }
             else if (IsSameWord(currentWord, "HELP"))
             {
                 help();
+            }
+            else if (IsSameWord(currentWord, "TESTING"))
+            {
+                printf("INI NGE TEST\n");
             }
             else
             {
