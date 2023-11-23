@@ -84,4 +84,5 @@ void ignoreBlanksLine();
 void CopyLine();
 void displayLine(Line line); // somehow naming the function printLine will result in an error
 void LineToString(Line line, char *string);
+void FPRINTWORD(FILE *fptr, Word W);
 #endif
