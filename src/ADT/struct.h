@@ -60,9 +60,12 @@ typedef struct
 } ListPenyanyiRevisi;
 
 typedef struct tSongPlay *addressPlaylist;
+
+typedef QueueSongTypeRevisi infoType;
+
 typedef struct tSongPlay
 {
-  QueueSongTypeRevisi info;
+  infoType info;
   addressPlaylist next;
 } SongPlay;
 

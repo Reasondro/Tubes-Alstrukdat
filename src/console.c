@@ -32,6 +32,17 @@ void realloc_dafplay(DaftarPlaylist DP)
     DP.Capacity += 5;
 }
 
+void DisplayDP(DaftarPlaylist depe)
+{
+    printf("Daftar Playlist: \n");
+    for (int i = 0; i < depe.Neff; i++)
+    {
+        printf("    %d.", i + 1);
+        printWord(depe.pl[i].nama);
+        printf("\n");
+    }
+}
+
 void Song_Next()
 {
     QueueSongTypeRevisi next_song;
@@ -176,10 +187,10 @@ void Play_Playlist()
 {
     char *id_Playlist_string;
     int id_Playlist;
+    DisplayDP(DP);
     printf("Masukkan Id Playlist: ");
     readCommand();
-    WordToString(currentWord, id_Playlist_string);
-    id_Playlist = *id_Playlist_string - '0';
+    id_Playlist = (*(currentWord.TabWord) - '0')-1;
     if (id_Playlist < DP.Neff)
     {
         QueueSongTypeRevisi otherSong;
@@ -187,10 +198,12 @@ void Play_Playlist()
         {
             dequeue(&QueueOriginal, &otherSong);
         }
+        printf("queue dibuang\n\n");
         while (!(IsEmptyStack(StackOriginal)))
         {
             Pop(&StackOriginal, &otherSong);
         }
+        printf("stack dibuang\n\n");
         addressPlaylist p = DP.pl[id_Playlist].First;
         CopasWord(&currentPlaySong.penyanyi, p->info.penyanyi);
         CopasWord(&currentPlaySong.album, p->info.album);
@@ -202,6 +215,7 @@ void Play_Playlist()
         }
         CopasWord(&CurrentPlaylist, DP.pl[id_Playlist].nama);
         CountPlaylist = NbElmt(DP.pl[id_Playlist]);
+        printf("Playlist sudah ditambah\n\n");
     }
     else
     {
@@ -232,17 +246,6 @@ void playlist_create()
     else
     {
         printf("Minimal terdapat 3 karakter selain whitespace dalam nama playlist. Silakan coba lagi.");
-    }
-}
-
-void DisplayDP(DaftarPlaylist depe, int idxplay)
-{
-    printf("Daftar Playlist: \n");
-    for (int i = 0; i < depe.Neff; i++)
-    {
-        printf("    %d.", i + 1);
-        printWord(depe.pl[i].nama);
-        printf("\n");
     }
 }
 
@@ -307,7 +310,7 @@ void playlist_add_song()
             else
             {
                 idxl--;
-                DisplayDP(DP, idxplay);
+                DisplayDP(DP);
                 printf("Masukkan ID Playlist yang dipilih : ");
                 STARTCOMMAND();
                 idxplay = *(currentWord.TabWord) - '0';
@@ -320,14 +323,16 @@ void playlist_add_song()
                 {
                     idxplay--;
                     addressPlaylist P = Alokasi(penyanyi, album, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]);
-                    if (Search(DP.pl[idxplay], Info(P)))
+                    int tambah = cekLagu(DP.pl[idxplay], DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]);
+                    if (tambah == -1)
+                    // !Search(DP.pl[idxplay], DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl])
                     {
                         // printf("Lagu dengan judul “%s” pada album %s oleh penyanyi %s sudah ada dalam playlist %s.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl], DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DaftarPenyanyi.Penyanyi[idxp].nama, DP.pl[idxplay].nama);
                         printf("Lagu dengan judul \"");
                         printWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]);
                         printf("\" pada album \"");
                         printWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum);
-                        printf("\" Oleh penyanyi \"");
+                        printf("\" oleh penyanyi \"");
                         printWord(DaftarPenyanyi.Penyanyi[idxp].nama);
                         printf("\" sudah ada dalam playlist \"");
                         printWord(DP.pl[idxplay].nama);
@@ -406,7 +411,7 @@ void playlist_add_album()
         }
         else
         {
-            DisplayDP(DP, idxplay);
+            DisplayDP(DP);
             printf("Masukkan ID Playlist yang dipilih : ");
             STARTCOMMAND();
             idxplay = *(currentWord.TabWord) - '0';
@@ -418,39 +423,48 @@ void playlist_add_album()
             else
             {
                 idxplay--;
-                int count = 0, idxl = 0;
-                addressPlaylist P;
-                while (idxl < DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.JumlahLagu)
-                {
-                    P = Alokasi(penyanyi, album, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]);
-                    if (!Search(DP.pl[idxplay], Info(P)))
-                    {
-                        InsertLast(&(DP.pl[idxplay]), P);
-                        count++;
-                    }
-                    idxl++;
-                    Dealokasi(&P);
-                }
-                if (count == 0)
-                {
-                    // printf("Album dengan judul “%s” sudah ada pada playlist pengguna “%s”.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DP.pl[idxplay].nama);
-                    printf("\" Album dengan judul \"");
-                    printWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum);
-                    printf("\" sudah ada pada playlist pengguna \"");
-                    printWord(DP.pl[idxplay].nama);
-                    printf("\".\n");
-                }
-                else
-                {
-                    // printf("Album dengan judul “%s” berhasil ditambahkan ke dalam pada playlist pengguna “%s”.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DP.pl[idxplay].nama);
-                    printf("Album dengan judul \"");
-                    printWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum);
-                    printf("\" berhasil ditambahkan ke dalam playlist pengguna \"");
-                    printWord(DP.pl[idxplay].nama);
-                    printf("\".\n");
-                }
+                playlistalbum(&(DP.pl[idxplay]),&DaftarPenyanyi,idxp,idxa,idxplay);
             }
         }
+    }
+}
+
+void playlistalbum(Playlist *L, ListPenyanyiRevisi *LP, int idxp, int idxa, int idxplay)
+{
+    int count = 0, idxl = 0;
+    addressPlaylist P;
+    while (idxl < (*LP).Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.JumlahLagu)
+    {
+        P = Alokasi((*LP).Penyanyi[idxp].nama, (*LP).Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, (*LP).Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]);
+        int tambah = cekLagu((*L), (*LP).Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]);
+        printf("%d",idxl);
+        if (tambah != -1)
+        // if (!Search(DP.pl[idxplay], DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]))
+        {
+            InsertLast(L, P);
+            count++;
+        }
+        printf("%d",tambah);
+        idxl++;
+        Dealokasi(&P);
+    }
+    if (count == 0)
+    {
+        // printf("Album dengan judul “%s” sudah ada pada playlist pengguna “%s”.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DP.pl[idxplay].nama);
+        printf("Album dengan judul \"");
+        printWord((*LP).Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum);
+        printf("\" sudah ada pada playlist pengguna \"");
+        printWord((*L).nama);
+        printf("\".\n");
+    }
+    else
+    {
+        // printf("Album dengan judul “%s” berhasil ditambahkan ke dalam pada playlist pengguna “%s”.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DP.pl[idxplay].nama);
+        printf("Album dengan judul \"");
+        printWord((*LP).Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum);
+        printf("\" berhasil ditambahkan ke dalam playlist pengguna \"");
+        printWord(DP.pl[idxplay].nama);
+        printf("\".\n");
     }
 }
 
@@ -989,6 +1003,7 @@ void Start()
     stringToWord("", &KOSONG);
     CreateQueue(&QueueOriginal);
     CreateEmptyStack(&StackOriginal);
+    init_dafplay();
 
     int i, j, k, l, m, n;
     for (i = 0; i < jumlahPenyanyi; i++)
@@ -1054,6 +1069,8 @@ void Load()
 
     CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
     CreateEmptyDaftarPlaylist(&DP);
+    init_dafplay();
+
     PenyanyiTypeRevisi2 currentPenyanyi; // variabel temp
     AlbumTypeRevisi2 currentAlbum;       // variabel temp
     Word currentSong;
@@ -1659,13 +1676,11 @@ void cmd_user()
             else if (IsSameWord(currentWord, "testing"))
             {
                 // Queue_Playlist();
-                Queue_Song();
-                Queue_Song();
-                Queue_Song();
-                Song_Next();
+                // Queue_Song();
+                // Queue_Song();
+                // Queue_Song();
+                // Song_Next();
                 // DisplayQueue(QueueOriginal);
-                Status();
-                // playlist_create();
                 // Queue_Playlist();
 
                 // ListDefault(DaftarPenyanyi);
@@ -1681,10 +1696,23 @@ void cmd_user()
                 // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[2]);
                 // printf("\n");
                 // init_dafplay();
-                // playlist_create();
+                playlist_create();
+                PrintInfo(DP.pl[0]);
+                playlist_create();
+                PrintInfo(DP.pl[1]);
+                playlist_add_album();
+                PrintInfo(DP.pl[0]);
+                PrintInfo(DP.pl[1]);
+                playlist_add_album();
+                PrintInfo(DP.pl[0]);
+                PrintInfo(DP.pl[1]);
+                playlist_add_song();
+                PrintInfo(DP.pl[0]);
+                PrintInfo(DP.pl[1]);
+                printWord(DP.pl[1].First->info.judul_lagu);
 
                 // printWord(DaftarPenyanyi.Penyanyi[2].nama);
-                // printf("\n");
+                printf("\n");
 
                 // DisplayMap(DaftarPenyanyi, tes1);
 
@@ -1704,7 +1732,7 @@ void cmd_user()
             }
             else if (IsSameWord(currentWord, "playlistprint"))
             {
-                PrintInfo(&(DP.pl[0]));
+                PrintInfo((DP.pl[0]));
             }
             else if (IsSameWord(currentWord, "PLAY"))
             {

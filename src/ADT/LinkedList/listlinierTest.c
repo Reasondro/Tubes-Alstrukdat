@@ -32,9 +32,9 @@ addressPlaylist Alokasi(Word penyanyi, Word album, Word judul)
     while (P == Nil) {
         addressPlaylist P = (addressPlaylist)malloc(1 * sizeof(SongPlay));
     } if (P != Nil){
-        CopasWord(&album, Info(P).album);
-        CopasWord(&judul, Info(P).judul_lagu);
-        CopasWord(&penyanyi, Info(P).penyanyi);
+        CopasWord(&Info(P).album, album);
+        CopasWord(&Info(P).judul_lagu, judul);
+        CopasWord(&Info(P).penyanyi, penyanyi);
         Next(P) = Nil;
         return P;
     }
@@ -153,7 +153,9 @@ void InsertLast(Playlist *L, addressPlaylist P)
         {
             Last = Next(Last);
         }
+        printf("sampe\n");
         InsertAfter(L, P, Last);
+        printf("sampe1\n");
     }
 }
 
@@ -262,24 +264,23 @@ void PrintInfo(Playlist L)
 /* Jika Playlist kosong : menulis [] */
 /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
 {
-    addressPlaylist P;
-
-    if (!IsEmptyList(L))
+    addressPlaylist P = First(L);
+    int i = 1;
+    while (P != Nil)
     {
-        P = First(L);
-        while (P != Nil)
-        {
-            printWord(Info(P).penyanyi);
-            printf(", ");
-            printWord(Info(P).album);
-            printf(", ");
-            printWord(Info(P).judul_lagu);
-            printf("\n");
-            P = Next(P);
-        }
-    }
+        printf("%d", i);
+        printWord(Info(P).penyanyi);
+        printf(", ");
+        printWord(Info(P).album);
+        printf(", ");
+        printWord(Info(P).judul_lagu);
+        printf("\n");
+        P = Next(P);
+        i++;
+    } 
     printf("batas\n");
 }
+
 int NbElmt(Playlist L)
 /* Mengirimkan banyaknya elemen Playlist; mengirimkan 0 jika Playlist kosong */
 {
@@ -469,89 +470,197 @@ int stringLength(char *string)
 void swaptest(Playlist *L, int idxl1, int idxl2)
 {
     if (!(idxl1 <= NbElmt(*L) && idxl1 > 0))
-    {
-        printf("Tidak ada lagu dengan urutan %d di playlist ""fd""\n", idxl1);
-        return;
-    }
-    else
-    {
-        idxl1--;
-        if (!(idxl2 <= NbElmt(*L) && idxl2 > 0))
         {
-            printf("Tidak ada lagu dengan urutan %d di playlist ""fd""\n", idxl2);
+            // printf("Tidak ada lagu dengan urutan %d di playlist ""%s""", idxl1, DP.pl[idxplay].nama);
+            printf("Tidak ada lagu dengan urutan %d di playlist \"", idxl1);
+            printWord((*L).nama);
+            printf("\",\n");
             return;
         }
         else
         {
-            idxl2--;
-            
-            if (idxl1 == 0 || idxl1 == NbElmt(*L)-1 || idxl2 == 0 || idxl2 == NbElmt(*L)-1)
+            idxl1--;
+            if (!(idxl2 <= NbElmt(*L) && idxl2 > 0))
             {
-                if (idxl1 < idxl2)
-                {
-                    swap_pinggir(L, idxl1, idxl2);
-                    addressPlaylist lagu1, lagu2;
-                    lagu1 = AddressAtIndex(*L, idxl1);
-                    lagu2 = AddressAtIndex(*L, idxl2);
-                    printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""fd""", lagu1->info.judul_lagu.judul,lagu2->info.judul_lagu.judul);
-                }
-                else
-                {
-                    swap_pinggir(L, idxl2, idxl1);
-                    addressPlaylist lagu1, lagu2;
-                    lagu1 = AddressAtIndex(*L, idxl1);
-                    lagu2 = AddressAtIndex(*L, idxl2);
-                    printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""fd""", lagu1->info.judul_lagu.judul,lagu2->info.judul_lagu.judul);
-                }
+                // printf("Tidak ada lagu dengan urutan %d di playlist ""%s""", idxl2, DP.pl[idxplay].nama);
+                printf("Tidak ada lagu dengan urutan %d di playlist \"", idxl2);
+                printWord((*L).nama);
+                printf("\",\n");
+                return;
             }
             else
             {
-                swap_tengah(*L, idxl1, idxl2);
-                addressPlaylist lagu1, lagu2;
-                lagu1 = AddressAtIndex(*L, idxl1);
-                lagu2 = AddressAtIndex(*L, idxl2);
-                printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""fd""", lagu1->info.judul_lagu.judul,lagu2->info.judul_lagu.judul);
+                idxl2--;
+                if (idxl1 == 0 || idxl1 == NbElmt((*L)) - 1 || idxl2 == 0 || idxl2 == NbElmt((*L)) - 1)
+                {
+                    if (idxl1 < idxl2)
+                    {
+                        swap_pinggir(L, idxl1, idxl2);
+                        addressPlaylist lagu1 = AddressAtIndex((*L), idxl1);
+                        addressPlaylist lagu2 = AddressAtIndex((*L), idxl2);
+                        // printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
+                        printf("Berhasil menukar lagu dengan nama \"");
+                        printWord(lagu1->info.judul_lagu);
+                        printf("\" dengan \"");
+                        printWord(lagu2->info.judul_lagu);
+                        printf("\" di playlist \"");
+                        printWord((*L).nama);
+                        printf("\".\n");
+                    }
+                    else
+                    {
+                        swap_pinggir(L, idxl2, idxl1);
+                        addressPlaylist lagu1 = AddressAtIndex(*L, idxl1);
+                        addressPlaylist lagu2 = AddressAtIndex(*L, idxl2);
+                        // printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
+                        printf("Berhasil menukar lagu dengan nama \"");
+                        printWord(lagu1->info.judul_lagu);
+                        printf("\" dengan \"");
+                        printWord(lagu2->info.judul_lagu);
+                        printf("\" di playlist \"");
+                        printWord((*L).nama);
+                        printf("\".\n");
+                    }
+                }
+                else
+                {
+                    swap_tengah((*L), idxl1, idxl2);
+                    addressPlaylist lagu1 = AddressAtIndex((*L), idxl1);
+                    addressPlaylist lagu2 = AddressAtIndex((*L), idxl2);
+                    // printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
+                    printf("Berhasil menukar lagu dengan nama \"");
+                    printWord(lagu1->info.judul_lagu);
+                    printf("\" dengan \"");
+                    printWord(lagu2->info.judul_lagu);
+                    printf("\" di playlist \"");
+                    printWord((*L).nama);
+                    printf("\".\n");
+                }
             }
         }
-    }
 }
 
 void playlist_removesong(Playlist *L, int idxl)
 {
-        if (!(idxl <= NbElmt(*L) && idxl > 0))
-        {
-            printf("Tidak ada lagu dengan urutan %d di playlist ""fd""", idxl);
-            return;
-        }
-        else
-        {
-            idxl--;
-            addressPlaylist lagu = AddressAtIndex(*L, idxl);
-            addressPlaylist X;
-            X = Alokasi(lagu->info.penyanyi,lagu->info.album,lagu->info.judul_lagu.judul);;
-            DelP(L, Info(X));
-            // printf("%s,%s,%s\n",X->info.penyanyi,X->info.album,X->info.judul_lagu.judul);
-            printf("Lagu %s oleh %s telah dihapus dari playlist fd!", X->info.judul_lagu.judul, X->info.penyanyi);
-        }
+    if (!(idxl <= NbElmt(*L) && idxl > 0))
+    {
+        printf("Tidak ada lagu dengan urutan %d di playlist \"", idxl);
+        printWord((*L).nama);
+        printf("\".\n");
+        return;
+    }
+    else
+    {
+        idxl--;
+        addressPlaylist lagu = AddressAtIndex(*L, idxl);
+        addressPlaylist X;
+        X = Alokasi(lagu->info.penyanyi,lagu->info.album,lagu->info.judul_lagu);
+        DelP(L, Info(X));
+        // printf("%s,%s,%s\n",X->info.penyanyi,X->info.album,X->info.judul_lagu.judul);
+        printf("Lagu \"");
+        printWord(X->info.judul_lagu);
+        printf("\" oleh \"");
+        printWord(X->info.penyanyi);
+        printf("\" telah dihapus dari playlist \"");
+        printWord((*L).nama);
+        printf("\"!\n");
+    }
 }
 
+void stringToWord(char *string1, Word *word1)
+{
+    int i = 0;
+    word1->Length = 0;
+    while (string1[i] != '\0')
+    {
+        word1->TabWord[i] = string1[i];
+        i++;
+        word1->Length++;
+    }
+    word1->TabWord[word1->Length] = '\0';
+}
+
+void printWord(Word word)
+{
+    int len = word.Length;
+    for (int i = 0; i < len; i++)
+    {
+        printf("%c", word.TabWord[i]);
+    }
+    word.TabWord[word.Length] = '\0';
+}
+
+boolean IsDuplicateWord(Word w1, Word w2)
+{
+    boolean IsSame = true;
+    if (w1.Length != w2.Length)
+    {
+        IsSame = false;
+        return IsSame;
+    }
+    int len = w2.Length;
+
+    for (int i = 0; i < len; i++)
+    {
+        if (w2.TabWord[i] != w1.TabWord[i])
+        {
+            IsSame = false;
+            return IsSame;
+        }
+    }
+    return IsSame;
+}
+
+void CopasWord(Word *Dest, Word Src)
+{
+    // int len = LengthWord(Src);
+    int len = Src.Length;
+    int i;
+    Dest->Length = 0;
+    for (i = 0; i < len; i++)
+    {
+        Dest->TabWord[i] = Src.TabWord[i];
+        Dest->Length++;
+    }
+    Dest->TabWord[Dest->Length] = '\0';
+}
 
 int main(){
     Playlist L;
     CreateEmpty(&L);
     addressPlaylist a,s,d,f,g,h,k,l;
-    Word wbil;
-    stringToWord("billy1",&wbil);
-    // a=Alokasi("1Billy","foto","lagu");
-    // s=Alokasi("2Bully","roti","coklat");
-    // d=Alokasi("3Ucok","aaaa","keju");
-    // f=Alokasi("4Udin","uuuu","stroberi");
-    // g=Alokasi("5Upin","iiii","kacang");
+    Word w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12;
+    stringToWord("1Billy",&w1);
+    stringToWord("album1",&w2);
+    stringToWord("lagu1",&w3);
+    stringToWord("2Bully",&w4);
+    stringToWord("album2",&w5);
+    stringToWord("lagu2",&w6);
+    stringToWord("3Udin",&w7);
+    stringToWord("album3",&w8);
+    stringToWord("lagu3",&w9);
+    stringToWord("4ucok",&w10);
+    stringToWord("album4",&w11);
+    stringToWord("lagu4",&w12);
+    a=Alokasi(w1,w2,w3);
+    s=Alokasi(w4,w5,w6);
+    d=Alokasi(w7,w8,w9);
+    f=Alokasi(w10,w11,w12);
+    printWord(a->info.penyanyi);
+    printWord(a->info.album);
+    printf("\n");
+    printWord(s->info.penyanyi);
+    printf("\n");
+    printWord(d->info.penyanyi);
+    printf("\n");
+    printWord(f->info.penyanyi);
+    printf("\n");
+    printf("sampe1.5\n");
     InsertLast(&L, a);
     InsertLast(&L, s);
     InsertLast(&L, d);
     InsertLast(&L, f);
-    InsertLast(&L, g);
+    printf("sampe2\n");
     PrintInfo(L);
     printf("di sini mulai remove\n");
     int i,j;

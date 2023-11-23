@@ -46,7 +46,7 @@ void Dealokasi(addressPlaylist *P);
 /* Melakukan dealokasi/pengembalian addressPlaylist P */
 
 /****************** PENCARIAN SEBUAH ELEMEN Playlist ******************/
-boolean Search(Playlist L, QueueSongTypeRevisi X);
+boolean Search(Playlist L, Word lagu);
 /* Mencari apakah ada elemen Playlist dengan info(P)= X */
 /* Jika ada, mengirimkan addressPlaylist elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
@@ -106,7 +106,7 @@ void DelAfter(Playlist *L, addressPlaylist *Pdel, addressPlaylist Prec);
 /*      Pdel adalah alamat elemen Playlist yang dihapus  */
 
 /****************** PROSES SEMUA ELEMEN Playlist ******************/
-void PrintInfo(Playlist *L);
+void PrintInfo(Playlist L);
 /* I.S. Playlist mungkin kosong */
 /* F.S. Jika Playlist tidak kosong, iai Playlist dicetak ke kanan: [e1,e2,...,en] */
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
@@ -136,5 +136,7 @@ addressPlaylist AddressAtIndex(Playlist L, int idx);
 void swap_tengah(Playlist L, int idx1, int idx2);
 
 void swap_pinggir(Playlist *L, int idx1, int idx2);
+
+int cekLagu(Playlist L, Word lagu);
 
 #endif

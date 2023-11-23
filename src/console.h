@@ -27,6 +27,8 @@ void Queue_Playlist();
 
 void Queue_Swap(int x, int y);
 
+void playlistalbum(Playlist *L, ListPenyanyiRevisi *LP, int idxp, int idxa, int idxplay);
+
 void Queue_Remove(int id);
 
 void Queue_Clear();

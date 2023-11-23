@@ -40,12 +40,24 @@ addressPlaylist Alokasi(Word penyanyi, Word album, Word judul)
     }
     if (P != Nil)
     {
-        CopasWord(&album, Info(P).album);
-        CopasWord(&judul, Info(P).judul_lagu);
-        CopasWord(&penyanyi, Info(P).penyanyi);
+        CopasWord(&Info(P).album, album);
+        CopasWord(&Info(P).judul_lagu, judul);
+        CopasWord(&Info(P).penyanyi, penyanyi);
         Next(P) = Nil;
         return P;
     }
+}
+
+int cekLagu(Playlist L, Word lagu)
+{
+    addressPlaylist P = First(L);
+    while (P != Nil)
+    {
+        if (IsDuplicateWord(Info(P).judul_lagu, lagu)) {
+            return -1;}
+        else P = Next(P);
+    }
+    return 1;
 }
 
 void Dealokasi(addressPlaylist *P)
@@ -57,27 +69,44 @@ void Dealokasi(addressPlaylist *P)
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN Playlist ******************/
-boolean Search(Playlist L, QueueSongTypeRevisi X)
-/* Mencari apakah ada elemen Playlist dengan Info(P)= X */
-/* Jika ada, mengirimkan address elemen tersebut. */
-/* Jika tidak ada, mengirimkan Nil */
+// boolean Search(Playlist L, QueueSongTypeRevisi X)
+// /* Mencari apakah ada elemen Playlist dengan Info(P)= X */
+// /* Jika ada, mengirimkan address elemen tersebut. */
+// /* Jika tidak ada, mengirimkan Nil */
+// {
+//     addressPlaylist p;
+//     boolean bFound = false;
+//     if (!IsEmptyList(L))
+//     {
+//         p = First(L);
+//         while (!bFound && p != Nil)
+//         {
+//             printf("apakah\n");
+//             if (IsDuplicateWord(X.judul_lagu, Info(p).judul_lagu) && IsDuplicateWord(X.album, Info(p).album) && IsDuplicateWord(X.penyanyi, Info(p).penyanyi))
+//             {
+//                 bFound = true;
+//             }
+//             else p = Next(p);
+
+//             if (bFound) printf("true\n");
+//             else if (!bFound) printf("false\n");
+//         }
+//     }
+//     return bFound;
+// }
+
+boolean Search(Playlist L, Word lagu)
 {
-    addressPlaylist P;
+    addressPlaylist P = First(L);
     boolean bFound = false;
-    if (!IsEmptyList(L))
+    while (!bFound && P != Nil)
     {
-        P = First(L);
-        while (!bFound && P != Nil)
-        {
-            if (IsDuplicateWord(X.judul_lagu, Info(P).judul_lagu) &&
-                IsDuplicateWord(X.album, Info(P).album) &&
-                IsDuplicateWord(X.penyanyi, Info(P).penyanyi))
-            {
-                bFound = true;
-            }
-            else
-                P = Next(P);
-        }
+        if (IsDuplicateWord(Info(P).judul_lagu, lagu)) {
+            bFound = true;
+            printf("ANEH\n");}
+        else P = Next(P);
+        if (bFound) printf("true\n");
+        else if (!bFound) printf("false\n");
     }
     return bFound;
 }
@@ -268,29 +297,27 @@ void DelAfter(Playlist *L, addressPlaylist *Pdel, addressPlaylist Prec)
 }
 
 /****************** PROSES SEMUA ELEMEN Playlist ******************/
-void PrintInfo(Playlist *L)
+void PrintInfo(Playlist L)
 /* I.S. Playlist mungkin kosong */
 /* F.S. Jika Playlist tidak kosong, iai Playlist dicetak ke kanan: [e1,e2,...,en] */
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 /* Jika Playlist kosong : menulis [] */
 /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
 {
-    addressPlaylist P;
-
-    if (!IsEmptyList(*L))
+    addressPlaylist P = First(L);
+    int i = 1;
+    while (P != Nil)
     {
-        P = First(*L);
-        while (P != Nil)
-        {
-            printWord(Info(P).penyanyi);
-            printf(", ");
-            printWord(Info(P).album);
-            printf(", ");
-            printWord(Info(P).judul_lagu);
-            printf("\n");
-            P = Next(P);
-        }
-    }
+        printf("%d", i);
+        printWord(Info(P).penyanyi);
+        printf(", ");
+        printWord(Info(P).album);
+        printf(", ");
+        printWord(Info(P).judul_lagu);
+        printf("\n");
+        P = Next(P);
+        i++;
+    } 
     printf("\n");
 }
 int NbElmt(Playlist L)
