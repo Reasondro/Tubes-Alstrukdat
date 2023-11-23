@@ -288,10 +288,19 @@ void playlist_add_song()
                 else
                 {
                     idxplay--;
-                    addressPlaylist P = Alokasi(&penyanyi, &album, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul);
+                    addressPlaylist P = Alokasi(penyanyi, album, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]);
                     if (Search(DP.pl[idxplay], Info(P)))
                     {
-                        printf("Lagu dengan judul “%s” pada album %s oleh penyanyi %s sudah ada dalam playlist %s.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl], DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DaftarPenyanyi.Penyanyi[idxp].nama, DP.pl[idxplay].nama);
+                        // printf("Lagu dengan judul “%s” pada album %s oleh penyanyi %s sudah ada dalam playlist %s.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl], DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DaftarPenyanyi.Penyanyi[idxp].nama, DP.pl[idxplay].nama);
+                        printf("Lagu dengan judul \"");
+                        printWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]);
+                        printf("\" pada album \"");
+                        printWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum);
+                        printf("\" Oleh penyanyi \"");
+                        printWord(DaftarPenyanyi.Penyanyi[idxp].nama);
+                        printf("\" sudah ada dalam playlist \"");
+                        printWord(DP.pl[idxplay].nama);
+                        printf("\".\n");
                     }
                     else
                     {
@@ -327,7 +336,7 @@ void playlist_add_song()
 
 void playlist_add_album()
 {
-    char penyanyi, album;
+    Word penyanyi, album;
     boolean foundp = false, founda = false;
     printf("ini daftar penyanyi harusnya\n");
     printf("Masukkan Nama Penyanyi yang dipilih : ");
@@ -345,7 +354,11 @@ void playlist_add_album()
     }
     if (!foundp)
     {
-        printf("Penyanyi %s tidak ada dalam daftar. Silakan coba lagi.", penyanyi);
+        // printf("Penyanyi %s tidak ada dalam daftar. Silakan coba lagi.", penyanyi);
+        printf("Penyanyi ");
+        printf("\"");
+        printWord(penyanyi);
+        printf("\" tidak ada dalam daftar. Silahkan coba lagi.\n");
         return;
     }
     else
@@ -365,7 +378,10 @@ void playlist_add_album()
         }
         if (!founda)
         {
-            printf("Album %s tidak ada dalam daftar. Silakan coba lagi.", album);
+            // printf("Album %s tidak ada dalam daftar. Silakan coba lagi.", album);
+            printf("Album \"");
+            printWord(album);
+            printf("\" tidak ada dalam daftar. Silahkan coba lagi.\n");
             return;
         }
         else
@@ -386,7 +402,7 @@ void playlist_add_album()
                 addressPlaylist P;
                 while (idxl < DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.JumlahLagu)
                 {
-                    P = Alokasi(&penyanyi, &album, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul);
+                    P = Alokasi(penyanyi, album, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]);
                     if (!Search(DP.pl[idxplay], Info(P)))
                     {
                         InsertLast(&DP.pl[idxplay], P);
@@ -397,11 +413,21 @@ void playlist_add_album()
                 }
                 if (count == 0)
                 {
-                    printf("Album dengan judul “%s” sudah ada pada playlist pengguna “%s”.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DP.pl[idxplay].nama);
+                    // printf("Album dengan judul “%s” sudah ada pada playlist pengguna “%s”.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DP.pl[idxplay].nama);
+                    printf("\" Album dengan judul \"");
+                    printWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum);
+                    printf("\" sudah ada pada playlist pengguna \"");
+                    printWord(DP.pl[idxplay].nama);
+                    printf("\".\n");
                 }
                 else
                 {
-                    printf("Album dengan judul “%s” berhasil ditambahkan ke dalam pada playlist pengguna “%s”.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DP.pl[idxplay].nama);
+                    // printf("Album dengan judul “%s” berhasil ditambahkan ke dalam pada playlist pengguna “%s”.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DP.pl[idxplay].nama);
+                    printf("\" Album dengan judul \"");
+                    printWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum);
+                    printf("\" berhasil ditambahkan ke dalam playlist pengguna \"");
+                    printWord(DP.pl[idxplay].nama);
+                    printf("\".\n");
                 }
             }
         }
@@ -420,7 +446,10 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
         idxplay--;
         if (!(idxl1 <= NbElmt(DP.pl[idxplay]) && idxl1 > 0))
         {
-            printf("Tidak ada lagu dengan urutan %d di playlist ""%s""", idxl1, DP.pl[idxplay].nama);
+            // printf("Tidak ada lagu dengan urutan %d di playlist ""%s""", idxl1, DP.pl[idxplay].nama);
+            printf("Tidak ada lagu dengan urutan %d di playlist \"", idxl1);
+            printWord(DP.pl[idxplay].nama);
+            printf("\",\n");
             return;
         }
         else
@@ -428,7 +457,10 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
             idxl1--;
             if (!(idxl2 <= NbElmt(DP.pl[idxplay]) && idxl2 > 0))
             {
-                printf("Tidak ada lagu dengan urutan %d di playlist ""%s""", idxl2, DP.pl[idxplay].nama);
+                // printf("Tidak ada lagu dengan urutan %d di playlist ""%s""", idxl2, DP.pl[idxplay].nama);
+                printf("Tidak ada lagu dengan urutan %d di playlist \"", idxl2);
+                printWord(DP.pl[idxplay].nama);
+                printf("\",\n");
                 return;
             }
             else
@@ -441,14 +473,28 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
                         swap_pinggir(&DP.pl[idxplay], idxl1, idxl2);
                         addressPlaylist lagu1 = AddressAtIndex(DP.pl[idxplay], idxl1);
                         addressPlaylist lagu2 = AddressAtIndex(DP.pl[idxplay], idxl2);
-                        printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
+                        // printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
+                        printf("Berhasil menukar lagu dengan nama \"");
+                        printWord(lagu1->info.judul_lagu);
+                        printf("\" dengan \"");
+                        printWord(lagu2->info.judul_lagu);
+                        printf("\" di playlist \"");
+                        printWord(DP.pl[idxplay].nama);
+                        printf("\".\n");
                     }
                     else
                     {
                         swap_pinggir(&DP.pl[idxplay], idxl2, idxl1);
                         addressPlaylist lagu1 = AddressAtIndex(DP.pl[idxplay], idxl1);
                         addressPlaylist lagu2 = AddressAtIndex(DP.pl[idxplay], idxl2);
-                        printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
+                        // printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
+                        printf("Berhasil menukar lagu dengan nama \"");
+                        printWord(lagu1->info.judul_lagu);
+                        printf("\" dengan \"");
+                        printWord(lagu2->info.judul_lagu);
+                        printf("\" di playlist \"");
+                        printWord(DP.pl[idxplay].nama);
+                        printf("\".\n");
                     }
                 }
                 else
@@ -456,7 +502,14 @@ void playlist_swap(int idxplay, int idxl1, int idxl2)
                     swap_tengah(DP.pl[idxplay], idxl1, idxl2);
                     addressPlaylist lagu1 = AddressAtIndex(DP.pl[idxplay], idxl1);
                     addressPlaylist lagu2 = AddressAtIndex(DP.pl[idxplay], idxl2);
-                    printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
+                    // printf("Berhasil menukar lagu dengan nama ""%s"" dengan ""%s"" di playlist ""%s""", lagu1->info.judul_lagu.judul, lagu2->info.judul_lagu.judul, DP.pl[idxplay].nama);
+                    printf("Berhasil menukar lagu dengan nama \"");
+                    printWord(lagu1->info.judul_lagu);
+                    printf("\" dengan \"");
+                    printWord(lagu2->info.judul_lagu);
+                    printf("\" di playlist \"");
+                    printWord(DP.pl[idxplay].nama);
+                    printf("\".\n");
                 }
             }
         }
@@ -475,9 +528,16 @@ void playlist_remove(Playlist *L, int idxl)
         idxl--;
         addressPlaylist lagu = AddressAtIndex(*L, idxl);
         addressPlaylist X;
-        X = Alokasi(lagu->info.penyanyi,lagu->info.album,lagu->info.judul_lagu.judul);;
+        X = Alokasi(lagu->info.penyanyi,lagu->info.album,lagu->info.judul_lagu);;
         DelP(L, Info(X));
-        printf("Lagu %s oleh %s telah dihapus dari playlist %s!", X->info.judul_lagu.judul, X->info.penyanyi, (*L).nama);
+        // printf("Lagu %s oleh %s telah dihapus dari playlist %s!", X->info.judul_lagu.judul, X->info.penyanyi, (*L).nama);
+        printf("Lagu \"");
+        printWord(X->info.judul_lagu);
+        printf("\" oleh \"");
+        printWord(X->info.penyanyi);
+        printf("\" telah dihapus dari playlist \"");
+        printWord((*L).nama);
+        printf("\"!\n");
     }
 }
 
@@ -514,7 +574,11 @@ void playlist_delete()
         {
             DP.pl[i] = DP.pl[i+1];
         }
-        printf("Playlist ID %d dengan judul %s berhasil dihapus.", idxplay, DP.pl[idxplay].nama);
+        // printf("Playlist ID %d dengan judul %s berhasil dihapus.", idxplay, DP.pl[idxplay].nama);
+        printf("Playlist ID %d dengan judul \"", idxplay);
+        printWord(DP.pl[idxplay].nama);
+        printf("\" berhasil dihapus.\n");
+        
     }
 }
 
@@ -578,13 +642,21 @@ void Status()
     {
         printf("Current Playlist: %s\n\n", CurrentPlaylist);
     }
-    if (IsSameString(currentPlaySong.judul_lagu.judul, ""))
+    if (IsSameString(currentPlaySong.judul_lagu, ""))
     {
         printf("Now Playing:\nNo songs have been played yet. Please search for a song to begin playback.\n\nQueue:\nYour queue is empty.\n");
     }
     else
     {
-        printf("Now Playing:\n%s - %s - %s\n\n", currentPlaySong.penyanyi, currentPlaySong.album, currentPlaySong.judul_lagu.judul);
+        // printf("Now Playing:\n%s - %s - %s\n\n", currentPlaySong.penyanyi, currentPlaySong.album, currentPlaySong.judul_lagu);
+        printf("Now Playing: ");
+        printWord(currentPlaySong.penyanyi);
+        printf(" - ");
+        printWord(currentPlaySong.album);
+        printf(" - ");
+        printWord(currentPlaySong.judul_lagu);
+        printf("\n\n");
+
         if (IsEmptyQueue(QueueOriginal))
         {
             printf("Queue:\nYour queue is empty.\n");
@@ -593,7 +665,14 @@ void Status()
         {
             for (i = 0; i < LengthQueue(QueueOriginal); i++)
             {
-                printf("%d. %s - %s - %s", i + 1, Antrean_Lagu.penyanyi, Antrean_Lagu.album, Antrean_Lagu.judul_lagu.judul);
+                // printf("%d. %s - %s - %s", i + 1, Antrean_Lagu.penyanyi, Antrean_Lagu.album, Antrean_Lagu.judul_lagu.judul);
+                printf("%d. ", Antrean_Lagu.penyanyi);
+                printWord(currentPlaySong.penyanyi);
+                printf(" - ");
+                printWord(currentPlaySong.album);
+                printf(" - ");
+                printWord(currentPlaySong.judul_lagu);
+                printf("\n\n");
             }
         }
     }
@@ -769,6 +848,16 @@ void Queue_Clear()
     printf("Queue berhasil dikosongkan.\n");
 }
 
+void quit(){
+    printf("Apakah kamu ingin menyimpan data sesi sekarang? ");
+    ADVWORD();
+    if (IsSameWord(currentWord, 'Y')){
+        Save();
+    }else if (IsSameWord(currentWord, 'N')){
+        printf("Kamu keluar dari WayangWave.\nDadah ^_^/\n")
+    }
+}
+
 void help()
 {
     if (sesi)
@@ -792,6 +881,7 @@ void help()
         printf("2. LOAD -> Untuk memulai sesi berdasarkan file konfigurasi\n");
     }
 }
+
 
 void invalid_command(){
     boolean error = false;
@@ -960,15 +1050,15 @@ void Start()
     jumlahPenyanyi = currentLine.TabLine[0] - '0'; // inisiasi jumlah penaynyi
 
     CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
-    PenyanyiTypeRevisi currentPenyanyi;       // variabel temp
-    AlbumTypeRevisi currentAlbum;             // variabel temp
-    SongType currentSong;
+    PenyanyiTypeRevisi2 currentPenyanyi;       // variabel temp
+    AlbumTypeRevisi2 currentAlbum;             // variabel temp
+    QueueSongTypeRevisi currentSong;
 
     CreateQueue(&QueueOriginal);
     CreateEmptyStack(&StackOriginal);
     CopasWord(currentPenyanyi.nama, "");
     CopasWord(currentAlbum.AlbumKe[0].NamaAlbum, "");
-    CopasWord(currentSong.judul, "");
+    CopasWord(currentSong, "");
 
     int i, j, k, l, m, n;
     for (i = 0; i < jumlahPenyanyi; i++)
@@ -1027,9 +1117,9 @@ void Load()
 
     CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
 
-    PenyanyiTypeRevisi currentPenyanyi; // variabel temp
-    AlbumTypeRevisi currentAlbum;       // variabel temp
-    SongType currentSong;
+    PenyanyiTypeRevisi2 currentPenyanyi; // variabel temp
+    AlbumTypeRevisi2 currentAlbum;       // variabel temp
+    QueueSongTypeRevisi currentSong;
 
     CreateQueue(&QueueOriginal);
     CreateEmptyStack(&StackOriginal);
@@ -1220,7 +1310,7 @@ void Load()
     }
 }
 
-void ListDefault(ListPenyanyi L)
+void ListDefault(ListPenyanyiRevisi L)
 {
 
     DisplayListPenyanyi(L);
