@@ -25,6 +25,8 @@ void CopyStack(StackRevisi SIn, StackRevisi *SOut);
 
 void displayStack(StackRevisi S);
 
+void ReverseStack(StackRevisi *StackReverse,StackRevisi *Stack);
+
 /* Nil adalah stack dengan elemen kosong . */
 /* indeks tabel */
 
