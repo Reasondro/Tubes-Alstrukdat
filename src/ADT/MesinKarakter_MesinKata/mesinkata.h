@@ -48,7 +48,7 @@ void CopyWord();
           currentChar = BLANK atau currentChar = MARK;
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
-void CopasWord(Word *Dest, Word Src);
+// void CopasWord(Word *Dest, Word Src);
 void STARTCOMMAND();
 
 void ADVCOMMAND();
@@ -67,8 +67,8 @@ void printWord(Word word);
 
 void stringCopy(char *string1, char *string2);
 
-void WordToString(Word word, char *string);
-void stringToWord(char *string1, Word *word1);
+// void WordToString(Word word, char *string);
+// void stringToWord(char *string1, Word *word1);
 int WordToInt(Word word);
 
 boolean IsSameString(char w1[], char w2[]);

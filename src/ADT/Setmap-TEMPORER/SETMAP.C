@@ -1,4 +1,6 @@
 #include "../MesinKarakter_MesinKata/mesinkata.h"
+#include "../MesinKarakter_MesinKata/mesinkarakter.h"
+
 #include "../struct.h"
 #include <stdio.h>
 

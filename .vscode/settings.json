@@ -1,8 +1,10 @@
 {
-    "files.associations": {
-        "SETMAP.C": "cpp",
-        "driverSETMAP.C": "cpp",
-        "mesinkata.h": "c",
-        "stdio.h": "c"
-    }
+  "files.associations": {
+    "*.html": "html",
+    "SETMAP.C": "cpp",
+    "driverSETMAP.C": "cpp",
+    "mesinkata.h": "c",
+    "stdio.h": "c",
+    "mesinkarakter.h": "c"
+  }
 }

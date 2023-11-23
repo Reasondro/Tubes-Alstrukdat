@@ -3,8 +3,9 @@
 #include "../../boolean.h"
 #include "../struct.h"
 #include "../MesinKarakter_MesinKata/mesinkata.h"
-#include <stdio.h>
+#include "../MesinKarakter_MesinKata/mesinkarakter.h"
 
+#include <stdio.h>
 
 // typedef char Word[20];
 

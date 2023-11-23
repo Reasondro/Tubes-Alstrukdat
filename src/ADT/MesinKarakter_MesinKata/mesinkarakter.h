@@ -51,6 +51,11 @@ void stringConcat(char *string1, char *string2);
 boolean IsSameString(char w1[], char w2[]);
 boolean IsSameChar(char c1, char c2);
 
+void stringToWord(char *string1, Word *word1);
+void wordConcat(Word *dest, Word src);
+void CopasWord(Word *Dest, Word Src);
+void WordToString(Word word, char *string);
+
 // /* Mengirimkan true jika currentChar = MARK */
 
 #endif

@@ -8,6 +8,7 @@
 #include "../../boolean.h"
 #include "../struct.h"
 #include "../MesinKarakter_MesinKata/mesinkata.h"
+#include "../MesinKarakter_MesinKata/mesinkarakter.h"
 
 void CreateEmptyStack(StackRevisi *S);
 
