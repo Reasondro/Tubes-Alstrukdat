@@ -131,3 +131,18 @@ void displayStack(StackRevisi S)
         }
     }
 }
+
+void ReverseStack(StackRevisi *Stack)
+{
+    int i;
+    QueueSongTypeRevisi mindah;
+    StackRevisi temp;
+    CreateEmptyStack(&temp);
+    int length = lengthStack(*Stack);
+    for (i = 0; i < length; i++)
+    {
+        Pop(Stack, &mindah);
+        Push(&temp, mindah);
+    }
+    CopyStack(temp, Stack);
+}

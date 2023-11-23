@@ -6,26 +6,26 @@
 #include <stdio.h>
 
 
-// typedef char keytype[20];
+// typedef char Word[20];
 
-// void CreatEmptySet(SetSong *S);
+void CreatEmptySet(SetSongRevisi *S);
 
-// boolean IsMemberSet(SetSong S, SongType Song);
+boolean IsMemberSet(SetSongRevisi S, QueueSongTypeRevisi Song);
 
-// int SearchAlbum(PenyanyiTypeRevisi P, char *album_dicari);
+int SearchAlbum(PenyanyiTypeRevisi2 P, Word album_dicari);
 
-// int SearchPenyanyi(ListPenyanyi LP, char *penyanyi_dicari);
+int SearchPenyanyi(ListPenyanyiRevisi LP, Word penyanyi_dicari);
 
-// void InsertSet(SongType Song, AlbumTypeRevisi *Album, char *NamaAlbumDicari);
+void InsertSet(Word Song, AlbumTypeRevisi2 *Album, Word NamaAlbumDicari);
 
-// void DisplaySet(AlbumTypeRevisi Album, char *NamaAlbumDicari);
+void DisplaySet(AlbumTypeRevisi2 Album, Word NamaAlbumDicari);
 
-// void CreateEmptyMap(AlbumTypeRevisi *Album);
+void CreateEmptyMap(AlbumTypeRevisi2 *Album);
 
-// boolean IsEmptyMap(AlbumTypeRevisi Album);
+boolean IsEmptyMap(AlbumTypeRevisi2 Album);
 
-// void InsertMap(AlbumTypeRevisi *Album, char *NamaAlbumDicari);
+void InsertMap(AlbumTypeRevisi2 *Album, Word NamaAlbumDicari);
 
-// void DisplayMap(ListPenyanyi L, char *PenyanyiDicari);
+void DisplayMap(ListPenyanyiRevisi L, Word PenyanyiDicari);
 
-// boolean IsMemberMap(AlbumTypeRevisi Album, keytype NamaAlbumDicari);
+boolean IsMemberMap(AlbumTypeRevisi2 Album, Word NamaAlbumDicari);

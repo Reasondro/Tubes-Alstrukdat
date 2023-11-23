@@ -1,10 +1,11 @@
 #include <stdio.h>
-#include "ADT/Queue/queue.h"
-#include "ADT/Setmap-TEMPORER/SETMAP.h"
 #include "ADT/Stack/stack.h"
+#include "ADT/List/list.h"
+#include "ADT/Setmap-TEMPORER/SETMAP.h"
+#include "ADT/Queue/queue.h"
 #include "ADT/LinkedList/listlinier.h"
 #include "ADT/MesinKarakter_MesinKata/mesinkata.h"
-#include "struct.h"
+#include "ADT/struct.h"
 
 void cmd_user();
 

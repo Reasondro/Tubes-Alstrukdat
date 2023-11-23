@@ -2,6 +2,7 @@
     "files.associations": {
         "SETMAP.C": "cpp",
         "driverSETMAP.C": "cpp",
-        "mesinkata.h": "c"
+        "mesinkata.h": "c",
+        "stdio.h": "c"
     }
 }

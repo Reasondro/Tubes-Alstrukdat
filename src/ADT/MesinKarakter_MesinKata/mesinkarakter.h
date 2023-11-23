@@ -10,7 +10,7 @@
 #include <string.h>
 
 #define MARK ';'
-#define MARKLOAD '.'
+#define MARKLOAD '\0'
 
 /* State Mesin */
 extern char currentChar;

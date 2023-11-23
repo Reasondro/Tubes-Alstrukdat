@@ -163,7 +163,7 @@ boolean IsEOP()
 void STARTLOAD(char *filename)
 {
     // pita = stdin;
-    char *dir = "saves/";
+    char dir[40] = "../save/";
     char filepath[30];
     stringCopy(filepath, dir);
     stringConcat(filepath, filename);

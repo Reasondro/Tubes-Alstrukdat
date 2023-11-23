@@ -2,7 +2,8 @@
 #include "console.h"
 #include "ADT/struct.h"
 
-int main(){
+int main()
+{
     // printf("Hello\n");
     cmd_user();
     return 0;

@@ -9,6 +9,24 @@
 #include "../struct.h"
 #include "../MesinKarakter_MesinKata/mesinkata.h"
 
+void CreateEmptyStack(StackRevisi *S);
+
+boolean IsEmptyStack(StackRevisi S);
+
+boolean IsFullStack(StackRevisi S);
+
+void Push(StackRevisi *S, QueueSongTypeRevisi X);
+
+void Pop(StackRevisi *S, QueueSongTypeRevisi *X);
+
+int lengthStack(StackRevisi S);
+
+void CopyStack(StackRevisi SIn, StackRevisi *SOut);
+
+void displayStack(StackRevisi S);
+
+void ReverseStack(StackRevisi *Stack);
+
 /* Nil adalah stack dengan elemen kosong . */
 /* indeks tabel */
 
