@@ -861,7 +861,7 @@ void quit()
     }
     else if (IsSameWord(currentWord, 'N'))
     {
-        printf("Kamu keluar dari WayangWave.\nDadah ^_^/\n")
+        printf("Kamu keluar dari WayangWave.\nDadah ^_^/\n");
     }
 }
 
