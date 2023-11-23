@@ -406,7 +406,7 @@ void playlist_add_album()
         }
         else
         {
-            printf("ini daftar playlist harusnya\n");
+            DisplayDP(DP, idxplay);
             printf("Masukkan ID Playlist yang dipilih : ");
             STARTCOMMAND();
             idxplay = *(currentWord.TabWord) - '0';
@@ -443,7 +443,7 @@ void playlist_add_album()
                 else
                 {
                     // printf("Album dengan judul “%s” berhasil ditambahkan ke dalam pada playlist pengguna “%s”.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DP.pl[idxplay].nama);
-                    printf("\" Album dengan judul \"");
+                    printf("Album dengan judul \"");
                     printWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum);
                     printf("\" berhasil ditambahkan ke dalam playlist pengguna \"");
                     printWord(DP.pl[idxplay].nama);
@@ -1631,6 +1631,14 @@ void cmd_user()
             else if (IsSameWord(currentWord, "playlistsong"))
             {
                 playlist_add_song();
+            }
+            else if (IsSameWord(currentWord, "playlistalbum"))
+            {
+                playlist_add_album();
+            }
+            else if (IsSameWord(currentWord, "playlistprint"))
+            {
+                PrintInfo(&(DP.pl[0]));
             }
             else if (IsSameWord(currentWord, "PLAY"))
             {

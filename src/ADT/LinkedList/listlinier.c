@@ -268,7 +268,7 @@ void DelAfter(Playlist *L, addressPlaylist *Pdel, addressPlaylist Prec)
 }
 
 /****************** PROSES SEMUA ELEMEN Playlist ******************/
-void PrintInfo(Playlist L)
+void PrintInfo(Playlist *L)
 /* I.S. Playlist mungkin kosong */
 /* F.S. Jika Playlist tidak kosong, iai Playlist dicetak ke kanan: [e1,e2,...,en] */
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
@@ -277,9 +277,9 @@ void PrintInfo(Playlist L)
 {
     addressPlaylist P;
 
-    if (!IsEmptyList(L))
+    if (!IsEmptyList(*L))
     {
-        P = First(L);
+        P = First(*L);
         while (P != Nil)
         {
             printWord(Info(P).penyanyi);

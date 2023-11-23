@@ -106,7 +106,7 @@ void DelAfter(Playlist *L, addressPlaylist *Pdel, addressPlaylist Prec);
 /*      Pdel adalah alamat elemen Playlist yang dihapus  */
 
 /****************** PROSES SEMUA ELEMEN Playlist ******************/
-void PrintInfo(Playlist L);
+void PrintInfo(Playlist *L);
 /* I.S. Playlist mungkin kosong */
 /* F.S. Jika Playlist tidak kosong, iai Playlist dicetak ke kanan: [e1,e2,...,en] */
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
