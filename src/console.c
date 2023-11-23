@@ -968,6 +968,7 @@ void Start()
         }
     }
     printf("File konfigurasi aplikasi berhasil dibaca. WayangWave berhasil dijalankan.\n");
+    sesi = true;
 }
 
 // // ------------------------------------------------------------
@@ -1256,7 +1257,7 @@ void ListDefault(ListPenyanyiRevisi L)
 void Save(ListPenyanyiRevisi L, QueueRevisi Q, StackRevisi S, DaftarPlaylist D, QueueSongTypeRevisi CPS)
 {
     FILE *fptr; // inisisasi file
-    char dir[40] = "saves/";
+    char dir[40] = "../save/";
     char saveFilePath[40];
     stringCopy(saveFilePath, dir);
     char saveFileName[20];
@@ -1557,18 +1558,20 @@ void invalid_command()
     }
 }
 
+Word tes1;
+
 void cmd_user()
 {
+    stringToWord("BLACKPINK", &tes1);
+
     while (mulai)
     {
         printf(">> ");
         readCommand();
-        if (IsSameWord(currentWord, "CEK")){
-            ListDefault(DaftarPenyanyi);
-            Status();
-        }
+
         if (sesi)
         {
+
             if (IsSameWord(currentWord, "LIST"))
             {
                 if (IsSameWord(currentWord, "DEFAULT"))
@@ -1579,6 +1582,32 @@ void cmd_user()
                 {
                     ListDefault(DaftarPenyanyi);
                 }
+            }
+            else if (IsSameWord(currentWord, "testing"))
+            {
+                // ListDefault(DaftarPenyanyi);
+                printWord(DaftarPenyanyi.Penyanyi[0].nama);
+                printf("\n");
+                printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].NamaAlbum);
+                printf("\n");
+                // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[1].NamaAlbum);
+                printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[0]);
+                printf("\n");
+                printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[1]);
+                printf("\n");
+                printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[2]);
+                printf("\n");
+
+                // printWord(DaftarPenyanyi.Penyanyi[2].nama);
+                // printf("\n");
+
+                // DisplayMap(DaftarPenyanyi, tes1);
+
+                // Status();
+            }
+            else if (IsSameWord(currentWord, "CEK"))
+            {
+                ListDefault(DaftarPenyanyi);
             }
             else if (IsSameWord(currentWord, "PLAY"))
             {
@@ -1672,6 +1701,7 @@ void cmd_user()
             {
                 // mulai = quit();
                 printf("quit");
+                mulai = false;
             }
             else
             {
