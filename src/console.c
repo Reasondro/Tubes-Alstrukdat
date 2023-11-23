@@ -1238,31 +1238,33 @@ void Load()
     WordToString(currentWord, LoadFileName);
     STARTLINE(LoadFileName);
 
+    boolean IsComplete = false;
+
     int jumlahPenyanyi, jumlahAlbum, jumlahLagu;
     jumlahPenyanyi = currentLine.TabLine[0] - '0'; // inisiasi jumlah penaynyi
 
     CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
-
-    PenyanyiTypeRevisi2 currentPenyanyi; // variabel temp
-    AlbumTypeRevisi2 currentAlbum;       // variabel temp
-    QueueSongTypeRevisi currentSong;
-
+    PenyanyiTypeRevisi2 currentPenyanyi;      // variabel temp
+    AlbumTypeRevisi2 currentAlbum;            // variabel temp
+    Word currentSong;
+    Word KOSONG;
+    stringToWord("", &KOSONG);
     CreateQueue(&QueueOriginal);
     CreateEmptyStack(&StackOriginal);
-    CopasWord(currentPenyanyi.nama, "");
-    CopasWord(currentAlbum.AlbumKe[0].NamaAlbum, "");
-    CopasWord(currentSong.judul, "");
 
     int i, j, k, l, m, n;
     for (i = 0; i < jumlahPenyanyi; i++)
     {
-        CopasWord(currentPenyanyi.nama, "");
+        CopasWord(&(currentPenyanyi.nama), KOSONG);
         ADVLINE();
         jumlahAlbum = currentLine.TabLine[0] - '0';
-
+        int x;
+        x = 0;
+        currentPenyanyi.nama.Length = 0;
         for (j = 2; j < currentLine.LengthLine; j++)
         {
-            currentPenyanyi.nama[j - 2] = currentLine.TabLine[j];
+            currentPenyanyi.nama.TabWord[j - 2] = currentLine.TabLine[j];
+            currentPenyanyi.nama.Length++;
         }
         InsertPenyanyi(&DaftarPenyanyi, currentPenyanyi);
 
@@ -1270,10 +1272,12 @@ void Load()
         {
             ADVLINE(); // ini masuk album pertama kali untuk penyanyi ke i;
             jumlahLagu = currentLine.TabLine[0] - '0';
-            CopasWord(currentAlbum.AlbumKe[0].NamaAlbum, "");
+            currentAlbum.AlbumKe[0].NamaAlbum.Length = 0;
+
             for (k = 2; k < currentLine.LengthLine; k++)
             {
-                currentAlbum.AlbumKe[0].NamaAlbum[k - 2] = currentLine.TabLine[k];
+                currentAlbum.AlbumKe[0].NamaAlbum.TabWord[k - 2] = currentLine.TabLine[k];
+                currentAlbum.AlbumKe[0].NamaAlbum.Length++;
             }
             InsertMap(&(DaftarPenyanyi.Penyanyi[i].album), currentAlbum.AlbumKe[0].NamaAlbum);
 
@@ -1281,10 +1285,12 @@ void Load()
             {
 
                 ADVLINE();
-                CopasWord(currentSong.judul, "");
+                currentSong.Length = 0;
+
                 for (n = 0; n < currentLine.LengthLine; n++)
                 {
-                    currentSong.judul[n] = currentLine.TabLine[n];
+                    currentSong.TabWord[n] = currentLine.TabLine[n];
+                    currentSong.Length++;
                 }
                 InsertSet(currentSong, &(DaftarPenyanyi.Penyanyi[i].album), currentAlbum.AlbumKe[0].NamaAlbum);
             }
@@ -1307,26 +1313,32 @@ void Load()
         idxHurufPenyanyi = 0;
         idxHurufAlbum = 0;
         idxHurufLagu = 0;
+        currentPlaySong.penyanyi.Length = 0;
 
         while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
         {
-            currentPlaySong.penyanyi[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
+            currentPlaySong.penyanyi.TabWord[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
+            currentPlaySong.penyanyi.Length++;
             idxHurufPenyanyi++;
             idxHuruf++;
         }
         idxHuruf++; // lanjut setelah semicolon
 
+        currentPlaySong.album.Length = 0;
         while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
         {
-            currentPlaySong.album[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
+            currentPlaySong.album.TabWord[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
+            currentPlaySong.album.Length++;
             idxHurufAlbum++;
             idxHuruf++;
         }
         idxHuruf++; // lanjut setelah semicolon
 
+        currentPlaySong.judul_lagu.Length = 0;
         for (idxHurufLagu = 0; idxHuruf < currentLine.LengthLine; idxHurufLagu++)
         {
-            currentPlaySong.judul_lagu.judul[idxHurufLagu] = currentLine.TabLine[idxHuruf];
+            currentPlaySong.judul_lagu.TabWord[idxHurufLagu] = currentLine.TabLine[idxHuruf];
+            currentPlaySong.judul_lagu.Length++;
             idxHuruf++;
         }
         ADVLINE();
@@ -1350,28 +1362,32 @@ void Load()
             idxHurufPenyanyi = 0;
             idxHurufAlbum = 0;
             idxHurufLagu = 0;
-            stringCopy(tempQST.penyanyi, "");
-            stringCopy(tempQST.album, "");
-            stringCopy(tempQST.judul_lagu.judul, "");
-
+            // stringCopy(tempQST.penyanyi, "");
+            // stringCopy(tempQST.album, "");
+            // stringCopy(tempQST.judul_lagu.judul, "");
+            tempQST.penyanyi.Length = 0;
             while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
             {
-                tempQST.penyanyi[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
+                tempQST.penyanyi.TabWord[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
+                tempQST.penyanyi.Length++;
                 idxHurufPenyanyi++;
                 idxHuruf++;
             }
             idxHuruf++; // lanjut setelah semicolon
+            tempQST.album.Length = 0;
             while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
             {
-                tempQST.album[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
+                tempQST.album.TabWord[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
+                tempQST.album.Length++;
                 idxHurufAlbum++;
                 idxHuruf++;
             }
             idxHuruf++; // lanjut setelah semicolon
-
+            tempQST.judul_lagu.Length = 0;
             for (idxHurufLagu = 0; idxHuruf < currentLine.LengthLine; idxHurufLagu++)
             {
-                tempQST.judul_lagu.judul[idxHurufLagu] = currentLine.TabLine[idxHuruf];
+                tempQST.judul_lagu.TabWord[idxHurufLagu] = currentLine.TabLine[idxHuruf];
+                tempQST.judul_lagu.Length++;
                 idxHuruf++;
             }
             enqueue(&QueueOriginal, tempQST);
@@ -1397,28 +1413,32 @@ void Load()
             idxHurufPenyanyi = 0;
             idxHurufAlbum = 0;
             idxHurufLagu = 0;
-            stringCopy(tempSST.penyanyi, "");
-            stringCopy(tempSST.album, "");
-            stringCopy(tempSST.judul_lagu.judul, "");
-
+            // stringCopy(tempSST.penyanyi, "");
+            // stringCopy(tempSST.album, "");
+            // stringCopy(tempSST.judul_lagu.judul, "");
+            tempSST.penyanyi.Length = 0;
             while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
             {
-                tempSST.penyanyi[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
+                tempSST.penyanyi.TabWord[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
+                tempSST.penyanyi.Length++;
                 idxHurufPenyanyi++;
                 idxHuruf++;
             }
             idxHuruf++; // lanjut setelah semicolon
+            tempSST.album.Length = 0;
             while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
             {
-                tempSST.album[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
+                tempSST.album.TabWord[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
+                tempSST.album.Length++;
                 idxHurufAlbum++;
                 idxHuruf++;
             }
             idxHuruf++; // lanjut setelah semicolon
-
+            tempSST.judul_lagu.Length = 0;
             for (idxHurufLagu = 0; idxHuruf < currentLine.LengthLine; idxHurufLagu++)
             {
-                tempSST.judul_lagu.judul[idxHurufLagu] = currentLine.TabLine[idxHuruf];
+                tempSST.judul_lagu.TabWord[idxHurufLagu] = currentLine.TabLine[idxHuruf];
+                tempSST.judul_lagu.Length++;
                 idxHuruf++;
             }
             Push(&StackOriginal, tempSST);
