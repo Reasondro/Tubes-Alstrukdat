@@ -6,6 +6,7 @@
 
 #include "../../boolean.h"
 #include "../struct.h"
+#include "stdio.h"
 
 #define BLANK ' '
 #define ENTER '\n'

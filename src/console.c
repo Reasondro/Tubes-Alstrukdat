@@ -908,7 +908,7 @@ void help()
 
 void Start()
 {
-    char StartFileName[40] = "save.txt";
+    char StartFileName[40] = "../save/save.txt";
     STARTLINE(StartFileName);
 
     int jumlahPenyanyi, jumlahAlbum, jumlahLagu;
@@ -1550,11 +1550,11 @@ void invalid_command()
     }
     if (invalid)
     {
-        printf("COmmand tidak diketahui!");
+        printf("COmmand tidak diketahui!\n");
     }
     else if (error)
     {
-        printf("Command tidak bisa dieksekusi!");
+        printf("Command tidak bisa dieksekusi!\n");
     }
 }
 
@@ -1684,7 +1684,7 @@ void cmd_user()
             }
             else if (IsSameWord(currentWord, "START"))
             {
-                // start();
+                Start();
             }
             else if (IsSameWord(currentWord, "LOAD"))
             {
