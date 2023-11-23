@@ -689,16 +689,21 @@ void Status()
         }
         else
         {
-            for (i = 0; i < LengthQueue(QueueOriginal); i++)
+            int len = LengthQueue(QueueOriginal);
+            printf("Queue:\n");
+            for (i = 1; i <= len; i++)
             {
+                QueueSongTypeRevisi tampil;
+                dequeue(&QueueOriginal, &tampil);
+                enqueue(&QueueOriginal, tampil);
                 // printf("%d. %s - %s - %s", i + 1, Antrean_Lagu.penyanyi, Antrean_Lagu.album, Antrean_Lagu.judul_lagu.judul);
                 printf("%d. ", i);
-                printWord(currentPlaySong.penyanyi);
+                printWord(tampil.penyanyi);
                 printf(" - ");
-                printWord(currentPlaySong.album);
+                printWord(tampil.album);
                 printf(" - ");
-                printWord(currentPlaySong.judul_lagu);
-                printf("\n\n");
+                printWord(tampil.judul_lagu);
+                printf("\n");
             }
         }
     }
@@ -717,7 +722,6 @@ void Queue_Song()
     int id_penyanyi, id_album;
     CopasWord(&chosen_penyanyi, currentWord);
     id_penyanyi = SearchPenyanyi(DaftarPenyanyi, chosen_penyanyi);
-    printf("%s\n", DaftarPenyanyi.Penyanyi[id_penyanyi]);
     if (id_penyanyi != -1)
     {
         DisplayMap(DaftarPenyanyi, currentWord);
@@ -731,24 +735,52 @@ void Queue_Song()
             printf("Masukkan ID Lagu yang dipilih : ");
             readCommand();
             id_chosen_lagu = *(currentWord.TabWord) - '0';
-            if (id_chosen_lagu < DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.JumlahLagu)
+            if (id_chosen_lagu <= DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.JumlahLagu)
             {
                 Word chosen_lagu;
                 CopasWord(&chosen_lagu, DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.Songs[id_chosen_lagu - 1]);
-                CopasWord(&currentPlaySong.penyanyi, chosen_penyanyi);
-                CopasWord(&currentPlaySong.album, chosen_album);
-                CopasWord(&currentPlaySong.judul_lagu, chosen_lagu);
-                if (CurrentPlaylist.Length != 0)
+                if (currentPlaySong.penyanyi.Length == 0)
                 {
-                    CurrentPlaylist.Length = 0;
-                    CountPlaylist = 0;
+                    CopasWord(&currentPlaySong.penyanyi, chosen_penyanyi);
+                    CopasWord(&currentPlaySong.album, chosen_album);
+                    CopasWord(&currentPlaySong.judul_lagu, chosen_lagu);
+                    printf("Tidak ada lagu yang diputar.\n");
+                    printf("Memutar lagu yang ditambahkan ke queue, yaitu ");
+                    printf("\"");
+                    printWord(currentPlaySong.judul_lagu);
+                    printf("\" oleh \"");
+                    printWord(currentPlaySong.penyanyi);
+                    printf("\".\n");
                 }
-                printf("Berhasil menambahkan lagu ");
-                printf("\"");
-                printWord(chosen_lagu);
-                printf("\" oleh \"");
-                printWord(chosen_penyanyi);
-                printf("\".\n");
+                else
+                {
+                    QueueSongTypeRevisi Antre_Lagu;
+                    // printWord(chosen_penyanyi);
+                    // printWord(chosen_album);
+                    // printWord(chosen_lagu);
+                    // printf("%s - %s - %s", chosen_penyanyi, chosen_album, chosen_lagu);
+                    CopasWord(&Antre_Lagu.penyanyi, chosen_penyanyi);
+                    CopasWord(&Antre_Lagu.album, chosen_album);
+                    CopasWord(&Antre_Lagu.judul_lagu, chosen_lagu);
+                    enqueue(&QueueOriginal, Antre_Lagu);
+                    // QueueSongTypeRevisi ngepop;
+                    // dequeue(&QueueOriginal, &ngepop);
+                    // printWord(ngepop.penyanyi);
+                    // printWord(ngepop.album);
+                    // printWord(ngepop.judul_lagu);
+
+                    if (CurrentPlaylist.Length != 0)
+                    {
+                        CurrentPlaylist.Length = 0;
+                        CountPlaylist = 0;
+                    }
+                    printf("Berhasil menambahkan lagu ");
+                    printf("\"");
+                    printWord(chosen_lagu);
+                    printf("\" oleh \"");
+                    printWord(chosen_penyanyi);
+                    printf("\" kedalam antrean.\n");
+                }
             }
             else
             {
@@ -770,13 +802,17 @@ void Queue_Song()
 void Queue_Playlist()
 {
     int id_playlist, i;
-    char *id_playlist_string;
+    printf("Masukkan ID Playlist: ");
     readCommand();
-    WordToString(currentWord, id_playlist_string);
-    id_playlist = *id_playlist_string - '0';
-    if (id_playlist < NbElmt(DP.pl[id_playlist]))
+    id_playlist = *(currentWord.TabWord) - '0';
+    if (id_playlist < DP.Neff)
     {
+        printf("%d", id_playlist);
         addressPlaylist p = (DP.pl[id_playlist].First);
+        CopasWord(&currentPlaySong.penyanyi, p->info.penyanyi);
+        CopasWord(&currentPlaySong.album, p->info.album);
+        CopasWord(&currentPlaySong.judul_lagu, p->info.judul_lagu);
+        p = Next(p);
         while (p != Nil)
         {
             enqueue(&QueueOriginal, p->info);
@@ -786,6 +822,10 @@ void Queue_Playlist()
         printf("Berhasil menambahkan playlist \"");
         printWord(DP.pl[id_playlist].nama);
         printf(" ke queue.\n");
+    }
+    else
+    {
+        printf("Playlist tidak tersedia.\n");
     }
 }
 
@@ -1620,6 +1660,14 @@ void cmd_user()
             {
                 // Queue_Playlist();
                 Queue_Song();
+                Queue_Song();
+                Queue_Song();
+                Song_Next();
+                // DisplayQueue(QueueOriginal);
+                Status();
+                // playlist_create();
+                // Queue_Playlist();
+
                 // ListDefault(DaftarPenyanyi);
                 // printWord(DaftarPenyanyi.Penyanyi[0].nama);
                 // printf("\n");

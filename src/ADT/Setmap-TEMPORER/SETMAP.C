@@ -163,7 +163,6 @@ int SearchAlbum(PenyanyiTypeRevisi2 P, Word album_dicari)
     boolean isfound = false;
     for (i = 0; i < P.album.JumlahAlbum; i++)
     {
-        printf("%s", P.album.AlbumKe[i].NamaAlbum);
         if (IsDuplicateWord(P.album.AlbumKe[i].NamaAlbum, album_dicari))
         {
             isfound = true;
