@@ -1,5 +1,5 @@
 #include "../MesinKarakter_MesinKata/mesinkata.h"
-#include "struct.h"
+#include "../struct.h"
 #include <stdio.h>
 
 // #include "mesinkarakter.c" // non comment hanya klao mo test
@@ -122,7 +122,7 @@ void DisplaySet(AlbumTypeRevisi2 Album, Word NamaAlbumDicari)
     }
     else
     {
-        printf("Tidak ada album bernama %s\n", NamaAlbumDicari);
+        printf("Tidak ada album bernama %s\n", NamaAlbumDicari.TabWord);
     }
 }
 

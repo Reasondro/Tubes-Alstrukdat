@@ -128,7 +128,7 @@ void Play_Song()
                 {
                     dequeue(&QueueOriginal, &otherSong);
                 }
-                while (!(IsEmptyStack()))
+                while (!(IsEmptyStack(StackOriginal)))
                 {
                     Pop(&StackOriginal, &otherSong);
                 }
@@ -150,12 +150,18 @@ void Play_Song()
         }
         else
         {
-            printf("Tidak ada Album \"%s\".", chosen_album);
+            // printf("Tidak ada Album \"%s\".", chosen_album);
+            printf("Tidak ada Album \"");
+            printWord(chosen_album);
+            printf("\".\n");
         }
     }
     else
     {
-        printf("Tidak ada Penyanyi \"%s\".", chosen_penyanyi);
+        // printf("Tidak ada Penyanyi \"%s\".", chosen_penyanyi);
+        printf("Tidak ada Penyanyi \"");
+        printWord(chosen_album);
+        printf("\".\n");
     }
 }
 
@@ -174,7 +180,7 @@ void Play_Playlist()
         {
             dequeue(&QueueOriginal, &otherSong);
         }
-        while (!(IsEmptyStack()))
+        while (!(IsEmptyStack(StackOriginal)))
         {
             Pop(&StackOriginal, &otherSong);
         }
@@ -209,7 +215,10 @@ void playlist_create()
         if (DP.Neff >= DP.Capacity)
             realloc_dafplay(DP);
         CopasWord(&(DP.pl[DP.Neff].nama), currentWord);
-        printf("Playlist %s berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", DP.pl[DP.Neff].nama);
+        // printf("Playlist %s berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n", DP.pl[DP.Neff].nama);
+        printf("Playlist ");
+        printWord(DP.pl[DP.Neff].nama);
+        printf(" berhasil dibuat! Silakan masukkan lagu - lagu artis terkini kesayangan Anda!\n");
         First(DP.pl[DP.Neff]) = Nil;
         DP.Neff++;
     }
@@ -334,11 +343,10 @@ void playlist_add_album()
     printf("ini daftar penyanyi harusnya\n");
     printf("Masukkan Nama Penyanyi yang dipilih : ");
     STARTCOMMAND();
-    WordToString(currentWord, &penyanyi);
     int idxp = 0, idxa = 0, idxplay;
     while (!foundp && idxp < penyanyimax)
     {
-        if (IsSameString(DaftarPenyanyi.Penyanyi[idxp].nama, &penyanyi))
+        if (IsDuplicateWord(DaftarPenyanyi.Penyanyi[idxp].nama, penyanyi))
         {
             foundp = true;
         }
@@ -359,10 +367,9 @@ void playlist_add_album()
         printf("ini daftar album harusnya\n");
         printf("Masukkan Judul Album yang dipilih : ");
         STARTCOMMAND();
-        WordToString(currentWord, &album);
         while (!founda && idxa < DaftarPenyanyi.Penyanyi[idxp].album.JumlahAlbum)
         {
-            if (IsSameString(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, &album))
+            if (IsDuplicateWord(DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, album))
             {
                 founda = true;
             }
@@ -513,7 +520,10 @@ void playlist_remove(Playlist *L, int idxl)
 {
     if (!(idxl <= NbElmt(*L) && idxl > 0))
     {
-        printf("Tidak ada lagu dengan urutan %d di playlist ""%s""", idxl, (*L).nama);
+        // printf("Tidak ada lagu dengan urutan %d di playlist \"%s\"", idxl, (*L).nama);
+        printf("Tidak ada lagu dengan urutan %d di playlist \"", idxl);
+        printWord((*L).nama);
+        printf("\"\n");
         return;
     }
     else
@@ -631,11 +641,14 @@ void Status()
 {
     QueueSongTypeRevisi Now_Playing, Antrean_Lagu;
     int i;
-    if (!(IsSameString(CurrentPlaylist, "")))
+    if (CurrentPlaylist.Length != 0)
     {
-        printf("Current Playlist: %s\n\n", CurrentPlaylist);
+        // printf("Current Playlist: %s\n\n", CurrentPlaylist);
+        printf("Current Playlist: \"");
+        printWord(CurrentPlaylist);
+        printf("\".\n");
     }
-    if (IsSameString(currentPlaySong.judul_lagu, ""))
+    if (currentPlaySong.judul_lagu.Length == 0)
     {
         printf("Now Playing:\nNo songs have been played yet. Please search for a song to begin playback.\n\nQueue:\nYour queue is empty.\n");
     }
@@ -659,7 +672,7 @@ void Status()
             for (i = 0; i < LengthQueue(QueueOriginal); i++)
             {
                 // printf("%d. %s - %s - %s", i + 1, Antrean_Lagu.penyanyi, Antrean_Lagu.album, Antrean_Lagu.judul_lagu.judul);
-                printf("%d. ", Antrean_Lagu.penyanyi);
+                printf("%d. ", i);
                 printWord(currentPlaySong.penyanyi);
                 printf(" - ");
                 printWord(currentPlaySong.album);
@@ -701,12 +714,12 @@ void Queue_Song()
                 CopasWord(&currentPlaySong.penyanyi, chosen_penyanyi);
                 CopasWord(&currentPlaySong.album, chosen_album);
                 CopasWord(&currentPlaySong.judul_lagu, chosen_lagu);
-                if (!(IsSameString(CurrentPlaylist, "")))
+                if (CurrentPlaylist.Length != 0)
                 {
-                    CopasWord(CurrentPlaylist, "");
+                    CurrentPlaylist.Length = 0;
                     CountPlaylist = 0;
                 }
-                printf("Berhasil menambahkan lagu ", chosen_lagu, chosen_penyanyi);
+                printf("Berhasil menambahkan lagu ");
                 printf("\"");
                 printWord(chosen_lagu);
                 printf("\" oleh \"");
@@ -733,7 +746,10 @@ void Queue_Playlist()
             enqueue(&QueueOriginal, p->info);
             p = Next(p);
         }
-        printf("Berhasil menambahkan playlist \"%s\" ke queue.\n", DP.pl[id_playlist].nama);
+        // printf("Berhasil menambahkan playlist \"%s\" ke queue.\n", DP.pl[id_playlist].nama);
+        printf("Berhasil menambahkan playlist \"");
+        printWord(DP.pl[id_playlist].nama);
+        printf(" ke queue.\n");
     }
 }
 
@@ -790,7 +806,7 @@ void Queue_Swap(int x, int y)
                 enqueue(&QueueOriginal, temp);
             }
         }
-        printf("Lagu ", song_x.judul_lagu, song_y.judul_lagu);
+        printf("Lagu ");
         printf("\"");
         printWord(song_x.judul_lagu);
         printf("\" berhasil ditukar dengan \"");
@@ -844,10 +860,10 @@ void Queue_Clear()
 void quit(){
     printf("Apakah kamu ingin menyimpan data sesi sekarang? ");
     ADVWORD();
-    if (IsSameWord(currentWord, 'Y')){
+    if (IsSameWord(currentWord, "Y")){
         Save();
-    }else if (IsSameWord(currentWord, 'N')){
-        printf("Kamu keluar dari WayangWave.\nDadah ^_^/\n")
+    }else if (IsSameWord(currentWord, "N")){
+        printf("Kamu keluar dari WayangWave.\nDadah ^_^/\n");
     }
 }
 
@@ -1020,9 +1036,9 @@ void cmd_user(){
                     // mulai = quit();
                     printf("quit");
             }else if (IsSameWord(currentWord, "START")){
-                start();
+                // start();
             }else if (IsSameWord(currentWord, "LOAD")){
-                Load();
+                // Load();
             }else if(IsSameWord(currentWord, "HELP")){
                 help();
             }else{
@@ -1031,309 +1047,309 @@ void cmd_user(){
         }
     }
 }
-void Start()
-{
-    char StartFileName[40] = "save.txt";
-    // printf("Masukkan nama file: ");
-    // readCommand();
-    // WordToString(currentWord, StartFileName);
-    STARTLINE(StartFileName);
+// void Start()
+// {
+//     char StartFileName[40] = "save.txt";
+//     // printf("Masukkan nama file: ");
+//     // readCommand();
+//     // WordToString(currentWord, StartFileName);
+//     STARTLINE(StartFileName);
 
-    int jumlahPenyanyi, jumlahAlbum, jumlahLagu;
-    jumlahPenyanyi = currentLine.TabLine[0] - '0'; // inisiasi jumlah penaynyi
+//     int jumlahPenyanyi, jumlahAlbum, jumlahLagu;
+//     jumlahPenyanyi = currentLine.TabLine[0] - '0'; // inisiasi jumlah penaynyi
 
-    CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
-    PenyanyiTypeRevisi2 currentPenyanyi;       // variabel temp
-    AlbumTypeRevisi2 currentAlbum;             // variabel temp
-    QueueSongTypeRevisi currentSong;
+//     CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
+//     PenyanyiTypeRevisi2 currentPenyanyi;       // variabel temp
+//     AlbumTypeRevisi2 currentAlbum;             // variabel temp
+//     QueueSongTypeRevisi currentSong;
 
-    CreateQueue(&QueueOriginal);
-    CreateEmptyStack(&StackOriginal);
-    CopasWord(currentPenyanyi.nama, "");
-    CopasWord(currentAlbum.AlbumKe[0].NamaAlbum, "");
-    CopasWord(currentSong, "");
+//     CreateQueue(&QueueOriginal);
+//     CreateEmptyStack(&StackOriginal);
+//     CopasWord(currentPenyanyi.nama, "");
+//     CopasWord(currentAlbum.AlbumKe[0].NamaAlbum, "");
+//     CopasWord(currentSong, "");
 
-    int i, j, k, l, m, n;
-    for (i = 0; i < jumlahPenyanyi; i++)
-    {
-        CopasWord(currentPenyanyi.nama, "");
-        ADVLINE();
-        jumlahAlbum = currentLine.TabLine[0] - '0';
+//     int i, j, k, l, m, n;
+//     for (i = 0; i < jumlahPenyanyi; i++)
+//     {
+//         CopasWord(currentPenyanyi.nama, "");
+//         ADVLINE();
+//         jumlahAlbum = currentLine.TabLine[0] - '0';
 
-        for (j = 2; j < currentLine.LengthLine; j++)
-        {
-            currentPenyanyi.nama[j - 2] = currentLine.TabLine[j];
-        }
-        // printf("testing -- %s\n", currentPenyanyi.nama);
-        InsertPenyanyi(&DaftarPenyanyi, currentPenyanyi);
+//         for (j = 2; j < currentLine.LengthLine; j++)
+//         {
+//             currentPenyanyi.nama[j - 2] = currentLine.TabLine[j];
+//         }
+//         // printf("testing -- %s\n", currentPenyanyi.nama);
+//         InsertPenyanyi(&DaftarPenyanyi, currentPenyanyi);
 
-        for (m = 0; m < jumlahAlbum; m++)
-        {
-            ADVLINE(); // ini masuk album pertama kali untuk penyanyi ke i;
-            jumlahLagu = currentLine.TabLine[0] - '0';
-            CopasWord(currentAlbum.AlbumKe[0].NamaAlbum, "");
-            // printf("isi album origin %s\n", currentAlbum.AlbumKe[0].NamaAlbum);
-            for (k = 2; k < currentLine.LengthLine; k++)
-            {
-                currentAlbum.AlbumKe[0].NamaAlbum[k - 2] = currentLine.TabLine[k];
-            }
-            // printf("testing -- %s\n", currentAlbum.AlbumKe[0].NamaAlbum);
-            InsertMap(&(DaftarPenyanyi.Penyanyi[i].album), currentAlbum.AlbumKe[0].NamaAlbum);
+//         for (m = 0; m < jumlahAlbum; m++)
+//         {
+//             ADVLINE(); // ini masuk album pertama kali untuk penyanyi ke i;
+//             jumlahLagu = currentLine.TabLine[0] - '0';
+//             CopasWord(currentAlbum.AlbumKe[0].NamaAlbum, "");
+//             // printf("isi album origin %s\n", currentAlbum.AlbumKe[0].NamaAlbum);
+//             for (k = 2; k < currentLine.LengthLine; k++)
+//             {
+//                 currentAlbum.AlbumKe[0].NamaAlbum[k - 2] = currentLine.TabLine[k];
+//             }
+//             // printf("testing -- %s\n", currentAlbum.AlbumKe[0].NamaAlbum);
+//             InsertMap(&(DaftarPenyanyi.Penyanyi[i].album), currentAlbum.AlbumKe[0].NamaAlbum);
 
-            for (l = 0; l < jumlahLagu; l++)
-            {
+//             for (l = 0; l < jumlahLagu; l++)
+//             {
 
-                ADVLINE();
-                CopasWord(currentSong.judul, "");
-                for (n = 0; n < currentLine.LengthLine; n++)
-                {
-                    currentSong.judul[n] = currentLine.TabLine[n];
-                }
-                InsertSet(currentSong, &(DaftarPenyanyi.Penyanyi[i].album), currentAlbum.AlbumKe[0].NamaAlbum);
-            }
-        }
-    }
-    printf("File konfigurasi aplikasi berhasil dibaca. WayangWave berhasil dijalankan.\n");
-}
+//                 ADVLINE();
+//                 CopasWord(currentSong.judul, "");
+//                 for (n = 0; n < currentLine.LengthLine; n++)
+//                 {
+//                     currentSong.judul[n] = currentLine.TabLine[n];
+//                 }
+//                 InsertSet(currentSong, &(DaftarPenyanyi.Penyanyi[i].album), currentAlbum.AlbumKe[0].NamaAlbum);
+//             }
+//         }
+//     }
+//     printf("File konfigurasi aplikasi berhasil dibaca. WayangWave berhasil dijalankan.\n");
+// }
 
-// ------------------------------------------------------------
-void Load()
-{
-    char LoadFileName[40];
-    printf("Masukkan nama file: ");
-    readCommand();
-    WordToString(currentWord, LoadFileName);
-    STARTLINE(LoadFileName);
+// // ------------------------------------------------------------
+// void Load()
+// {
+//     char LoadFileName[40];
+//     printf("Masukkan nama file: ");
+//     readCommand();
+//     WordToString(currentWord, LoadFileName);
+//     STARTLINE(LoadFileName);
 
-    int jumlahPenyanyi, jumlahAlbum, jumlahLagu;
-    jumlahPenyanyi = currentLine.TabLine[0] - '0'; // inisiasi jumlah penaynyi
+//     int jumlahPenyanyi, jumlahAlbum, jumlahLagu;
+//     jumlahPenyanyi = currentLine.TabLine[0] - '0'; // inisiasi jumlah penaynyi
 
-    CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
+//     CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
 
-    PenyanyiTypeRevisi2 currentPenyanyi; // variabel temp
-    AlbumTypeRevisi2 currentAlbum;       // variabel temp
-    QueueSongTypeRevisi currentSong;
+//     PenyanyiTypeRevisi2 currentPenyanyi; // variabel temp
+//     AlbumTypeRevisi2 currentAlbum;       // variabel temp
+//     QueueSongTypeRevisi currentSong;
 
-    CreateQueue(&QueueOriginal);
-    CreateEmptyStack(&StackOriginal);
-    CopasWord(currentPenyanyi.nama, "");
-    CopasWord(currentAlbum.AlbumKe[0].NamaAlbum, "");
-    CopasWord(currentSong.judul, "");
+//     CreateQueue(&QueueOriginal);
+//     CreateEmptyStack(&StackOriginal);
+//     CopasWord(currentPenyanyi.nama, "");
+//     CopasWord(currentAlbum.AlbumKe[0].NamaAlbum, "");
+//     CopasWord(currentSong.judul, "");
 
-    int i, j, k, l, m, n;
-    for (i = 0; i < jumlahPenyanyi; i++)
-    {
-        CopasWord(currentPenyanyi.nama, "");
-        ADVLINE();
-        jumlahAlbum = currentLine.TabLine[0] - '0';
+//     int i, j, k, l, m, n;
+//     for (i = 0; i < jumlahPenyanyi; i++)
+//     {
+//         CopasWord(currentPenyanyi.nama, "");
+//         ADVLINE();
+//         jumlahAlbum = currentLine.TabLine[0] - '0';
 
-        for (j = 2; j < currentLine.LengthLine; j++)
-        {
-            currentPenyanyi.nama[j - 2] = currentLine.TabLine[j];
-        }
-        InsertPenyanyi(&DaftarPenyanyi, currentPenyanyi);
+//         for (j = 2; j < currentLine.LengthLine; j++)
+//         {
+//             currentPenyanyi.nama[j - 2] = currentLine.TabLine[j];
+//         }
+//         InsertPenyanyi(&DaftarPenyanyi, currentPenyanyi);
 
-        for (m = 0; m < jumlahAlbum; m++)
-        {
-            ADVLINE(); // ini masuk album pertama kali untuk penyanyi ke i;
-            jumlahLagu = currentLine.TabLine[0] - '0';
-            CopasWord(currentAlbum.AlbumKe[0].NamaAlbum, "");
-            for (k = 2; k < currentLine.LengthLine; k++)
-            {
-                currentAlbum.AlbumKe[0].NamaAlbum[k - 2] = currentLine.TabLine[k];
-            }
-            InsertMap(&(DaftarPenyanyi.Penyanyi[i].album), currentAlbum.AlbumKe[0].NamaAlbum);
+//         for (m = 0; m < jumlahAlbum; m++)
+//         {
+//             ADVLINE(); // ini masuk album pertama kali untuk penyanyi ke i;
+//             jumlahLagu = currentLine.TabLine[0] - '0';
+//             CopasWord(currentAlbum.AlbumKe[0].NamaAlbum, "");
+//             for (k = 2; k < currentLine.LengthLine; k++)
+//             {
+//                 currentAlbum.AlbumKe[0].NamaAlbum[k - 2] = currentLine.TabLine[k];
+//             }
+//             InsertMap(&(DaftarPenyanyi.Penyanyi[i].album), currentAlbum.AlbumKe[0].NamaAlbum);
 
-            for (l = 0; l < jumlahLagu; l++)
-            {
+//             for (l = 0; l < jumlahLagu; l++)
+//             {
 
-                ADVLINE();
-                CopasWord(currentSong.judul, "");
-                for (n = 0; n < currentLine.LengthLine; n++)
-                {
-                    currentSong.judul[n] = currentLine.TabLine[n];
-                }
-                InsertSet(currentSong, &(DaftarPenyanyi.Penyanyi[i].album), currentAlbum.AlbumKe[0].NamaAlbum);
-            }
-        }
-    }
+//                 ADVLINE();
+//                 CopasWord(currentSong.judul, "");
+//                 for (n = 0; n < currentLine.LengthLine; n++)
+//                 {
+//                     currentSong.judul[n] = currentLine.TabLine[n];
+//                 }
+//                 InsertSet(currentSong, &(DaftarPenyanyi.Penyanyi[i].album), currentAlbum.AlbumKe[0].NamaAlbum);
+//             }
+//         }
+//     }
 
-    ADVLINE();
-    int idxHuruf;
-    int idxHurufPenyanyi;
-    int idxHurufAlbum;
-    int idxHurufLagu;
+//     ADVLINE();
+//     int idxHuruf;
+//     int idxHurufPenyanyi;
+//     int idxHurufAlbum;
+//     int idxHurufLagu;
 
-    if (IsSameChar(currentLine.TabLine[0], '-')) // masukikn currentPlaySong
-    {
-        ADVLINE();
-    }
-    else
-    {
-        idxHuruf = 0;
-        idxHurufPenyanyi = 0;
-        idxHurufAlbum = 0;
-        idxHurufLagu = 0;
+//     if (IsSameChar(currentLine.TabLine[0], '-')) // masukikn currentPlaySong
+//     {
+//         ADVLINE();
+//     }
+//     else
+//     {
+//         idxHuruf = 0;
+//         idxHurufPenyanyi = 0;
+//         idxHurufAlbum = 0;
+//         idxHurufLagu = 0;
 
-        while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
-        {
-            currentPlaySong.penyanyi[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
-            idxHurufPenyanyi++;
-            idxHuruf++;
-        }
-        idxHuruf++; // lanjut setelah semicolon
+//         while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
+//         {
+//             currentPlaySong.penyanyi[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
+//             idxHurufPenyanyi++;
+//             idxHuruf++;
+//         }
+//         idxHuruf++; // lanjut setelah semicolon
 
-        while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
-        {
-            currentPlaySong.album[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
-            idxHurufAlbum++;
-            idxHuruf++;
-        }
-        idxHuruf++; // lanjut setelah semicolon
+//         while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
+//         {
+//             currentPlaySong.album[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
+//             idxHurufAlbum++;
+//             idxHuruf++;
+//         }
+//         idxHuruf++; // lanjut setelah semicolon
 
-        for (idxHurufLagu = 0; idxHuruf < currentLine.LengthLine; idxHurufLagu++)
-        {
-            currentPlaySong.judul_lagu.judul[idxHurufLagu] = currentLine.TabLine[idxHuruf];
-            idxHuruf++;
-        }
-        ADVLINE();
-    }
-    if (IsSameChar(currentLine.TabLine[0], '0')) // masukin queue
-    {
-        ADVLINE();
-    }
-    else
-    {
-        int queueCount;
-        queueCount = currentLine.TabLine[0] - '0';
-        ADVLINE();
+//         for (idxHurufLagu = 0; idxHuruf < currentLine.LengthLine; idxHurufLagu++)
+//         {
+//             currentPlaySong.judul_lagu.judul[idxHurufLagu] = currentLine.TabLine[idxHuruf];
+//             idxHuruf++;
+//         }
+//         ADVLINE();
+//     }
+//     if (IsSameChar(currentLine.TabLine[0], '0')) // masukin queue
+//     {
+//         ADVLINE();
+//     }
+//     else
+//     {
+//         int queueCount;
+//         queueCount = currentLine.TabLine[0] - '0';
+//         ADVLINE();
 
-        QueueSongTypeRevisi tempQST;
+//         QueueSongTypeRevisi tempQST;
 
-        int o;
-        for (o = 0; o < queueCount; o++)
-        {
-            idxHuruf = 0;
-            idxHurufPenyanyi = 0;
-            idxHurufAlbum = 0;
-            idxHurufLagu = 0;
-            stringCopy(tempQST.penyanyi, "");
-            stringCopy(tempQST.album, "");
-            stringCopy(tempQST.judul_lagu.judul, "");
+//         int o;
+//         for (o = 0; o < queueCount; o++)
+//         {
+//             idxHuruf = 0;
+//             idxHurufPenyanyi = 0;
+//             idxHurufAlbum = 0;
+//             idxHurufLagu = 0;
+//             stringCopy(tempQST.penyanyi, "");
+//             stringCopy(tempQST.album, "");
+//             stringCopy(tempQST.judul_lagu.judul, "");
 
-            while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
-            {
-                tempQST.penyanyi[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
-                idxHurufPenyanyi++;
-                idxHuruf++;
-            }
-            idxHuruf++; // lanjut setelah semicolon
-            while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
-            {
-                tempQST.album[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
-                idxHurufAlbum++;
-                idxHuruf++;
-            }
-            idxHuruf++; // lanjut setelah semicolon
+//             while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
+//             {
+//                 tempQST.penyanyi[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
+//                 idxHurufPenyanyi++;
+//                 idxHuruf++;
+//             }
+//             idxHuruf++; // lanjut setelah semicolon
+//             while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
+//             {
+//                 tempQST.album[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
+//                 idxHurufAlbum++;
+//                 idxHuruf++;
+//             }
+//             idxHuruf++; // lanjut setelah semicolon
 
-            for (idxHurufLagu = 0; idxHuruf < currentLine.LengthLine; idxHurufLagu++)
-            {
-                tempQST.judul_lagu.judul[idxHurufLagu] = currentLine.TabLine[idxHuruf];
-                idxHuruf++;
-            }
-            enqueue(&QueueOriginal, tempQST);
-            ADVLINE();
-        }
-    }
-    if (IsSameChar(currentLine.TabLine[0], '0')) // masukin stack
-    {
-        ADVLINE();
-    }
-    else
-    {
-        int stackCount;
-        stackCount = currentLine.TabLine[0] - '0';
-        ADVLINE();
+//             for (idxHurufLagu = 0; idxHuruf < currentLine.LengthLine; idxHurufLagu++)
+//             {
+//                 tempQST.judul_lagu.judul[idxHurufLagu] = currentLine.TabLine[idxHuruf];
+//                 idxHuruf++;
+//             }
+//             enqueue(&QueueOriginal, tempQST);
+//             ADVLINE();
+//         }
+//     }
+//     if (IsSameChar(currentLine.TabLine[0], '0')) // masukin stack
+//     {
+//         ADVLINE();
+//     }
+//     else
+//     {
+//         int stackCount;
+//         stackCount = currentLine.TabLine[0] - '0';
+//         ADVLINE();
 
-        QueueSongTypeRevisi tempSST;
+//         QueueSongTypeRevisi tempSST;
 
-        int o;
-        for (o = 0; o < stackCount; o++)
-        {
-            idxHuruf = 0;
-            idxHurufPenyanyi = 0;
-            idxHurufAlbum = 0;
-            idxHurufLagu = 0;
-            stringCopy(tempSST.penyanyi, "");
-            stringCopy(tempSST.album, "");
-            stringCopy(tempSST.judul_lagu.judul, "");
+//         int o;
+//         for (o = 0; o < stackCount; o++)
+//         {
+//             idxHuruf = 0;
+//             idxHurufPenyanyi = 0;
+//             idxHurufAlbum = 0;
+//             idxHurufLagu = 0;
+//             stringCopy(tempSST.penyanyi, "");
+//             stringCopy(tempSST.album, "");
+//             stringCopy(tempSST.judul_lagu.judul, "");
 
-            while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
-            {
-                tempSST.penyanyi[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
-                idxHurufPenyanyi++;
-                idxHuruf++;
-            }
-            idxHuruf++; // lanjut setelah semicolon
-            while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
-            {
-                tempSST.album[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
-                idxHurufAlbum++;
-                idxHuruf++;
-            }
-            idxHuruf++; // lanjut setelah semicolon
+//             while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
+//             {
+//                 tempSST.penyanyi[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
+//                 idxHurufPenyanyi++;
+//                 idxHuruf++;
+//             }
+//             idxHuruf++; // lanjut setelah semicolon
+//             while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
+//             {
+//                 tempSST.album[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
+//                 idxHurufAlbum++;
+//                 idxHuruf++;
+//             }
+//             idxHuruf++; // lanjut setelah semicolon
 
-            for (idxHurufLagu = 0; idxHuruf < currentLine.LengthLine; idxHurufLagu++)
-            {
-                tempSST.judul_lagu.judul[idxHurufLagu] = currentLine.TabLine[idxHuruf];
-                idxHuruf++;
-            }
-            Push(&StackOriginal, tempSST);
-            ADVLINE();
-        }
-    }
-    // akhir dari baris stack, lanjut ke baris playlist jika ada
-    if (IsSameChar(currentLine.TabLine[0], '0'))
-    {
-        // printf("gaada playlist :(\n"); // isinya nanti
-    }
-    else
-    {
-        // printf("%c", currentLine.TabLine[0]); // isinya nanti habis ngerti playlist
-    }
-}
+//             for (idxHurufLagu = 0; idxHuruf < currentLine.LengthLine; idxHurufLagu++)
+//             {
+//                 tempSST.judul_lagu.judul[idxHurufLagu] = currentLine.TabLine[idxHuruf];
+//                 idxHuruf++;
+//             }
+//             Push(&StackOriginal, tempSST);
+//             ADVLINE();
+//         }
+//     }
+//     // akhir dari baris stack, lanjut ke baris playlist jika ada
+//     if (IsSameChar(currentLine.TabLine[0], '0'))
+//     {
+//         // printf("gaada playlist :(\n"); // isinya nanti
+//     }
+//     else
+//     {
+//         // printf("%c", currentLine.TabLine[0]); // isinya nanti habis ngerti playlist
+//     }
+// }
 
 void ListDefault(ListPenyanyiRevisi L)
 {
 
-    DisplayListPenyanyi(L);
-    printf("Ingin melihat album yang ada? (Y/N): ");
-    readCommand();
-    char namaPenyanyi[30];
-    char namaAlbum[30];
-    int idxPenyanyi;
-    if (IsSameWord(currentWord, "Y"))
-    {
-        printf("Pilih penyanyi untuk melihat album mereka:\n");
-        readCommand();
-        WordToString(currentWord, namaPenyanyi);
-        // printf("%s\n", namaPenyanyi);
-        // printf("BLACKPINK");
-        DisplayMap(L, namaPenyanyi);
-        printf("Ingin melihat lagu yang ada? (Y/N): ");
-        readCommand();
-        idxPenyanyi = SearchPenyanyi(L, namaPenyanyi);
-        if (IsSameWord(currentWord, "Y"))
-        {
-            printf("Pilih nama album dari penyanyi tersebut: ");
-            readCommand();
-            stringCopy(namaAlbum, "");
-            WordToString(currentWord, namaAlbum);
-            // printf("%s\n", DaftarPenyanyi.Penyanyi[1].album.AlbumKe[0].NamaAlbum);
-            DisplaySet(L.Penyanyi[idxPenyanyi].album, namaAlbum);
-        }
-    }
-    else if (IsSameWord(currentWord, "N")) // ini tinggal n keluar
-    {
-    }
+    // DisplayListPenyanyi(L);
+    // printf("Ingin melihat album yang ada? (Y/N): ");
+    // readCommand();
+    // char namaPenyanyi[30];
+    // char namaAlbum[30];
+    // int idxPenyanyi;
+    // if (IsSameWord(currentWord, "Y"))
+    // {
+    //     printf("Pilih penyanyi untuk melihat album mereka:\n");
+    //     readCommand();
+    //     WordToString(currentWord, namaPenyanyi);
+    //     // printf("%s\n", namaPenyanyi);
+    //     // printf("BLACKPINK");
+    //     DisplayMap(L, namaPenyanyi);
+    //     printf("Ingin melihat lagu yang ada? (Y/N): ");
+    //     readCommand();
+    //     idxPenyanyi = SearchPenyanyi(L, namaPenyanyi);
+    //     if (IsSameWord(currentWord, "Y"))
+    //     {
+    //         printf("Pilih nama album dari penyanyi tersebut: ");
+    //         readCommand();
+    //         stringCopy(namaAlbum, "");
+    //         WordToString(currentWord, namaAlbum);
+    //         // printf("%s\n", DaftarPenyanyi.Penyanyi[1].album.AlbumKe[0].NamaAlbum);
+    //         DisplaySet(L.Penyanyi[idxPenyanyi].album, namaAlbum);
+    //     }
+    // }
+    // else if (IsSameWord(currentWord, "N")) // ini tinggal n keluar
+    // {
+    // }
 }
