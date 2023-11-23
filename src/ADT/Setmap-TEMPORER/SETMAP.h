@@ -16,7 +16,7 @@ int SearchAlbum(PenyanyiTypeRevisi2 P, Word album_dicari);
 
 int SearchPenyanyi(ListPenyanyiRevisi LP, Word penyanyi_dicari);
 
-void InsertSet(QueueSongTypeRevisi Song, AlbumTypeRevisi2 *Album, Word NamaAlbumDicari);
+void InsertSet(Word Song, AlbumTypeRevisi2 *Album, Word NamaAlbumDicari);
 
 void DisplaySet(AlbumTypeRevisi2 Album, Word NamaAlbumDicari);
 
