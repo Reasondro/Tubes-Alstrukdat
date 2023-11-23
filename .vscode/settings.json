@@ -5,6 +5,7 @@
     "driverSETMAP.C": "cpp",
     "mesinkata.h": "c",
     "stdio.h": "c",
-    "mesinkarakter.h": "c"
+    "mesinkarakter.h": "c",
+    "queue.h": "c"
   }
 }

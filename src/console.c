@@ -307,7 +307,7 @@ void playlist_add_song()
             else
             {
                 idxl--;
-                DisplayDP(DP,idxplay);
+                DisplayDP(DP, idxplay);
                 printf("Masukkan ID Playlist yang dipilih : ");
                 STARTCOMMAND();
                 idxplay = *(currentWord.TabWord) - '0';
@@ -711,22 +711,26 @@ void Queue_Song()
     Word id_chosen_lagu_string;
     int id_chosen_lagu;
 
+    DisplayListPenyanyi(DaftarPenyanyi);
     printf("Masukkan Nama Penyanyi yang dipilih : ");
     readCommand();
     int id_penyanyi, id_album;
-    id_penyanyi = SearchPenyanyi(DaftarPenyanyi, currentWord);
+    CopasWord(&chosen_penyanyi, currentWord);
+    id_penyanyi = SearchPenyanyi(DaftarPenyanyi, chosen_penyanyi);
+    printf("%s\n", DaftarPenyanyi.Penyanyi[id_penyanyi]);
     if (id_penyanyi != -1)
     {
         DisplayMap(DaftarPenyanyi, currentWord);
         printf("Masukkan Nama Album yang dipilih : ");
         readCommand();
+        CopasWord(&chosen_album, currentWord);
         id_album = SearchAlbum(DaftarPenyanyi.Penyanyi[id_penyanyi], chosen_album);
         if (id_album != -1)
         {
             DisplaySet(DaftarPenyanyi.Penyanyi[id_penyanyi].album, chosen_album);
             printf("Masukkan ID Lagu yang dipilih : ");
             readCommand();
-            id_chosen_lagu = *(id_chosen_lagu_string.TabWord) - '0';
+            id_chosen_lagu = *(currentWord.TabWord) - '0';
             if (id_chosen_lagu < DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.JumlahLagu)
             {
                 Word chosen_lagu;
@@ -746,7 +750,19 @@ void Queue_Song()
                 printWord(chosen_penyanyi);
                 printf("\".\n");
             }
+            else
+            {
+                printf("Tidak ada lagu dengan ID %d\n", id_chosen_lagu);
+            }
         }
+        else
+        {
+            printf("Album tidak tersedia.\n");
+        }
+    }
+    else
+    {
+        printf("Penyanyi tidak tersedia.\n");
     }
 }
 
@@ -1602,6 +1618,8 @@ void cmd_user()
 
             else if (IsSameWord(currentWord, "testing"))
             {
+                // Queue_Playlist();
+                Queue_Song();
                 // ListDefault(DaftarPenyanyi);
                 // printWord(DaftarPenyanyi.Penyanyi[0].nama);
                 // printf("\n");
@@ -1614,8 +1632,8 @@ void cmd_user()
                 // printf("\n");
                 // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[2]);
                 // printf("\n");
-                init_dafplay();
-                playlist_create();
+                // init_dafplay();
+                // playlist_create();
 
                 // printWord(DaftarPenyanyi.Penyanyi[2].nama);
                 // printf("\n");
