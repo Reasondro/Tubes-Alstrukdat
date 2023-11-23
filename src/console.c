@@ -1563,6 +1563,10 @@ void cmd_user()
     {
         printf(">> ");
         readCommand();
+        if (IsSameWord(currentWord, "CEK")){
+            ListDefault(DaftarPenyanyi);
+            Status();
+        }
         if (sesi)
         {
             if (IsSameWord(currentWord, "LIST"))
