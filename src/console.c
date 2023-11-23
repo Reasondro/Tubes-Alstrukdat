@@ -1206,6 +1206,7 @@ void Load()
     {
         // printf("%c", currentLine.TabLine[0]); // isinya nanti habis ngerti playlist
     }
+    sesi = true;
 }
 
 void ListDefault(ListPenyanyiRevisi L)
@@ -1594,6 +1595,11 @@ void cmd_user()
                     ListDefault(DaftarPenyanyi);
                 }
             }
+            else if (IsSameWord(currentWord, "display"))
+            {
+                DisplayMap(DaftarPenyanyi, tes1);
+            }
+
             else if (IsSameWord(currentWord, "testing"))
             {
                 // ListDefault(DaftarPenyanyi);
