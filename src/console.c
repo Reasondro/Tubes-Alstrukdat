@@ -239,7 +239,9 @@ void playlist_add_song()
     }
     if (!foundp)
     {
-        printf("Penyanyi %s tidak ada dalam daftar. Silakan coba lagi.", penyanyi);
+        printf("Penyanyi ");
+        printWord(penyanyi);
+        printf(" tidak ada dalam daftar. Silakan coba lagi.");
         return;
     }
     else
@@ -259,7 +261,9 @@ void playlist_add_song()
         }
         if (!founda)
         {
-            printf("Album %s tidak ada dalam daftar. Silakan coba lagi.", album);
+            printf("Album ");
+            printWord(album);
+            printf(" tidak ada dalam daftar. Silakan coba lagi.");
             return;
         }
         else
@@ -304,14 +308,7 @@ void playlist_add_song()
                     }
                     else
                     {
-                        QueueSongTypeRevisi X;
-                        // stringCopy(X.album, &album);
-                        // stringCopy(X.judul_lagu.judul, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul);
-                        // stringCopy(X.penyanyi, &penyanyi);
-                        // stringCopy(X.album, &album);
-                        // stringCopy(X.judul_lagu.judul, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul);
-                        // stringCopy(X.penyanyi, &penyanyi);
-                        InsVLast(&DP.pl[idxplay], X);
+                        InsVLast(&DP.pl[idxplay], Info(P));
                         // printf("Lagu dengan judul “%s” pada album %s oleh penyanyi %s berhasil ditambahkan ke dalam playlist %s.\n", DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl].judul, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, DaftarPenyanyi.Penyanyi[idxp].nama, DP.pl[idxplay].nama);
                         printf("Lagu dengan judul ");
                         printf("\"");
@@ -323,10 +320,6 @@ void playlist_add_song()
                         printf("\" berhasil ditambahkan ke dalam playlist \"");
                         printWord(DP.pl[idxplay].nama);
                         printf("\".\n");
-
-
-
-                        
                     }
                 }
             }
