@@ -1192,8 +1192,9 @@ void Start()
     jumlahPenyanyi = currentLine.TabLine[0] - '0'; // inisiasi jumlah penaynyi
 
     CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
-    PenyanyiTypeRevisi2 currentPenyanyi;      // variabel temp
-    AlbumTypeRevisi2 currentAlbum;            // variabel temp
+    CreateEmptyDaftarPlaylist(&DP);
+    PenyanyiTypeRevisi2 currentPenyanyi; // variabel temp
+    AlbumTypeRevisi2 currentAlbum;       // variabel temp
     Word currentSong;
     Word KOSONG;
     stringToWord("", &KOSONG);
@@ -1262,8 +1263,9 @@ void Load()
     jumlahPenyanyi = currentLine.TabLine[0] - '0'; // inisiasi jumlah penaynyi
 
     CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
-    PenyanyiTypeRevisi2 currentPenyanyi;      // variabel temp
-    AlbumTypeRevisi2 currentAlbum;            // variabel temp
+    CreateEmptyDaftarPlaylist(&DP);
+    PenyanyiTypeRevisi2 currentPenyanyi; // variabel temp
+    AlbumTypeRevisi2 currentAlbum;       // variabel temp
     Word currentSong;
     Word KOSONG;
     stringToWord("", &KOSONG);
@@ -1459,6 +1461,7 @@ void Load()
             Push(&StackOriginal, tempSST);
             ADVLINE();
         }
+        ReverseStack(&StackOriginal);
     }
     // akhir dari baris stack, lanjut ke baris playlist jika ada
     if (IsSameChar(currentLine.TabLine[0], '0'))
@@ -1526,4 +1529,174 @@ void ListDefault(ListPenyanyiRevisi L)
     {
         return;
     }
+}
+
+void Save(ListPenyanyiRevisi L, QueueRevisi Q, StackRevisi S, DaftarPlaylist D, QueueSongTypeRevisi CPS)
+{
+    FILE *fptr; // inisisasi file
+    char dir[40] = "saves/";
+    char saveFilePath[40];
+    stringCopy(saveFilePath, dir);
+    char saveFileName[20];
+    printf("Masukkan nama save file: ");
+    readCommand();
+    WordToString(currentWord, saveFileName);
+    stringConcat(saveFilePath, saveFileName);
+
+    // scanf("%s", saveFileName);
+    fptr = fopen(saveFilePath, "w");
+
+    QueueRevisi QueueTemp; // mulai prosedur save queue
+    // CreateQueue(&QueueTemp);
+    CopyQueue(Q, &QueueTemp);
+    QueueSongTypeRevisi qstQTemp;
+    int jumlahQueue;
+
+    // nge save jumlah penyanyi;
+    fprintf(fptr, "%d\n", L.JumlahPenyanyi);
+
+    // nge save album per penyanyi;
+    int i, j, k, l;
+    int countPenyanyi;
+    int countAlbum;
+    int countLagu;
+    countPenyanyi = L.JumlahPenyanyi;
+
+    for (i = 0; i < countPenyanyi; i++)
+    {
+        fprintf(fptr, "%d ", L.Penyanyi[i].album.JumlahAlbum);
+        FPRINTWORD(fptr, L.Penyanyi[i].nama);
+        fprintf(fptr, "\n");
+        countAlbum = L.Penyanyi[i].album.JumlahAlbum;
+        for (j = 0; j < countAlbum; j++)
+        {
+            fprintf(fptr, "%d ", L.Penyanyi[i].album.AlbumKe[j].DaftarLagu.JumlahLagu);
+            countLagu = L.Penyanyi[i].album.AlbumKe[j].DaftarLagu.JumlahLagu;
+            FPRINTWORD(fptr, L.Penyanyi[i].album.AlbumKe[j].NamaAlbum);
+            fprintf(fptr, "\n");
+            for (k = 0; k < countLagu; k++)
+            {
+                FPRINTWORD(fptr, L.Penyanyi[i].album.AlbumKe[j].DaftarLagu.Songs[k]);
+                fprintf(fptr, "\n");
+            }
+        }
+    }
+
+    // ini buat nge save currentPlaySongs
+    if (currentPlaySong.penyanyi.Length != 0)
+    {
+        FPRINTWORD(fptr, CPS.penyanyi);
+        fprintf(fptr, ";");
+        FPRINTWORD(fptr, CPS.album);
+        fprintf(fptr, ";");
+        FPRINTWORD(fptr, CPS.judul_lagu);
+        fprintf(fptr, "\n");
+    }
+    else
+    {
+        fprintf(fptr, "-\n");
+    }
+
+    if (!IsEmptyQueue(Q))
+    {
+        jumlahQueue = LengthQueue(QueueTemp);
+        fprintf(fptr, "%d\n", jumlahQueue);
+        for (i = 0; i < LengthQueue(Q); i++)
+        {
+            qstQTemp.penyanyi.Length = 0;
+            qstQTemp.album.Length = 0;
+            qstQTemp.judul_lagu.Length = 0;
+            dequeue(&QueueTemp, &qstQTemp);
+
+            for (int x = 0; x < qstQTemp.penyanyi.Length; x++)
+            {
+                if (x == qstQTemp.penyanyi.Length - 1)
+                {
+                    fprintf(fptr, "%c;", qstQTemp.penyanyi.TabWord[x]);
+                    break;
+                }
+                fprintf(fptr, "%c", qstQTemp.penyanyi.TabWord[x]);
+            }
+            for (int y = 0; y < qstQTemp.album.Length; y++)
+            {
+                if (y == qstQTemp.album.Length - 1)
+                {
+                    fprintf(fptr, "%c;", qstQTemp.album.TabWord[y]);
+                    break;
+                }
+                fprintf(fptr, "%c", qstQTemp.album.TabWord[y]);
+            }
+            for (int z = 0; z < qstQTemp.judul_lagu.Length; z++)
+            {
+                if (z == qstQTemp.judul_lagu.Length - 1)
+                {
+                    fprintf(fptr, "%c\n", qstQTemp.judul_lagu.TabWord[z]);
+                    break;
+                }
+                fprintf(fptr, "%c", qstQTemp.judul_lagu.TabWord[z]);
+            }
+        }
+    }
+    else
+    {
+        fprintf(fptr, "0\n");
+    }
+
+    StackRevisi StackTemp; // mulai prosedur save stack
+    CreateEmptyStack(&StackTemp);
+    CopyStack(S, &StackTemp);
+    QueueSongTypeRevisi qstSTemp;
+    int jumlahStack;
+
+    if (!IsEmptyStack(S))
+    {
+        jumlahStack = lengthStack(StackTemp);
+        fprintf(fptr, "%d\n", jumlahStack);
+        for (i = 0; i < lengthStack(S); i++)
+        {
+            qstSTemp.penyanyi.Length = 0;
+            qstSTemp.album.Length = 0;
+            qstSTemp.judul_lagu.Length = 0;
+            Pop(&StackTemp, &qstSTemp);
+            for (int a = 0; qstSTemp.penyanyi.Length; a++)
+            {
+                if (a == qstSTemp.penyanyi.Length - 1)
+                {
+                    fprintf(fptr, "%c;", qstSTemp.penyanyi.TabWord[a]);
+                    break;
+                }
+                fprintf(fptr, "%c", qstSTemp.penyanyi.TabWord[a]);
+            }
+            for (int b = 0; qstSTemp.album.Length; b++)
+            {
+                if (b == qstSTemp.album.Length - 1)
+                {
+                    fprintf(fptr, "%c;", qstSTemp.album.TabWord[b]);
+                    break;
+                }
+                fprintf(fptr, "%c", qstSTemp.album.TabWord[b]);
+            }
+            for (int c = 0; qstSTemp.judul_lagu.Length; c++)
+            {
+                if (c == qstSTemp.judul_lagu.Length - 1)
+                {
+                    fprintf(fptr, "%c\n", qstSTemp.judul_lagu.TabWord[c]);
+                    break;
+                }
+                fprintf(fptr, "%c", qstSTemp.judul_lagu.TabWord[c]);
+            }
+        }
+    }
+    else
+    {
+        fprintf(fptr, "0\n");
+    }
+    if (D.Neff == 0)
+    {
+        fprintf(fptr, "%d\n", D.Neff);
+    }
+    else
+    {
+    }
+    fclose(fptr);
 }

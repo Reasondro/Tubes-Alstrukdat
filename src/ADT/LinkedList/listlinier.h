@@ -32,6 +32,7 @@ boolean IsEmptyList(Playlist L);
 void CreateEmpty(Playlist *L);
 /* I.S. sembarang             */
 /* F.S. Terbentuk Playlist kosong */
+void CreateEmptyDaftarPlaylist(DaftarPlaylist *D);
 
 /****************** Manajemen Memori ******************/
 addressPlaylist Alokasi(Word penyanyi, Word album, Word judul);

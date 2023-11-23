@@ -21,6 +21,11 @@ void CreateEmpty(Playlist *L)
     First(*L) = Nil;
 }
 
+void CreateEmptyDaftarPlaylist(DaftarPlaylist *D)
+{
+    D->Neff = 0;
+}
+
 /****************** Manajemen Memori ******************/
 addressPlaylist Alokasi(Word penyanyi, Word album, Word judul)
 /* Mengirimkan address hasil alokasi sebuah elemen */
@@ -29,9 +34,12 @@ addressPlaylist Alokasi(Word penyanyi, Word album, Word judul)
 /* Jika alokasi gagal, mengirimkan Nil */
 {
     addressPlaylist P = (addressPlaylist)malloc(1 * sizeof(SongPlay));
-    while (P == Nil) {
+    while (P == Nil)
+    {
         addressPlaylist P = (addressPlaylist)malloc(1 * sizeof(SongPlay));
-    } if (P != Nil){
+    }
+    if (P != Nil)
+    {
         CopasWord(&album, Info(P).album);
         CopasWord(&judul, Info(P).judul_lagu);
         CopasWord(&penyanyi, Info(P).penyanyi);
@@ -56,17 +64,22 @@ boolean Search(Playlist L, QueueSongTypeRevisi X)
 {
     addressPlaylist P;
     boolean bFound = false;
-    if (!IsEmptyList(L)){
+    if (!IsEmptyList(L))
+    {
         P = First(L);
-        while (!bFound && P != Nil){
-            if (IsDuplicateWord(X.judul_lagu, Info(P).judul_lagu)&&
-                IsDuplicateWord(X.album, Info(P).album)&&
-                IsDuplicateWord(X.penyanyi, Info(P).penyanyi)) {
+        while (!bFound && P != Nil)
+        {
+            if (IsDuplicateWord(X.judul_lagu, Info(P).judul_lagu) &&
+                IsDuplicateWord(X.album, Info(P).album) &&
+                IsDuplicateWord(X.penyanyi, Info(P).penyanyi))
+            {
                 bFound = true;
             }
-            else P = Next(P);
+            else
+                P = Next(P);
         }
-    } return bFound;
+    }
+    return bFound;
 }
 
 void InsVLast(Playlist *L, QueueSongTypeRevisi X)
@@ -75,7 +88,7 @@ void InsVLast(Playlist *L, QueueSongTypeRevisi X)
 /* menambahkan elemen Playlist di akhir: elemen terakhir yang baru */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 {
-    addressPlaylist P = Alokasi(X.penyanyi,X.album,X.judul_lagu);
+    addressPlaylist P = Alokasi(X.penyanyi, X.album, X.judul_lagu);
     if (P != Nil)
     {
         InsertLast(L, P);
@@ -144,7 +157,8 @@ void InsertLast(Playlist *L, addressPlaylist P)
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
 {
     addressPlaylist Last;
-    if (IsEmptyList(*L)) InsertFirst(L, P);
+    if (IsEmptyList(*L))
+        InsertFirst(L, P);
     else
     {
         Last = First(*L);
@@ -178,11 +192,11 @@ void DelP(Playlist *L, QueueSongTypeRevisi X)
     addressPlaylist Prec;
     addressPlaylist P = First(*L);
     boolean bFound = false;
-    
+
     if (!IsEmptyList(*L))
     {
-        if (IsDuplicateWord(X.judul_lagu, Info(P).judul_lagu)&&
-            IsDuplicateWord(X.album, Info(P).album)&&
+        if (IsDuplicateWord(X.judul_lagu, Info(P).judul_lagu) &&
+            IsDuplicateWord(X.album, Info(P).album) &&
             IsDuplicateWord(X.penyanyi, Info(P).penyanyi))
         {
             DelFirst(L, &P);
@@ -194,8 +208,8 @@ void DelP(Playlist *L, QueueSongTypeRevisi X)
             P = Next(P);
             while (!bFound && P != Nil)
             {
-                if (IsDuplicateWord(X.judul_lagu, Info(P).judul_lagu)&&
-                    IsDuplicateWord(X.album, Info(P).album)&&
+                if (IsDuplicateWord(X.judul_lagu, Info(P).judul_lagu) &&
+                    IsDuplicateWord(X.album, Info(P).album) &&
                     IsDuplicateWord(X.penyanyi, Info(P).penyanyi))
                 {
                     bFound = true;
@@ -298,33 +312,35 @@ int NbElmt(Playlist L)
     return cnt;
 }
 
-
 addressPlaylist AddressAtIndex(Playlist L, int idx)
 {
     addressPlaylist P;
     P = First(L);
-    if (IsEmptyList(L)) return Nil;
-    for (int i=0; i<idx; i++){
+    if (IsEmptyList(L))
+        return Nil;
+    for (int i = 0; i < idx; i++)
+    {
         P = Next(P);
     }
     return P;
 }
 
-void swap_tengah(Playlist L, int idx1, int idx2) 
+void swap_tengah(Playlist L, int idx1, int idx2)
 {
     addressPlaylist lagu1, lagu2, prev1, prev2, next1, next2;
     lagu1 = AddressAtIndex(L, idx1);
     lagu2 = AddressAtIndex(L, idx2);
-    prev1 = AddressAtIndex(L, idx1-1);
-    prev2 = AddressAtIndex(L, idx2-1);
-    next1 = Next(lagu1); next2 = Next(lagu2);
-    if (idx2-idx1 == 1) 
+    prev1 = AddressAtIndex(L, idx1 - 1);
+    prev2 = AddressAtIndex(L, idx2 - 1);
+    next1 = Next(lagu1);
+    next2 = Next(lagu2);
+    if (idx2 - idx1 == 1)
     {
         Next(prev1) = lagu2;
         Next(lagu2) = lagu1;
         Next(lagu1) = next2;
     }
-    else if (idx1-idx2 == 1) 
+    else if (idx1 - idx2 == 1)
     {
         Next(prev2) = lagu1;
         Next(lagu1) = lagu2;
@@ -341,9 +357,9 @@ void swap_tengah(Playlist L, int idx1, int idx2)
 
 void swap_pinggir(Playlist *L, int idx1, int idx2)
 {
-    if (idx2-idx1 != 1)
+    if (idx2 - idx1 != 1)
     {
-        if (idx1==0 && idx2==NbElmt(*L)-1)
+        if (idx1 == 0 && idx2 == NbElmt(*L) - 1)
         {
             addressPlaylist lagu1, lagu2;
             DelFirst(L, &lagu1);
@@ -351,24 +367,25 @@ void swap_pinggir(Playlist *L, int idx1, int idx2)
             InsertFirst(L, lagu2);
             InsertLast(L, lagu1);
         }
-        else if (idx1==0) /* idx2==tengah */
+        else if (idx1 == 0) /* idx2==tengah */
         {
             addressPlaylist lagu1, lagu2, prev2, next1, next2;
             lagu1 = First(*L);
             lagu2 = AddressAtIndex(*L, idx2);
-            prev2 = AddressAtIndex(*L, idx2-1);
-            next2 = Next(lagu2); next1 = Next(lagu1);
+            prev2 = AddressAtIndex(*L, idx2 - 1);
+            next2 = Next(lagu2);
+            next1 = Next(lagu1);
             Next(prev2) = lagu1;
             Next(lagu1) = next2;
             Next(lagu2) = next1;
             First(*L) = lagu2;
         }
-        else if (idx2==NbElmt(*L)-1) /* idx1==tengah */
+        else if (idx2 == NbElmt(*L) - 1) /* idx1==tengah */
         {
             addressPlaylist lagu1, lagu2, prev1, prev2, next1;
             lagu1 = AddressAtIndex(*L, idx1);
-            prev1 = AddressAtIndex(*L, idx1-1);
-            prev2 = AddressAtIndex(*L, idx2-1);
+            prev1 = AddressAtIndex(*L, idx1 - 1);
+            prev2 = AddressAtIndex(*L, idx2 - 1);
             next1 = Next(lagu1);
             DelLast(L, &lagu2);
             Next(prev2) = lagu1;
@@ -379,17 +396,17 @@ void swap_pinggir(Playlist *L, int idx1, int idx2)
     }
     else
     {
-        if (idx1==0) /* idx2==1 */
+        if (idx1 == 0) /* idx2==1 */
         {
             addressPlaylist lagu1, lagu2, prev2, next2;
             lagu1 = First(*L);
             lagu2 = Next(lagu1);
             next2 = Next(lagu2);
-            First(*L)=lagu2;
+            First(*L) = lagu2;
             Next(lagu2) = lagu1;
             Next(lagu1) = next2;
         }
-        else if (idx2==NbElmt(*L)-1) /* idx1==akhir-1 */
+        else if (idx2 == NbElmt(*L) - 1) /* idx1==akhir-1 */
         {
             addressPlaylist lagu1, lagu2;
             DelLast(L, &lagu2);
