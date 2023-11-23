@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../struct.h"
 
 #define MARK ';'
 #define MARKLOAD '\0'

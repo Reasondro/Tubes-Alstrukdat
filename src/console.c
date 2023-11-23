@@ -978,7 +978,10 @@ void Load()
     printf("Masukkan nama file: ");
     readCommand();
     WordToString(currentWord, LoadFileName);
+    // printf("NAMA FILE YANG DITERIMA %s\n", LoadFileName);
+    // char LoadFileName[] = "custom.txt";
     STARTLINE(LoadFileName);
+    printf("NAMA FILE YANG DITERIMA %s\n", LoadFileName);
 
     boolean IsComplete = false;
 

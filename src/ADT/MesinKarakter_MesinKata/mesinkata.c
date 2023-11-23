@@ -102,18 +102,18 @@ void CopyWord()
     currentWord.Length = i - 1;
 }
 
-void CopasWord(Word *Dest, Word Src)
-{
-    // int len = LengthWord(Src);
-    int len = Src.Length;
-    int i;
-    Dest->Length = 0;
-    for (i = 0; i < len; i++)
-    {
-        Dest->TabWord[i] = Src.TabWord[i];
-        Dest->Length++;
-    }
-}
+// void CopasWord(Word *Dest, Word Src)
+// {
+//     // int len = LengthWord(Src);
+//     int len = Src.Length;
+//     int i;
+//     Dest->Length = 0;
+//     for (i = 0; i < len; i++)
+//     {
+//         Dest->TabWord[i] = Src.TabWord[i];
+//         Dest->Length++;
+//     }
+// }
 
 void CopyCommand()
 {
@@ -235,28 +235,28 @@ void printWord(Word word)
     }
 }
 
-void WordToString(Word word, char *string)
-{
-    int i = 0;
-    while (i < word.Length)
-    {
-        string[i] = word.TabWord[i];
-        i++;
-    }
-    string[i] = '\0';
-}
+// void WordToString(Word word, char *string)
+// {
+//     int i = 0;
+//     while (i < word.Length)
+//     {
+//         string[i] = word.TabWord[i];
+//         i++;
+//     }
+//     string[i] = '\0';
+// }
 
-void stringToWord(char *string1, Word *word1)
-{
-    int i = 0;
-    word1->Length = 0;
-    while (string1[i] != '\0')
-    {
-        word1->TabWord[i] = string1[i];
-        i++;
-        word1->Length++;
-    }
-}
+// void stringToWord(char *string1, Word *word1)
+// {
+//     int i = 0;
+//     word1->Length = 0;
+//     while (string1[i] != '\0')
+//     {
+//         word1->TabWord[i] = string1[i];
+//         i++;
+//         word1->Length++;
+//     }
+// }
 
 void ignoreBlanksLine()
 {
@@ -298,6 +298,7 @@ void ADVLINE()
 void STARTLINE(char *filename)
 {
     STARTLOAD(filename);
+    // printf("NAMA FILE YANG DITERIMA %s\n", filename);
     ignoreBlanksLine();
     if (currentCharLoad == MARKLOAD)
     {

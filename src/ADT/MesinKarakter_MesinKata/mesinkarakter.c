@@ -159,14 +159,76 @@ boolean IsEOP()
 //     pitaLoad = fopen(dir, "r");
 //     ADVLOAD();
 // }
+void stringToWord(char *string1, Word *word1)
+{
+    int i = 0;
+    word1->Length = 0;
+    while (string1[i] != '\0')
+    {
+        word1->TabWord[i] = string1[i];
+        i++;
+        word1->Length++;
+    }
+}
 
+void wordConcat(Word *dest, Word src)
+{
+    int lengthSrc = src.Length;
+    int lengthDest = dest->Length;
+
+    for (int i = 0; i < lengthSrc; i++)
+    {
+        dest->TabWord[lengthDest + i] = src.TabWord[i];
+        dest->Length++;
+    }
+}
+
+void CopasWord(Word *Dest, Word Src)
+{
+    // int len = LengthWord(Src);
+    int len = Src.Length;
+    int i;
+    Dest->Length = 0;
+    for (i = 0; i < len; i++)
+    {
+        Dest->TabWord[i] = Src.TabWord[i];
+        Dest->Length++;
+    }
+}
+void WordToString(Word word, char *string)
+{
+    int i = 0;
+    while (i < word.Length)
+    {
+        string[i] = word.TabWord[i];
+        i++;
+    }
+    string[i] = '\0';
+}
 void STARTLOAD(char *filename)
 {
     // pita = stdin;
-    char dir[40] = "../save/";
-    char filepath[30];
-    stringCopy(filepath, dir);
-    stringConcat(filepath, filename);
+    char dir[50] = "../save/";
+    char filepath[50];
+    Word dirW;
+    Word filepathW;
+    Word filenameW;
+
+    stringToWord(dir, &(dirW));
+    CopasWord(&filepathW, dirW);
+
+    stringToWord(filename, &(filenameW));
+    wordConcat(&(filepathW), filenameW);
+    WordToString(filepathW, filepath);
+    // * buat nge test
+    // printf("NAMA FILE YANG DITERIMA %s\n", filepath);
+    // printf("NAMA FILE YANG DITERIMA %s\n", filename);
+    // printf("NAMA FILE YANG DITERIMA %s\n", dir);
+
+    // stringCopy(filepath, dir);
+    // printf("NAMA FILE YANG DITERIMA %s\n", filepath);
+    // stringConcat(filepath, filename);
+
     pitaLoad = fopen(filepath, "r");
     if (pitaLoad == NULL)
     {
