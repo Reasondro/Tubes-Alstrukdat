@@ -102,5 +102,6 @@ void CopyCommandNB();
 
 void readCommandNB();
 
+Word SentenceToWord(Word w, int wordKe);
 // -------- NO BLANK ------------
 #endif
