@@ -194,19 +194,20 @@ void Play_Song()
     Word id_chosen_lagu_string;
     int id_chosen_lagu;
 
+    DisplayListPenyanyi(DaftarPenyanyi);
     printf("Masukkan Nama Penyanyi yang dipilih : ");
-    readCommandNB();
+    readCommand();
     int id_penyanyi, id_album;
-    id_penyanyi = SearchPenyanyi(DaftarPenyanyi, currentWordNB);
+    id_penyanyi = SearchPenyanyi(DaftarPenyanyi, currentWord);
     if (id_penyanyi != -1)
     {
         DisplayMap(DaftarPenyanyi, chosen_penyanyi);
         printf("Masukkan Nama Album yang dipilih : ");
-        readCommandNB();
-        id_album = SearchAlbum(DaftarPenyanyi.Penyanyi[id_penyanyi], currentWordNB);
+        readCommand();
+        id_album = SearchAlbum(DaftarPenyanyi.Penyanyi[id_penyanyi], currentWord);
         if (id_album != -1)
         {
-            DisplaySet(DaftarPenyanyi.Penyanyi[id_penyanyi].album, currentWordNB);
+            DisplaySet(DaftarPenyanyi.Penyanyi[id_penyanyi].album, currentWord);
             printf("Masukkan ID Lagu yang dipilih : ");
             readCommand();
             id_chosen_lagu = *(id_chosen_lagu_string.TabWord) - '0';
@@ -1848,7 +1849,7 @@ void cmd_user()
                 }
                 else if (IsSameWord(currentWordNB, "PLAYLIST"))
                 {
-                    ListDefault(DaftarPenyanyi);
+                    list_playlist(DP);
                 }
             }
             else if (IsSameWord(currentWordNB, "PLAY"))
