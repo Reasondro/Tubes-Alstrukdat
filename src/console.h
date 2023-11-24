@@ -7,11 +7,13 @@
 #include "ADT/MesinKarakter_MesinKata/mesinkata.h"
 #include "ADT/struct.h"
 
-void cmd_user();
+void art_WayangWave();
 
-void list_default();
+void init_dafplay();
 
-void list_playlist();
+void realloc_dafplay(DaftarPlaylist DP);
+
+void list_playlist(DaftarPlaylist depe);
 
 void Song_Next ();
 
@@ -20,18 +22,6 @@ void Song_Previous();
 void Play_Song();
 
 void Play_Playlist();
-
-void Queue_Song();
-
-void Queue_Playlist();
-
-void Queue_Swap(int x, int y);
-
-void playlistalbum(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, int idxp, int idxa, int idxplay);
-
-void Queue_Remove(int id);
-
-void Queue_Clear();
 
 void playlist_create();
 
@@ -45,7 +35,40 @@ void playlistalbum(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, int idxp, int i
 
 void playlist_swap(int idxplay, int idxl1, int idxl2);
 
-void Save();
+void playlist_remove(Playlist *L, int idxl);
+
+void playlist_removesong(int idxplay, int idxl);
+
+void playlist_delete();
+
+void Queue_Song();
+
+void Queue_Playlist();
+
+void Queue_Swap(int x, int y);
+
+void playlistalbum(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, int idxp, int idxa, int idxplay);
+
+void Queue_Remove(int id);
+
+void Queue_Clear();
+
+void quit();
+
+void help();
+
+void Start();
+
+void load_playlist_create(DaftarPlaylist *depe, Word nama);
+
+void load_playlistsong(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, Word penyanyi, Word album, Word judul, int idxplay);
+
+void ListDefault(ListPenyanyiRevisi L);
+
+void Save(ListPenyanyiRevisi L, QueueRevisi Q, StackRevisi S, DaftarPlaylist D, QueueSongTypeRevisi CPS)
 
 void Status();
 
+void invalid_command();
+
+void cmd_user();
