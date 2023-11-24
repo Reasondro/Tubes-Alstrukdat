@@ -10,6 +10,7 @@
 
 #define BLANK ' '
 #define ENTER '\n'
+#define MARKLINUX '\r'
 
 /* State Mesin Kata */
 extern boolean EndWord;

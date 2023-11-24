@@ -261,7 +261,7 @@ void printWord(Word word)
 void ignoreBlanksLine()
 {
     {
-        while (currentCharLoad == BLANK || currentCharLoad == ENTER)
+        while (currentCharLoad == BLANK || currentCharLoad == ENTER || currentCharLoad == MARKLINUX) // ini ada marklinux
         {
             ADVLOAD();
         }
@@ -273,7 +273,7 @@ void CopyLine()
 
     int i = 0;
     currentLine.LengthLine = 0;
-    while ((currentCharLoad != MARKLOAD && (currentCharLoad != ENTER)))
+    while ((currentCharLoad != MARKLOAD && (currentCharLoad != ENTER) && (currentCharLoad != MARKLINUX))) // ini ada marklinux
     {
         currentLine.TabLine[i] = currentCharLoad;
         i++;
