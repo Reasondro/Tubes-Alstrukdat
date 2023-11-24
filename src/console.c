@@ -1028,6 +1028,135 @@ void Start()
     sesi = true;
 }
 
+// ini buat load
+void load_playlist_create(DaftarPlaylist *depe, Word nama)
+{
+    if (DP.Neff >= DP.Capacity)
+        realloc_dafplay(DP);
+    CopasWord(&((*depe).pl[DP.Neff].nama), nama);
+    First(DP.pl[DP.Neff]) = Nil;
+    DP.Neff++;
+}
+
+void playlist_add_song(DaftarPlaylist *depe, ListPenyanyiRevisi *DaftarPenyanyi)
+{
+    Word penyanyi, album;
+    boolean foundp = false, founda = false;
+    DisplayListPenyanyi(*DaftarPenyanyi);
+    printf("Masukkan Nama Penyanyi yang dipilih : ");
+    STARTCOMMAND();
+    CopasWord(&penyanyi, currentWord);
+    int idxp = 0, idxa = 0, idxl, idxplay;
+    boolean foundp = false, founda = false;
+    while (!foundp && idxp < penyanyimax)
+    {
+        if (IsDuplicateWord((*DaftarPenyanyi).Penyanyi[idxp].nama, penyanyi))
+        {
+            foundp = true;
+        }
+        else
+            idxp++;
+    }
+    if (!foundp)
+    {
+        printf("Penyanyi ");
+        printWord(penyanyi);
+        printf(" tidak ada dalam daftar. Silakan coba lagi.");
+        return;
+    }
+    else
+    {
+        DisplayMap(*DaftarPenyanyi, penyanyi);
+        printf("Masukkan Judul Album yang dipilih : ");
+        STARTCOMMAND();
+        CopasWord(&album, currentWord);
+        while (!founda && idxa < (*DaftarPenyanyi).Penyanyi[idxp].album.JumlahAlbum)
+        {
+            if (IsDuplicateWord((*DaftarPenyanyi).Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, album))
+            {
+                founda = true;
+            }
+            else
+                idxa++;
+        }
+        if (!founda)
+        {
+            printf("Album ");
+            printWord(album);
+            printf(" tidak ada dalam daftar. Silakan coba lagi.");
+            return;
+        }
+        else
+        {
+            DisplaySet((*DaftarPenyanyi).Penyanyi[idxp].album, album);
+            printf("Masukkan ID Lagu yang dipilih : ");
+            STARTCOMMAND();
+            idxl = *(currentWord.TabWord) - '0';
+            if (!(idxl <= (*DaftarPenyanyi).Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.JumlahLagu && idxl > 0))
+            {
+                printf("ID Lagu %d tidak valid. Silakan coba lagi", idxl);
+                return;
+            }
+            else
+            {
+                idxl--;
+                DisplayDP(*depe);
+                printf("Masukkan ID Playlist yang dipilih : ");
+                STARTCOMMAND();
+                idxplay = *(currentWord.TabWord) - '0';
+                if (!(idxplay <= (*depe).Neff && idxplay > 0))
+                {
+                    printf("ID Playlist %d tidak valid. Silakan coba lagi", idxplay);
+                    return;
+                }
+                else
+                {
+                    idxplay--;
+                    playlistsong(depe, DaftarPenyanyi, idxp, idxa, idxl, idxplay);
+                }
+            }
+        }
+    }
+}
+
+void playlistsong(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, Word penyanyi, Word album, Word judul, int idxplay)
+{
+    int idxp = 0, idxa = 0, idxl = 0;
+    boolean foundp = false, founda = false, foundl = false;
+    while (!foundp && idxp < penyanyimax)
+    {
+        if (IsDuplicateWord((*LP).Penyanyi[idxp].nama, penyanyi))
+        {
+            foundp = true;
+        }
+        else
+            idxp++;
+    }
+    while (!founda && idxa < (*LP).Penyanyi[idxp].album.JumlahAlbum)
+    {
+        if (IsDuplicateWord((*LP).Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, album))
+        {
+            founda = true;
+        }
+        else
+            idxa++;
+    }
+    while (!foundl && idxl < (*LP).Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.JumlahLagu)
+    {
+        if (IsDuplicateWord((*LP).Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl], judul))
+        {
+            foundl = true;
+        }
+        else
+            idxl++;
+    }
+    QueueSongTypeRevisi P;
+    P.penyanyi = (*LP).Penyanyi[idxp].nama;
+    P.album = (*LP).Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum;
+    P.judul_lagu = (*LP).Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl];
+    InsVLast(&((*depe).pl[idxplay]), P);
+}
+
 // // ------------------------------------------------------------
 void Load()
 {
