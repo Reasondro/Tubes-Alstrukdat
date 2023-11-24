@@ -45,6 +45,9 @@ void ADVWORD();
           Jika currentChar = MARK, EndWord = true.
    Proses : Akuisisi kata menggunakan procedure SalinWord */
 int LengthWord(Word w1);
+
+Word SentenceToWord(Word w, int wordKe);
+
 void CopyWord();
 /* Mengakuisisi kata, menyimpan dalam currentWord
    I.S. : currentChar adalah karakter pertama dari kata

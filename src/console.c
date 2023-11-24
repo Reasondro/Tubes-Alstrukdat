@@ -190,32 +190,82 @@ void Song_Previous()
 
 void Play_Song()
 {
-    Word chosen_penyanyi;
-    Word chosen_album;
-    Word id_chosen_lagu_string;
-    int id_chosen_lagu;
+    Word penyanyi, album, lagu;
+    int idxp = 0, idxa = 0, idxl;
+    boolean foundp = false, founda = false;
 
     DisplayListPenyanyi(DaftarPenyanyi);
     printf("Masukkan Nama Penyanyi yang dipilih : ");
-    readCommand();
-    int id_penyanyi, id_album;
-    id_penyanyi = SearchPenyanyi(DaftarPenyanyi, currentWord);
-    if (id_penyanyi != -1)
+    STARTCOMMAND();
+    CopasWord(&penyanyi, currentWord);
+    while (!foundp && idxp < penyanyimax)
     {
-        DisplayMap(DaftarPenyanyi, chosen_penyanyi);
-        printf("Masukkan Nama Album yang dipilih : ");
-        readCommand();
-        id_album = SearchAlbum(DaftarPenyanyi.Penyanyi[id_penyanyi], currentWord);
-        if (id_album != -1)
+        if (IsDuplicateWord((DaftarPenyanyi).Penyanyi[idxp].nama, penyanyi))
         {
-            DisplaySet(DaftarPenyanyi.Penyanyi[id_penyanyi].album, currentWord);
-            printf("Masukkan ID Lagu yang dipilih : ");
-            readCommand();
-            id_chosen_lagu = *(id_chosen_lagu_string.TabWord) - '0';
-            if (id_chosen_lagu < DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.JumlahLagu)
+            foundp = true;
+        }
+        else
+            idxp++;
+    }
+    if (!foundp)
+    {
+        printf("Penyanyi ");
+        printWord(penyanyi);
+        printf(" tidak ada dalam daftar. Silakan coba lagi.");
+        return;
+    }
+    else
+    {
+        DisplayMap(DaftarPenyanyi, penyanyi);
+        printf("Masukkan Judul Album yang dipilih : ");
+        STARTCOMMAND();
+        CopasWord(&album, currentWord);
+        while (!founda && idxa < (DaftarPenyanyi).Penyanyi[idxp].album.JumlahAlbum)
+        {
+            if (IsDuplicateWord((DaftarPenyanyi).Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, album))
             {
-                Word chosen_lagu;
-                CopasWord(&chosen_lagu, DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.Songs[id_chosen_lagu - 1]);
+                founda = true;
+            }
+            else
+                idxa++;
+        }
+        if (!founda)
+        {
+            printf("Album ");
+            printWord(album);
+            printf(" tidak ada dalam daftar. Silakan coba lagi.");
+            return;
+        }
+        else
+        {
+            DisplaySet((DaftarPenyanyi).Penyanyi[idxp].album, album);
+            printf("Masukkan ID Lagu yang dipilih : ");
+            STARTCOMMAND();
+            idxl = *(currentWord.TabWord) - '0';
+            if (!(idxl <= (DaftarPenyanyi).Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.JumlahLagu && idxl > 0))
+            {
+                printf("ID Lagu %d tidak valid. Silakan coba lagi", idxl);
+                return;
+            }
+            else
+            {
+                idxl--;
+    // if (id_penyanyi != -1)
+    // {
+    //     DisplayMap(DaftarPenyanyi, chosen_penyanyi);
+    //     printf("Masukkan Nama Album yang dipilih : ");
+    //     readCommand();
+    //     id_album = SearchAlbum(DaftarPenyanyi.Penyanyi[id_penyanyi], currentWord);
+    //     if (id_album != -1)
+    //     {
+    //         DisplaySet(DaftarPenyanyi.Penyanyi[id_penyanyi].album, currentWord);
+            // printf("Masukkan ID Lagu yang dipilih : ");
+            // readCommand();
+            // id_chosen_lagu = *(id_chosen_lagu_string.TabWord) - '0';
+            // if (id_chosen_lagu < DaftarPenyanyi.Penyanyi[id_penyanyi].album.AlbumKe[id_album].DaftarLagu.JumlahLagu)
+            // {
+            //     Word chosen_lagu;
+                CopasWord(&lagu, DaftarPenyanyi.Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.Songs[idxl]);
                 QueueSongTypeRevisi otherSong;
                 for (int i = 0; i < LengthQueue(QueueOriginal); i++)
                 {
@@ -225,10 +275,9 @@ void Play_Song()
                 {
                     Pop(&StackOriginal, &otherSong);
                 }
-                CopasWord(&currentPlaySong.penyanyi, chosen_penyanyi);
-                CopasWord(&currentPlaySong.album, chosen_album);
-                CopasWord(&currentPlaySong.judul_lagu, chosen_lagu);
-                CountPlaylist++;
+                CopasWord(&currentPlaySong.penyanyi, penyanyi);
+                CopasWord(&currentPlaySong.album, album);
+                CopasWord(&currentPlaySong.judul_lagu, lagu);
                 printf("Memutar lagu ");
                 printf("\"");
                 printWord(currentPlaySong.judul_lagu);
@@ -236,25 +285,7 @@ void Play_Song()
                 printWord(currentPlaySong.penyanyi);
                 printf("\".\n");
             }
-            else
-            {
-                printf("Tidak ada lagu dengan id %d", id_chosen_lagu);
-            }
         }
-        else
-        {
-            // printf("Tidak ada Album \"%s\".", chosen_album);
-            printf("Tidak ada Album \"");
-            printWord(chosen_album);
-            printf("\".\n");
-        }
-    }
-    else
-    {
-        // printf("Tidak ada Penyanyi \"%s\".", chosen_penyanyi);
-        printf("Tidak ada Penyanyi \"");
-        printWord(chosen_album);
-        printf("\".\n");
     }
 }
 
