@@ -102,7 +102,8 @@ void list_playlist(DaftarPlaylist depe)
 {
     printf("Daftar playlist yang kamu miliki: \n");
     if (DP.Neff > 0)
-    {    for (int i = 0; i < depe.Neff; i++)
+    {
+        for (int i = 0; i < depe.Neff; i++)
         {
             printf("    %d.", i + 1);
             printWord(depe.pl[i].nama);
@@ -294,7 +295,7 @@ void Play_Playlist()
     }
     else
     {
-        printf("Tidak ada playlist dengan id %d.\n\n", id_Playlist+1);
+        printf("Tidak ada playlist dengan id %d.\n\n", id_Playlist + 1);
     }
 }
 
@@ -1493,7 +1494,7 @@ void Save(ListPenyanyiRevisi L, QueueRevisi Q, StackRevisi S, DaftarPlaylist D, 
 
     Word dirW;
     Word savefilepathW;
-    Word savefilenameW;
+    // Word savefilenameW;
 
     stringToWord(dir, &(dirW));
     CopasWord(&savefilepathW, dirW);
@@ -1501,9 +1502,10 @@ void Save(ListPenyanyiRevisi L, QueueRevisi Q, StackRevisi S, DaftarPlaylist D, 
     char saveFileName[30];
     // printf("Masukkan nama save file: ");
     // readCommand();
-    CopasWord(&(savefilenameW), currentWord);
+    // CopasWord(&(savefilenameW), currentWord);
 
-    wordConcat(&(savefilepathW), savefilenameW);
+    // wordConcat(&(savefilepathW), savefilenameW);
+    wordConcat(&(savefilepathW), filepath);
     WordToString(savefilepathW, saveFilePath);
 
     // scanf("%s", saveFileName);
@@ -1704,9 +1706,10 @@ void invalid_command()
 {
     boolean error = false;
     boolean invalid = false;
+    Word First_Word = SentenceToWord(currentWord, 0);
+
     if (!sesi)
     {
-        Word First_Word = SentenceToWord(currentWord, 0);
         if (IsSameWord(First_Word, "LIST"))
         {
             Word Second_Word = SentenceToWord(currentWord, 1);
@@ -1829,7 +1832,6 @@ void invalid_command()
         else if (IsSameWord(First_Word, "LOAD"))
         {
             error = true;
-
         }
         else
         {
@@ -1853,9 +1855,10 @@ void cmd_user()
     {
         printf(">> ");
         readCommand();
+        Word First_Word = SentenceToWord(currentWord, 0);
+
         if (sesi)
         {
-            Word First_Word = SentenceToWord(currentWord, 0);
             if (IsSameWord(First_Word, "LIST"))
             {
                 Word Second_Word = SentenceToWord(currentWord, 1);
@@ -1947,8 +1950,8 @@ void cmd_user()
                     int id = *(Third_Word.TabWord) - '0';
                     Word Fourth_Word = SentenceToWord(currentWord, 3);
                     int x = *(Fourth_Word.TabWord) - '0';
-                    Word Fifth_Word = SentenceToWord(currentWordm 4);
-                    int y = *(Fifth_Word.TabWord)- '0';
+                    Word Fifth_Word = SentenceToWord(currentWord, 4);
+                    int y = *(Fifth_Word.TabWord) - '0';
                     playlist_swap(id, x, y);
                 }
                 else if (IsSameWord(Second_Word, "REMOVE"))
@@ -1956,7 +1959,7 @@ void cmd_user()
                     Word Third_Word = SentenceToWord(currentWord, 2);
                     int id = *(Third_Word.TabWord) - '0';
                     Word Fourth_Word = SentenceToWord(currentWord, 3);
-                    int x = *(Fourth_Word.TabWord)- '0';
+                    int x = *(Fourth_Word.TabWord) - '0';
                     playlist_removesong(id, x);
                 }
                 else if (IsSameWord(Second_Word, "DELETE"))
