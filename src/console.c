@@ -2022,6 +2022,10 @@ void cmd_user()
                 {
                     playlist_delete();
                 }
+                else if (IsSameWord(Second_Word, "DISPLAY"))
+                {
+                    DisplayPlaylist(DP);
+                }
             }
             else if (IsSameWord(First_Word, "STATUS"))
             {
