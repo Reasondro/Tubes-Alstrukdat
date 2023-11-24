@@ -1704,107 +1704,114 @@ void invalid_command()
 {
     boolean error = false;
     boolean invalid = false;
-    if (!(sesi))
+    if (!sesi)
     {
-        if (IsSameWord(currentWordNB, "LIST"))
+        Word First_Word = SentenceToWord(currentWord, 0);
+        if (IsSameWord(First_Word, "LIST"))
         {
-            if (IsSameWord(currentWordNB, "DEFAULT"))
+            Word Second_Word = SentenceToWord(currentWord, 1);
+            if (IsSameWord(Second_Word, "DEFAULT"))
             {
                 error = true;
             }
-            else if (IsSameWord(currentWordNB, "PLAYLIST"))
+            else if (IsSameWord(Second_Word, "PLAYLIST"))
             {
                 error = true;
             }
         }
-        else if (IsSameWord(currentWordNB, "PLAY"))
+        else if (IsSameWord(First_Word, "PLAY"))
         {
-            if (IsSameWord(currentWordNB, "SONG"))
+            Word Second_Word = SentenceToWord(currentWord, 1);
+            if (IsSameWord(Second_Word, "SONG"))
             {
                 error = true;
             }
-            else if (IsSameWord(currentWordNB, "PLAYLIST"))
+            else if (IsSameWord(Second_Word, "PLAYLIST"))
             {
                 error = true;
             }
         }
-        else if (IsSameWord(currentWordNB, "QUEUE"))
+        else if (IsSameWord(First_Word, "QUEUE"))
         {
-            if (IsSameWord(currentWordNB, "SONG"))
+            Word Second_Word = SentenceToWord(currentWord, 1);
+            if (IsSameWord(Second_Word, "SONG"))
             {
                 error = true;
             }
-            else if (IsSameWord(currentWordNB, "PLAYLIST"))
+            else if (IsSameWord(Second_Word, "PLAYLIST"))
             {
                 error = true;
             }
-            else if (IsSameWord(currentWordNB, "SWAP"))
+            else if (IsSameWord(Second_Word, "SWAP"))
             {
                 error = true;
             }
-            else if (IsSameWord(currentWordNB, "REMOVE"))
+            else if (IsSameWord(Second_Word, "REMOVE"))
             {
                 error = true;
             }
-            else if (IsSameWord(currentWordNB, "CLEAR"))
+            else if (IsSameWord(Second_Word, "CLEAR"))
             {
                 error = true;
             }
         }
-        else if (IsSameWord(currentWordNB, "SONG"))
+        else if (IsSameWord(First_Word, "SONG"))
         {
-            if (IsSameWord(currentWordNB, "NEXT"))
+            Word Second_Word = SentenceToWord(currentWord, 1);
+            if (IsSameWord(Second_Word, "NEXT"))
             {
                 error = true;
             }
-            else if (IsSameWord(currentWordNB, "PREVIOUS"))
+            else if (IsSameWord(Second_Word, "PREVIOUS"))
             {
                 error = true;
             }
         }
-        else if (IsSameWord(currentWordNB, "PLAYLIST"))
+        else if (IsSameWord(First_Word, "PLAYLIST"))
         {
-            if (IsSameWord(currentWordNB, "CREATE"))
+            Word Second_Word = SentenceToWord(currentWord, 1);
+            if (IsSameWord(Second_Word, "CREATE"))
             {
                 error = true;
             }
-            else if (IsSameWord(currentWordNB, "ADD"))
+            else if (IsSameWord(Second_Word, "ADD"))
             {
-                if (IsSameWord(currentWordNB, "SONG"))
+                Word Third_Word = SentenceToWord(currentWord, 2);
+                if (IsSameWord(Third_Word, "SONG"))
                 {
                     error = true;
                 }
-                else if (IsSameWord(currentWordNB, "ALBUM"))
+                else if (IsSameWord(Third_Word, "ALBUM"))
                 {
                     error = true;
                 }
             }
-            else if (IsSameWord(currentWordNB, "SWAP"))
+            else if (IsSameWord(Second_Word, "SWAP"))
             {
                 error = true;
             }
-            else if (IsSameWord(currentWordNB, "REMOVE"))
+            else if (IsSameWord(Second_Word, "REMOVE"))
             {
                 error = true;
             }
-            else if (IsSameWord(currentWordNB, "DELETE"))
+            else if (IsSameWord(Second_Word, "DELETE"))
             {
                 error = true;
             }
         }
-        else if (IsSameWord(currentWordNB, "STATUS"))
+        else if (IsSameWord(First_Word, "STATUS"))
         {
             error = true;
         }
-        else if (IsSameWord(currentWordNB, "SAVE"))
+        else if (IsSameWord(First_Word, "SAVE"))
         {
             error = true;
         }
-        else if (IsSameWord(currentWordNB, "HELP"))
+        else if (IsSameWord(First_Word, "HELP"))
         {
             error = true;
         }
-        else if (IsSameWord(currentWordNB, "QUIT"))
+        else if (IsSameWord(First_Word, "QUIT"))
         {
             error = true;
         }
@@ -1815,9 +1822,14 @@ void invalid_command()
     }
     else
     {
-        if (IsSameWord(currentWordNB, "START") || IsSameWord(currentWordNB, "LOAD"))
+        if (IsSameWord(First_Word, "START"))
         {
             error = true;
+        }
+        else if (IsSameWord(First_Word, "LOAD"))
+        {
+            error = true;
+
         }
         else
         {
@@ -1840,132 +1852,133 @@ void cmd_user()
     while (mulai)
     {
         printf(">> ");
-        readCommandNB();
+        readCommand();
         if (sesi)
         {
-            if (IsSameWord(currentWordNB, "LIST"))
+            Word First_Word = SentenceToWord(currentWord, 0);
+            if (IsSameWord(First_Word, "LIST"))
             {
-                ADVCOMMANDNB();
-                if (IsSameWord(currentWordNB, "DEFAULT"))
+                Word Second_Word = SentenceToWord(currentWord, 1);
+                if (IsSameWord(Second_Word, "DEFAULT"))
                 {
                     ListDefault(DaftarPenyanyi);
                 }
-                else if (IsSameWord(currentWordNB, "PLAYLIST"))
+                else if (IsSameWord(Second_Word, "PLAYLIST"))
                 {
                     list_playlist(DP);
                 }
             }
-            else if (IsSameWord(currentWordNB, "PLAY"))
+            else if (IsSameWord(First_Word, "PLAY"))
             {
-                ADVCOMMANDNB();
-                if (IsSameWord(currentWordNB, "SONG"))
+                Word Second_Word = SentenceToWord(currentWord, 1);
+                if (IsSameWord(Second_Word, "SONG"))
                 {
                     Play_Song();
                 }
-                else if (IsSameWord(currentWordNB, "PLAYLIST"))
+                else if (IsSameWord(Second_Word, "PLAYLIST"))
                 {
                     Play_Playlist();
                 }
             }
-            else if (IsSameWord(currentWordNB, "QUEUE"))
+            else if (IsSameWord(First_Word, "QUEUE"))
             {
-                ADVCOMMANDNB();
-                if (IsSameWord(currentWordNB, "SONG"))
+                Word Second_Word = SentenceToWord(currentWord, 1);
+                if (IsSameWord(Second_Word, "SONG"))
                 {
                     Queue_Song();
                 }
-                else if (IsSameWord(currentWordNB, "PLAYLIST"))
+                else if (IsSameWord(Second_Word, "PLAYLIST"))
                 {
                     Queue_Playlist();
                 }
-                else if (IsSameWord(currentWordNB, "SWAP"))
+                else if (IsSameWord(Second_Word, "SWAP"))
                 {
-                    ADVCOMMANDNB();
-                    int x = *(currentWordNB.TabWord) - '0';
-                    ADVCOMMANDNB();
-                    int y = *(currentWordNB.TabWord)- '0';
+                    Word Third_Word = SentenceToWord(currentWord, 2);
+                    int x = *(Third_Word.TabWord) - '0';
+                    Word Fourth_Word = SentenceToWord(currentWord, 3);
+                    int y = *(Fourth_Word.TabWord) - '0';
                     Queue_Swap(x, y);
                 }
-                else if (IsSameWord(currentWordNB, "REMOVE"))
+                else if (IsSameWord(Second_Word, "REMOVE"))
                 {
-                    ADVCOMMANDNB();
-                    int x = *(currentWordNB.TabWord) - '0';
+                    Word Third_Word = SentenceToWord(currentWord, 2);
+                    int x = *(Third_Word.TabWord) - '0';
                     Queue_Remove(x);
                 }
-                else if (IsSameWord(currentWordNB, "CLEAR"))
+                else if (IsSameWord(Second_Word, "CLEAR"))
                 {
                     Queue_Clear();
                 }
             }
-            else if (IsSameWord(currentWordNB, "SONG"))
+            else if (IsSameWord(First_Word, "SONG"))
             {
-                ADVCOMMANDNB();
-                if (IsSameWord(currentWordNB, "NEXT"))
+                Word Second_Word = SentenceToWord(currentWord, 1);
+                if (IsSameWord(Second_Word, "NEXT"))
                 {
                     Song_Next();
                 }
-                else if (IsSameWord(currentWordNB, "PREVIOUS"))
+                else if (IsSameWord(Second_Word, "PREVIOUS"))
                 {
                     Song_Previous();
                 }
             }
-            else if (IsSameWord(currentWordNB, "PLAYLIST"))
+            else if (IsSameWord(First_Word, "PLAYLIST"))
             {
-                ADVCOMMANDNB();
-                if (IsSameWord(currentWordNB, "CREATE"))
+                Word Second_Word = SentenceToWord(currentWord, 1);
+                if (IsSameWord(Second_Word, "CREATE"))
                 {
                     playlist_create();
                 }
-                else if (IsSameWord(currentWordNB, "ADD"))
+                else if (IsSameWord(Second_Word, "ADD"))
                 {
-                    ADVCOMMANDNB();
-                    if (IsSameWord(currentWordNB, "SONG"))
+                    Word Third_Word = SentenceToWord(currentWord, 2);
+                    if (IsSameWord(Third_Word, "SONG"))
                     {
                         playlist_add_song(&DP, &DaftarPenyanyi);
                     }
-                    else if (IsSameWord(currentWordNB, "ALBUM"))
+                    else if (IsSameWord(Third_Word, "ALBUM"))
                     {
                         playlist_add_album(&DP, &DaftarPenyanyi);
                     }
                 }
-                else if (IsSameWord(currentWordNB, "SWAP"))
+                else if (IsSameWord(Second_Word, "SWAP"))
                 {
-                    ADVCOMMANDNB();
-                    int id = *(currentWordNB.TabWord) - '0';
-                    ADVCOMMANDNB();
-                    int x = *(currentWordNB.TabWord) - '0';
-                    ADVCOMMANDNB();
-                    int y = *(currentWordNB.TabWord)- '0';
+                    Word Third_Word = SentenceToWord(currentWord, 2);
+                    int id = *(Third_Word.TabWord) - '0';
+                    Word Fourth_Word = SentenceToWord(currentWord, 3);
+                    int x = *(Fourth_Word.TabWord) - '0';
+                    Word Fifth_Word = SentenceToWord(currentWordm 4);
+                    int y = *(Fifth_Word.TabWord)- '0';
                     playlist_swap(id, x, y);
                 }
-                else if (IsSameWord(currentWordNB, "REMOVE"))
+                else if (IsSameWord(Second_Word, "REMOVE"))
                 {
-                    ADVCOMMANDNB();
-                    int id = *(currentWordNB.TabWord) - '0';
-                    ADVCOMMANDNB();
-                    int x = *(currentWordNB.TabWord)- '0';
+                    Word Third_Word = SentenceToWord(currentWord, 2);
+                    int id = *(Third_Word.TabWord) - '0';
+                    Word Fourth_Word = SentenceToWord(currentWord, 3);
+                    int x = *(Fourth_Word.TabWord)- '0';
                     playlist_removesong(id, x);
                 }
-                else if (IsSameWord(currentWordNB, "DELETE"))
+                else if (IsSameWord(Second_Word, "DELETE"))
                 {
                     playlist_delete();
                 }
             }
-            else if (IsSameWord(currentWordNB, "STATUS"))
+            else if (IsSameWord(First_Word, "STATUS"))
             {
                 Status();
             }
-            else if (IsSameWord(currentWordNB, "SAVE"))
+            else if (IsSameWord(First_Word, "SAVE"))
             {
-                ADVCOMMANDNB();
-                Word filepath = currentWordNB;
+                Word Second_Word = SentenceToWord(currentWord, 1);
+                Word filepath = Second_Word;
                 Save(DaftarPenyanyi, QueueOriginal, StackOriginal, DP, currentPlaySong, filepath);
             }
-            else if (IsSameWord(currentWordNB, "HELP"))
+            else if (IsSameWord(First_Word, "HELP"))
             {
                 help();
             }
-            else if (IsSameWord(currentWordNB, "QUIT"))
+            else if (IsSameWord(First_Word, "QUIT"))
             {
                 quit();
             }
@@ -1976,23 +1989,23 @@ void cmd_user()
         }
         else
         {
-            if (IsSameWord(currentWordNB, "QUIT"))
+            if (IsSameWord(First_Word, "QUIT"))
             {
                 quit();
             }
-            else if (IsSameWord(currentWordNB, "START"))
+            else if (IsSameWord(First_Word, "START"))
             {
                 Start();
             }
-            else if (IsSameWord(currentWordNB, "LOAD"))
+            else if (IsSameWord(First_Word, "LOAD"))
             {
                 Load();
             }
-            else if (IsSameWord(currentWordNB, "HELP"))
+            else if (IsSameWord(First_Word, "HELP"))
             {
                 help();
             }
-            else if (IsSameWord(currentWordNB, "TESTING"))
+            else if (IsSameWord(First_Word, "TESTING"))
             {
                 printf("INI NGE TEST\n");
             }
