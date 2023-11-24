@@ -636,58 +636,6 @@ void playlist_delete()
     }
 }
 
-// save yang dulu ak comment dulu, lgi ak kerjani
-// void Save()
-// {
-//     FILE *fptr; // inisisasi file
-//     char SaveFile[100];
-//     printf("Masukkan nama file: ");
-//     scanf("%s", SaveFile);
-//     fptr = fopen(SaveFile, "w");
-
-//     int i;
-
-//     Queue QueueTemp; // mulai prosedur save queue
-//     CreateQueue(&QueueTemp);
-//     CopyQueue(QueueOriginal, &QueueTemp);
-//     SongType SongQueue;
-//     int jumlahQueue;
-
-//     if (!IsEmptyQueue(QueueOriginal))
-//     {
-//         jumlahQueue = LengthQueue(QueueTemp);
-//         fprintf(fptr, "%d\n", jumlahQueue);
-//         for (i = 0; i < LengthQueue(QueueOriginal); i++)
-//         {
-//             dequeue(&QueueTemp, &SongQueue);
-//             fprintf(fptr, "%s;", SongQueue.penyanyi);
-//             fprintf(fptr, "%s;", SongQueue.album);
-//             fprintf(fptr, "%s\n", SongQueue.judul_lagu);
-//         }
-//     }
-
-//     Stack StackTemp; // mulai prosedur save stack
-//     CreateEmptyStack(&StackTemp);
-//     CopyStack(StackOriginal, &StackTemp);
-//     SongType SongStack;
-//     int jumlahStack;
-
-//     if (!IsEmptyStack(StackOriginal))
-//     {
-//         jumlahStack = lengthStack(StackTemp);
-//         fprintf(fptr, "%d\n", jumlahStack);
-//         for (i = 0; i < lengthStack(StackOriginal); i++)
-//         {
-//             Pop(&StackTemp, &SongStack);
-//             fprintf(fptr, "%s;", SongStack.penyanyi);
-//             fprintf(fptr, "%s;", SongStack.album);
-//             fprintf(fptr, "%s\n", SongStack.judul_lagu);
-//         }
-//     }
-//     fclose(fptr);
-// }
-
-// masih bermasalah (mungkin)
 void Status()
 {
     QueueSongTypeRevisi Now_Playing, Antrean_Lagu;
@@ -1022,9 +970,8 @@ void Start()
     jumlahPenyanyi = currentLine.TabLine[0] - '0'; // inisiasi jumlah penaynyi
 
     CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
-    CreateEmptyDaftarPlaylist(&DP);
-    PenyanyiTypeRevisi2 currentPenyanyi; // variabel temp
-    AlbumTypeRevisi2 currentAlbum;       // variabel temp
+    PenyanyiTypeRevisi2 currentPenyanyi;      // variabel temp
+    AlbumTypeRevisi2 currentAlbum;            // variabel temp
     Word currentSong;
     Word KOSONG;
     stringToWord("", &KOSONG);
@@ -1096,8 +1043,9 @@ void Load()
     jumlahPenyanyi = currentLine.TabLine[0] - '0'; // inisiasi jumlah penaynyi
 
     CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
-    CreateEmptyDaftarPlaylist(&DP);
     init_dafplay();
+    // CreateEmptyDaftarPlaylist(&DP);
+    // init_dafplay();
 
     PenyanyiTypeRevisi2 currentPenyanyi; // variabel temp
     AlbumTypeRevisi2 currentAlbum;       // variabel temp
@@ -1572,6 +1520,7 @@ void Save(ListPenyanyiRevisi L, QueueRevisi Q, StackRevisi S, DaftarPlaylist D, 
                     fprintf(fptr, ";");
                     FPRINTWORD(fptr, P1->info.judul_lagu);
                     fprintf(fptr, "\n");
+                    P1 = P1->next;
                 }
             }
             else
@@ -1749,12 +1698,12 @@ void cmd_user()
             else if (IsSameWord(currentWord, "testing"))
             {
                 playlist_create();
-                playlist_add_album(&DP, &DaftarPenyanyi);
+                // playlist_add_album(&DP, &DaftarPenyanyi);
                 // printf("Berhasil ditambah\n");
-                Queue_Playlist();
-                Status();
-                Queue_Playlist();
-                Status();
+                // Queue_Playlist();
+                // Status();
+                // Queue_Playlist();
+                // Status();
             }
             else if (IsSameWord(currentWord, "CEK"))
             {
