@@ -1,7 +1,7 @@
 #include "list.h"
 #include <stdio.h>
 #include "../MesinKarakter_MesinKata/mesinkata.h"
-#include "../Setmap-TEMPORER/SETMAP.h"
+#include "../SetMap/SETMAP.h"
 
 void CreateEmptyListPenyanyi(ListPenyanyiRevisi *L)
 {
