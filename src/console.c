@@ -265,11 +265,11 @@ void Play_Playlist()
     printf("Masukkan Id Playlist: ");
     readCommand();
     id_Playlist = (*(currentWord.TabWord) - '0') - 1;
-    if (id_Playlist < DP.Neff)
+    if (id_Playlist < DP.Neff && id_Playlist >= 0)
     {
         QueueSongTypeRevisi otherSong;
         CreateQueue(&QueueOriginal);
-        DisplayQueue(QueueOriginal);
+        // DisplayQueue(QueueOriginal);
         // printf("queue dibuang\n\n");
         // printf("\n");
         CreateEmptyStack(&StackOriginal);
@@ -288,11 +288,13 @@ void Play_Playlist()
         }
         CopasWord(&CurrentPlaylist, DP.pl[id_Playlist].nama);
         CountPlaylist = NbElmt(DP.pl[id_Playlist]);
-        printf("Playlist sudah ditambah\n\n");
+        printf("Memutar playlist \"");
+        printWord(DP.pl[id_Playlist].nama);
+        printf("\".\n\n");
     }
     else
     {
-        printf("Tidak ada Playlist dengan id %d", id_Playlist);
+        printf("Tidak ada playlist dengan id %d.\n\n", id_Playlist+1);
     }
 }
 
@@ -987,10 +989,11 @@ void Queue_Clear()
 void quit()
 {
     printf("Apakah kamu ingin menyimpan data sesi sekarang? ");
-    ADVCOMMANDNB();
+    STARTCOMMAND();
     if (IsSameWord(currentWord, "Y"))
     {
-        ADVCOMMANDNB();
+        printf("Masukkan nama save file: ");
+        STARTCOMMAND();
         Word filepath = currentWordNB;
         Save(DaftarPenyanyi, QueueOriginal, StackOriginal, DP, currentPlaySong, filepath);
     }
@@ -1496,8 +1499,8 @@ void Save(ListPenyanyiRevisi L, QueueRevisi Q, StackRevisi S, DaftarPlaylist D, 
     CopasWord(&savefilepathW, dirW);
 
     char saveFileName[30];
-    printf("Masukkan nama save file: ");
-    readCommand();
+    // printf("Masukkan nama save file: ");
+    // readCommand();
     CopasWord(&(savefilenameW), currentWord);
 
     wordConcat(&(savefilepathW), savefilenameW);
@@ -1945,8 +1948,7 @@ void cmd_user()
                 }
                 else if (IsSameWord(currentWordNB, "DELETE"))
                 {
-                    // playlist_delete();
-                    printf("DELETE");
+                    playlist_delete();
                 }
             }
             else if (IsSameWord(currentWordNB, "STATUS"))
