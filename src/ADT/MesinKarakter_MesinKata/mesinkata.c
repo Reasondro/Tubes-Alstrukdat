@@ -280,29 +280,6 @@ void printWord(Word word)
     }
 }
 
-// void WordToString(Word word, char *string)
-// {
-//     int i = 0;
-//     while (i < word.Length)
-//     {
-//         string[i] = word.TabWord[i];
-//         i++;
-//     }
-//     string[i] = '\0';
-// }
-
-// void stringToWord(char *string1, Word *word1)
-// {
-//     int i = 0;
-//     word1->Length = 0;
-//     while (string1[i] != '\0')
-//     {
-//         word1->TabWord[i] = string1[i];
-//         i++;
-//         word1->Length++;
-//     }
-// }
-
 void ignoreBlanksLine()
 {
     {
