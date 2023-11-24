@@ -32,7 +32,6 @@ boolean IsEmptyList(Playlist L);
 void CreateEmpty(Playlist *L);
 /* I.S. sembarang             */
 /* F.S. Terbentuk Playlist kosong */
-void CreateEmptyDaftarPlaylist(DaftarPlaylist *D);
 
 /****************** Manajemen Memori ******************/
 addressPlaylist Alokasi(Word penyanyi, Word album, Word judul);
@@ -44,12 +43,6 @@ void Dealokasi(addressPlaylist *P);
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian addressPlaylist P */
-
-/****************** PENCARIAN SEBUAH ELEMEN Playlist ******************/
-boolean Search(Playlist L, Word lagu);
-/* Mencari apakah ada elemen Playlist dengan info(P)= X */
-/* Jika ada, mengirimkan addressPlaylist elemen tersebut. */
-/* Jika tidak ada, mengirimkan Nil */
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
@@ -116,20 +109,6 @@ int NbElmt(Playlist L);
 /* Mengirimkan banyaknya elemen Playlist; mengirimkan 0 jika Playlist kosong */
 
 /****************** PROSES TERHADAP Playlist ******************/
-
-void InversList(Playlist *L);
-/* I.S. sembarang. */
-/* F.S. elemen Playlist dibalik : */
-/* Elemen terakhir menjadi elemen pertama, dan seterusnya. */
-/* Membalik elemen Playlist, tanpa melakukan alokasi/dealokasi. */
-
-void Konkat1(Playlist *L1, Playlist *L2, Playlist *L3);
-/* I.S. L1 dan L2 sembarang */
-/* F.S. L1 dan L2 kosong, L3 adalah hasil konkatenasi L1 & L2 */
-/* Konkatenasi dua buah Playlist : L1 dan L2    */
-/* menghasilkan L3 yang baru (dengan elemen Playlist L1 dan L2) */
-/* dan L1 serta L2 menjadi Playlist kosong.*/
-/* Tidak ada alokasi/dealokasi pada prosedur ini */
 
 addressPlaylist AddressAtIndex(Playlist L, int idx);
 

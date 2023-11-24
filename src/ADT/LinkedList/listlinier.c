@@ -21,11 +21,6 @@ void CreateEmpty(Playlist *L)
     First(*L) = Nil;
 }
 
-void CreateEmptyDaftarPlaylist(DaftarPlaylist *D)
-{
-    D->Neff = 0;
-}
-
 /****************** Manajemen Memori ******************/
 addressPlaylist Alokasi(Word penyanyi, Word album, Word judul)
 /* Mengirimkan address hasil alokasi sebuah elemen */
@@ -68,49 +63,6 @@ void Dealokasi(addressPlaylist *P)
 /* Melakukan dealokasi/pengembalian address P */
 {
     free(*P);
-}
-
-/****************** PENCARIAN SEBUAH ELEMEN Playlist ******************/
-// boolean Search(Playlist L, QueueSongTypeRevisi X)
-// /* Mencari apakah ada elemen Playlist dengan Info(P)= X */
-// /* Jika ada, mengirimkan address elemen tersebut. */
-// /* Jika tidak ada, mengirimkan Nil */
-// {
-//     addressPlaylist p;
-//     boolean bFound = false;
-//     if (!IsEmptyList(L))
-//     {
-//         p = First(L);
-//         while (!bFound && p != Nil)
-//         {
-//             printf("apakah\n");
-//             if (IsDuplicateWord(X.judul_lagu, Info(p).judul_lagu) && IsDuplicateWord(X.album, Info(p).album) && IsDuplicateWord(X.penyanyi, Info(p).penyanyi))
-//             {
-//                 bFound = true;
-//             }
-//             else p = Next(p);
-
-//             if (bFound) printf("true\n");
-//             else if (!bFound) printf("false\n");
-//         }
-//     }
-//     return bFound;
-// }
-
-boolean Search(Playlist L, Word lagu)
-{
-    addressPlaylist P = First(L);
-    boolean bFound = false;
-    while (!bFound && P != Nil)
-    {
-        if (IsDuplicateWord(Info(P).judul_lagu, lagu)) {
-            bFound = true;
-            printf("ANEH\n");}
-        else P = Next(P);
-        if (bFound) printf("true\n");
-        else if (!bFound) printf("false\n");
-    }
-    return bFound;
 }
 
 void InsVLast(Playlist *L, QueueSongTypeRevisi X)
@@ -445,58 +397,3 @@ void swap_pinggir(Playlist *L, int idx1, int idx2)
         }
     }
 }
-
-// /****************** PROSES TERHADAP Playlist ******************/
-// void InversList(Playlist *L)
-// /* I.S. sembarang. */
-// /* F.S. elemen Playlist dibalik : */
-// /* Elemen terakhir menjadi elemen pertama, dan seterusnya. */
-// /* Membalik elemen Playlist, tanpa melakukan alokasi/dealokasi. */
-// {
-//     address P;
-//     address Prec = Nil;
-//     address Succ;
-
-//     if (!IsEmptyList(*L))
-//     {
-//         P = First(*L);
-//         while (P != Nil)
-//         {
-//             Succ = Next(P);
-//             Next(P) = Prec;
-//             Prec = P;
-//             P = Succ;
-//         }
-//         First(*L) = Prec;
-//     }
-// }
-
-// void Konkat1(Playlist *L1, Playlist *L2, Playlist *L3)
-// /* I.S. L1 dan L2 sembarang */
-// /* F.S. L1 dan L2 kosong, L3 adalah hasil konkatenasi L1 & L2 */
-// /* Konkatenasi dua buah Playlist : L1 dan L2    */
-// /* menghasilkan L3 yang baru (dengan elemen Playlist L1 dan L2) */
-// /* dan L1 serta L2 menjadi Playlist kosong.*/
-// /* Tidak ada alokasi/dealokasi pada prosedur ini */
-// {
-//     address Last1;
-
-//     CreateEmpty(L3);
-//     if (IsEmptyList(*L1))
-//     {
-//         First(*L3) = First(*L2);
-//     }
-//     else
-//     {
-//         First(*L3) = First(*L1);
-//         Last1 = First(*L1);
-//         while (Next(Last1) != Nil)
-//         {
-//             Last1 = Next(Last1);
-//         }
-//         Next(Last1) = First(*L2);
-//     }
-
-//     First(*L1) = Nil;
-//     First(*L2) = Nil;
-// }
