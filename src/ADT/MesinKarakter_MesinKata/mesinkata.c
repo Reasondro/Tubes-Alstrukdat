@@ -151,6 +151,60 @@ void readCommand()
     STARTCOMMAND();
 }
 
+Word SentenceToWord(Word w, int wordKe)
+{
+    int count;
+
+    int i = 0;
+    int x = 0;
+    int index;
+    int j;
+    count = wordKe;
+    Word hasil;
+    hasil.Length = 0;
+    if (count == 0)
+    {
+        for (x = 0; x < w.Length; x++)
+        {
+            if (w.TabWord[x] == BLANK)
+            {
+                break;
+            }
+            hasil.TabWord[x] = w.TabWord[x];
+            hasil.Length++;
+        }
+    }
+    else
+    {
+        for (j = 0; j < w.Length; j++)
+        {
+            if (count == 0)
+            {
+                printf("%c\n", w.TabWord[j]);
+                break;
+            }
+            if (w.TabWord[j] == BLANK)
+            {
+                count -= 1;
+            }
+        }
+        index = j;
+
+        for (index = j; index < w.Length; index++)
+        {
+
+            if (w.TabWord[index] == BLANK)
+            {
+                break;
+            }
+            hasil.TabWord[x] = w.TabWord[index];
+            x++;
+            hasil.Length++;
+        }
+    }
+    return hasil;
+}
+
 // ------------------- COMMAND NO BLANKS ---------------------------------------------
 void IgnoreBlanksInputNB()
 

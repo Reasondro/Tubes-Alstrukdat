@@ -97,4 +97,17 @@ void displayLine(Line line); // somehow naming the function printLine will resul
 void LineToString(Line line, char *string);
 void FPRINTWORD(FILE *fptr, Word W);
 
+// --------NO BLANK -------------
+void IgnoreBlanksInputNB();
+
+void STARTCOMMANDNB();
+
+void ADVCOMMANDNB();
+
+void CopyCommandNB();
+
+void readCommandNB();
+
+Word SentenceToWord(Word w, int wordKe);
+// -------- NO BLANK ------------
 #endif
