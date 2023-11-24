@@ -15,14 +15,67 @@ ListPenyanyiRevisi DaftarPenyanyi;
 void art_WayangWave()
 {
     printf("\n");
-    printf("      _       _                               _       _                   \n");
-    printf("     ( )  _  ( )                             ( )  _  ( )                  \n");
-    printf("     | | ( ) | |  _ _ _   _   _ _  ___    __ | | ( ) | |  _ _ _   _   __  \n");
-    printf("     | | | | | |/ _  ) ) ( )/ _  )  _  \\/ _  \\ | | | | |/ _  ) ) ( )/ __ \\\n");
-    printf("     | (_/ \\_) | (_| | (_) | (_| | ( ) | (_) | (_/ \\_) | (_| | \\_/ |  ___/\n");
-    printf("      \\__/\\___/ \\__ _)\\__  |\\__ _)_) (_)\\__  |\\__/\\___/ \\__ _)\\___/ \\____)\n");
-    printf("                     ( )_| |           ( )_) |                            \n");
-    printf("                      \\___/             \\___/                             \n");
+    printf("              _       _                               _       _                   \n");
+    printf("             ( )  _  ( )                             ( )  _  ( )                  \n");
+    printf("             | | ( ) | |  _ _ _   _   _ _  ___    __ | | ( ) | |  _ _ _   _   __  \n");
+    printf("             | | | | | |/ _  ) ) ( )/ _  )  _  \\/ _  \\ | | | | |/ _  ) ) ( )/ __ \\\n");
+    printf("             | (_/ \\_) | (_| | (_) | (_| | ( ) | (_) | (_/ \\_) | (_| | \\_/ |  ___/\n");
+    printf("              \\__/\\___/ \\__ _)\\__  |\\__ _)_) (_)\\__  |\\__/\\___/ \\__ _)\\___/ \\____)\n");
+    printf("                             ( )_| |           ( )_) |                            \n");
+    printf("                              \\___/             \\___/                             \n");
+    printf("                                                                                                    \n");
+    printf("                                           ..                                                       \n");
+    printf("                          :~?Y555YJ!^  .^7??:                                                       \n");
+    printf("                       .7P#&&&&&&###BP7J555?                                                        \n");
+    printf("                      ^P##PJ777J5####PY555PY?^.                                                     \n");
+    printf("                      P#P^       ^5GGPY555Y5GY   .:!!~:                                             \n");
+    printf("                      YBP!        !BGYYPP555557!J555~..                                             \n");
+    printf("            ^: .~?5PGPPGG5!.     .Y#BP55P5555J5Y55Y.                                                \n");
+    printf("           :?Y75###B5B#PBPYJ7..^7PBPPGG#BG555YYYYY^                                                 \n");
+    printf("          .!5YYYPPP5YY5P5Y5YGY5PP5Y5GG###G5P555Y5Y.                                                 \n");
+    printf("           ^PP5YYY55PPPPPP55PY555PP5G###P5PYY55YYJ:                                                 \n");
+    printf("           :5PGPPGGPBP5PPPY55JY55PG###BPP555Y5Y5YY~:^.                   :~~:..^~!7JY5PP!           \n");
+    printf("           :5B######BBGPBBGPP5PBB###B5JY555P5JY55Y5Y!       ......:^^~!!?Y5P55GB#&&&&###B.          \n");
+    printf("           ~GBB##B####BGB#BBBBB##GP55555P55Y555YJY55^.^~7?YPGBGGBB#######BPP5YJ?JJ!~~P###!          \n");
+    printf("           !####B######BB#B5PBGBBGGPPPP5PPP555PPPGGBGB##&&&##BBGP5Y?YYPPPYY5J?77~    ^B##5          \n");
+    printf("           :G###############GGGB###BBBBGPPGBPBB########BPY7~::.       :7?!!!~~^:      J##B.         \n");
+    printf("          ^YBPGPYPB##GYYYYJ7^:!YG#######B5GB5PPB###BGJ^.                              :B##!         \n");
+    printf("          ?Y~     ~5Y^  :7JYPGB5PBGB#####BG#BPPBBGPP5?                                 J##Y         \n");
+    printf("                       :B##&&&BG##GGGGGGPB###BP555555?                                 .B#G.        \n");
+    printf("                       ?###Y775G####BPPPGG###BP55PPPY~                                  7##~        \n");
+    printf("                       P##P   !P########GP###GY5PPP57                                  :!G#J        \n");
+    printf("                     :7###7   .?P#####BBPP#BGPPP5Y?:                                   :5Y55?~      \n");
+    printf("                  :7YPG##P.     :75GP5YPPG###Y!!~. .                                   .YPYP5?      \n");
+    printf("                  75JYB##7        .!?GBBPP###?  ^?Y557.                                 !JYBP?.     \n");
+    printf("                 ^5Y75B5PJ~          ~B##PB##P  ?PPPPPY?~                            .   .?#P       \n");
+    printf("                 757:PB5G7^          .P&5YB#BBY~:JPGPGGGGJ                         :JP5Y5G#G~       \n");
+    printf("                 :J^^BGG7          .7YG5JYPGB55Y?Y55555555!.                     ~PBBPB#BG?.        \n");
+    printf("                   :5#BB:        .?YGPYY555PGGGPPPPPPP55P??J?.                  ~BY^. .^.~.         \n");
+    printf("                   :B##G         !55P555P5Y55PPGPBGGG555Y?Y5Y?7.                ?5       ~.         \n");
+    printf("                   J###Y        .YYYY55P5P5Y555555PPBGPYY5PGP55J7.              .:       !          \n");
+    printf("                   P##B^        ^Y555PPPPGGPPGGGGGP5PPBBPY5P5P555Y?^.                   .7          \n");
+    printf("                  .G##P        .J5Y5PPP5PPPPP55PPGP55PGG#P5PPP5YP55PY?7^                :!          \n");
+    printf("                  .B##?        ~Y5Y555P55PGP55PPPPPP555Y5BBPPP5YP55PPPPP?.              ^!          \n");
+    printf("                  :B##^       .JY5YYY5Y55PGGPPGPPP555555Y5BB5YP555JY55YY5?.             ~!          \n");
+    printf("                  ^##G        !555YYY5YY5YPYGGPPGPPY555YJY5GBGGP?YJYYJYYYJ!             !~          \n");
+    printf("                  ~##J        ^YYYY5PJY5Y55.JP5555PY5P555PGGG#GP55JJJYJYJJY7            7^          \n");
+    printf("                 .7##^        :Y55P5PYYJJGG!?5YY5JJJ55PP5JYGGGBBPPJJYJYYYYJJ?:          ?:          \n");
+    printf("                 7Y#P          !PGP5PPPJJYYY5J?Y55YYJJ7!J!:~YPBBBG5YYJJY7 ~JYYJ^       .Y^          \n");
+    printf("                :PYP5!.         YGYJPG7~5555?JYY55P5YYJ~ .:^^?PGBBPPYJJY7 ~JYY!        .5^          \n");
+    printf("                JP5P5J          YGY5PGPJ5Y~   .75YY7!J5555Y7^. ?PPB###BYY5Y!  ~YYY?:   .P^          \n");
+    printf("                ~JGBY!          YG5PGPJ5Y~   .75YY7!J5555Y7^. ?PPB###BYY5Y!  ~YYY?:    .P^          \n");
+    printf("         :^?Y~^::Y#Y:           ?PPGPY?^.     :?5YJ^ ^7?Y5555J5GP5G##BG555Y?YYYYY5577. :P^          \n");
+    printf("      .?PGGB#&#BBG?            !P5YY5J         :JYYJ.   .:^~!~~55YPG##BGYP5YJ7?7^~~^~. :P^          \n");
+    printf("     ^P?^..:?Y5J^.           .7GP555PY^         :J55J.         .75J?JG#BBBGYY!         :P^          \n");
+    printf("     !7       ~              YP55B#BGJ:           75P?~:.      ..^?JY##&#B###G:        :P^          \n");
+    printf("             ~:             .5YJ5B#PPY~           :YPYYP5?~:^^~PBB#&&&#GPBBY!^         ^P:          \n");
+    printf("            ^~               JYJYG#GGY^     ...:^!5P5PPGGGGGGBB####Y7!^  Y#B7          ~P.          \n");
+    printf("           .7.               :?Y5PGPPP??JYY5PPGGBBBBBBBBBBBGGPP555!       J##J         !5           \n");
+    printf("           !^            :5PPPGB#&#&&&&##BBBBBGGGP55YJ?7!~^::..            ~PG7:       ?J           \n");
+    printf("          ^7             ?&&&#B#BP5YJYYY?77!~^::..                          ^PP5!      YJ           \n");
+    printf("         .?.             :YG5~::.                                            JBPPJ     57 ..        \n");
+    printf("         7~                .                                                 .5GPBP:  ^PYJ5P5^      \n");
+    printf("        :!                                                                    ^YJ?YJ~!??JJJJ!..     \n");
     printf("\n");
 }
 void init_dafplay()
@@ -45,13 +98,20 @@ void realloc_dafplay(DaftarPlaylist DP)
     DP.Capacity += 5;
 }
 
-void DisplayDP(DaftarPlaylist depe)
+void list_playlist(DaftarPlaylist depe)
 {
-    printf("Daftar Playlist: \n");
-    for (int i = 0; i < depe.Neff; i++)
+    printf("Daftar playlist yang kamu miliki: \n");
+    if (DP.Neff > 0)
+    {    for (int i = 0; i < depe.Neff; i++)
+        {
+            printf("    %d.", i + 1);
+            printWord(depe.pl[i].nama);
+            printf("\n");
+        }
+    }
+    else
     {
-        printf("    %d.", i + 1);
-        printWord(depe.pl[i].nama);
+        printf("Kamu tidak memiliki playlist.");
         printf("\n");
     }
 }
@@ -200,7 +260,7 @@ void Play_Playlist()
 {
     char *id_Playlist_string;
     int id_Playlist;
-    DisplayDP(DP);
+    list_playlist(DP);
     printf("Masukkan Id Playlist: ");
     readCommand();
     id_Playlist = (*(currentWord.TabWord) - '0') - 1;
@@ -322,7 +382,7 @@ void playlist_add_song(DaftarPlaylist *depe, ListPenyanyiRevisi *DaftarPenyanyi)
             else
             {
                 idxl--;
-                DisplayDP(*depe);
+                list_playlist(*depe);
                 printf("Masukkan ID Playlist yang dipilih : ");
                 STARTCOMMAND();
                 idxplay = *(currentWord.TabWord) - '0';
@@ -431,7 +491,7 @@ void playlist_add_album(DaftarPlaylist *depe, ListPenyanyiRevisi *DaftarPenyanyi
         }
         else
         {
-            DisplayDP(*depe);
+            list_playlist(*depe);
             printf("\nMasukkan ID Playlist yang dipilih : ");
             STARTCOMMAND();
             idxplay = *(currentWord.TabWord) - '0';
@@ -612,7 +672,7 @@ void playlist_removesong(int idxplay, int idxl)
 
 void playlist_delete()
 {
-    DisplayDP(DP);
+    list_playlist(DP);
     int idxplay;
     printf("Masukkan ID Playlist yang dipilih : ");
     STARTCOMMAND();
@@ -1781,7 +1841,6 @@ void cmd_user()
 
         if (sesi)
         {
-
             if (IsSameWord(currentWord, "LIST"))
             {
                 if (IsSameWord(currentWord, "DEFAULT"))
