@@ -969,9 +969,9 @@ void Start()
     int jumlahPenyanyi, jumlahAlbum, jumlahLagu;
     jumlahPenyanyi = currentLine.TabLine[0] - '0'; // inisiasi jumlah penaynyi
 
-    CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
-    PenyanyiTypeRevisi2 currentPenyanyi;      // variabel temp
-    AlbumTypeRevisi2 currentAlbum;            // variabel temp
+    // CreateEmptyListPenyanyi(&DaftarPenyanyi); // ini buat inisiasi list penyanyi
+    PenyanyiTypeRevisi2 currentPenyanyi; // variabel temp
+    AlbumTypeRevisi2 currentAlbum;       // variabel temp
     Word currentSong;
     Word KOSONG;
     stringToWord("", &KOSONG);
@@ -1038,88 +1038,7 @@ void load_playlist_create(DaftarPlaylist *depe, Word nama)
     DP.Neff++;
 }
 
-void playlist_add_song(DaftarPlaylist *depe, ListPenyanyiRevisi *DaftarPenyanyi)
-{
-    Word penyanyi, album;
-    boolean foundp = false, founda = false;
-    DisplayListPenyanyi(*DaftarPenyanyi);
-    printf("Masukkan Nama Penyanyi yang dipilih : ");
-    STARTCOMMAND();
-    CopasWord(&penyanyi, currentWord);
-    int idxp = 0, idxa = 0, idxl, idxplay;
-    boolean foundp = false, founda = false;
-    while (!foundp && idxp < penyanyimax)
-    {
-        if (IsDuplicateWord((*DaftarPenyanyi).Penyanyi[idxp].nama, penyanyi))
-        {
-            foundp = true;
-        }
-        else
-            idxp++;
-    }
-    if (!foundp)
-    {
-        printf("Penyanyi ");
-        printWord(penyanyi);
-        printf(" tidak ada dalam daftar. Silakan coba lagi.");
-        return;
-    }
-    else
-    {
-        DisplayMap(*DaftarPenyanyi, penyanyi);
-        printf("Masukkan Judul Album yang dipilih : ");
-        STARTCOMMAND();
-        CopasWord(&album, currentWord);
-        while (!founda && idxa < (*DaftarPenyanyi).Penyanyi[idxp].album.JumlahAlbum)
-        {
-            if (IsDuplicateWord((*DaftarPenyanyi).Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum, album))
-            {
-                founda = true;
-            }
-            else
-                idxa++;
-        }
-        if (!founda)
-        {
-            printf("Album ");
-            printWord(album);
-            printf(" tidak ada dalam daftar. Silakan coba lagi.");
-            return;
-        }
-        else
-        {
-            DisplaySet((*DaftarPenyanyi).Penyanyi[idxp].album, album);
-            printf("Masukkan ID Lagu yang dipilih : ");
-            STARTCOMMAND();
-            idxl = *(currentWord.TabWord) - '0';
-            if (!(idxl <= (*DaftarPenyanyi).Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.JumlahLagu && idxl > 0))
-            {
-                printf("ID Lagu %d tidak valid. Silakan coba lagi", idxl);
-                return;
-            }
-            else
-            {
-                idxl--;
-                DisplayDP(*depe);
-                printf("Masukkan ID Playlist yang dipilih : ");
-                STARTCOMMAND();
-                idxplay = *(currentWord.TabWord) - '0';
-                if (!(idxplay <= (*depe).Neff && idxplay > 0))
-                {
-                    printf("ID Playlist %d tidak valid. Silakan coba lagi", idxplay);
-                    return;
-                }
-                else
-                {
-                    idxplay--;
-                    playlistsong(depe, DaftarPenyanyi, idxp, idxa, idxl, idxplay);
-                }
-            }
-        }
-    }
-}
-
-void playlistsong(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, Word penyanyi, Word album, Word judul, int idxplay)
+void load_playlistsong(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, Word penyanyi, Word album, Word judul, int idxplay)
 {
     int idxp = 0, idxa = 0, idxl = 0;
     boolean foundp = false, founda = false, foundl = false;
@@ -1294,9 +1213,6 @@ void Load()
             idxHurufPenyanyi = 0;
             idxHurufAlbum = 0;
             idxHurufLagu = 0;
-            // stringCopy(tempQST.penyanyi, "");
-            // stringCopy(tempQST.album, "");
-            // stringCopy(tempQST.judul_lagu.judul, "");
             tempQST.penyanyi.Length = 0;
             while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
             {
@@ -1378,11 +1294,69 @@ void Load()
     // akhir dari baris stack, lanjut ke baris playlist jika ada
     if (IsSameChar(currentLine.TabLine[0], '0'))
     {
-        // printf("gaada playlist :(\n"); // isinya nanti
+        // ga ngapain" kosong
     }
     else
     {
-        // printf("%c", currentLine.TabLine[0]); // isinya nanti habis ngerti playlist
+        int jumlahPlaylist;
+        jumlahPlaylist = currentLine.TabLine[0] - '0';
+        int indexPlaylist;
+        int jumlahLaguPlaylist;
+        int indexLaguPL;
+        infoType isipltemp;
+        Word namaPL;
+        Word namaPenyanyiPL;
+        Word namaAlbumPL;
+        Word namaLaguPL;
+
+        for (indexPlaylist = 0; indexPlaylist < jumlahPlaylist; indexPlaylist++)
+        {
+            ADVLINE();
+            jumlahLaguPlaylist = currentLine.TabLine[0] - '0';
+            namaPL.Length = 0;
+            for (int x = 2; x < currentLine.LengthLine; x++)
+            {
+                namaPL.TabWord[x - 2] = currentLine.TabLine[x];
+                namaPL.Length++;
+            }
+            load_playlist_create(&DP, namaPL);
+            for (indexLaguPL = 0; indexLaguPL < jumlahLaguPlaylist; indexLaguPL++)
+            {
+                ADVLINE();
+                idxHuruf = 0;
+                idxHurufPenyanyi = 0;
+                idxHurufAlbum = 0;
+                idxHurufLagu = 0;
+
+                namaPenyanyiPL.Length = 0;
+                namaAlbumPL.Length = 0;
+                namaLaguPL.Length = 0;
+                while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
+                {
+                    namaPenyanyiPL.TabWord[idxHurufPenyanyi] = currentLine.TabLine[idxHuruf];
+                    namaPenyanyiPL.Length++;
+                    idxHurufPenyanyi++;
+                    idxHuruf++;
+                }
+                idxHuruf++; // lanjut setelah semicolon
+                while (!IsSameChar(currentLine.TabLine[idxHuruf], ';'))
+                {
+                    namaAlbumPL.TabWord[idxHurufAlbum] = currentLine.TabLine[idxHuruf];
+                    namaAlbumPL.Length++;
+                    idxHurufAlbum++;
+                    idxHuruf++;
+                }
+                idxHuruf++; // lanjut setelah semicolon
+                for (idxHurufLagu = 0; idxHuruf < currentLine.LengthLine; idxHurufLagu++)
+                {
+                    namaLaguPL.TabWord[idxHurufLagu] = currentLine.TabLine[idxHuruf];
+                    namaLaguPL.Length++;
+                    idxHuruf++;
+                }
+                load_playlistsong(&DP, &DaftarPenyanyi, namaPenyanyiPL, namaAlbumPL, namaLaguPL, indexPlaylist);
+            }
+        }
+        // ADVLINE();
     }
 
     sesi = true;

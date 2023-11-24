@@ -29,12 +29,13 @@ Arabella
 2 Membalas Hutan
 Welcome
 To the jungle
--  // currentplay
-0 // queue
-0 // stack
-1 // jumlah playlist
+-
+0
+0
+2
 4 HMIF
 BLACKPINK;BORN PINK;Pink Venom
 BLACKPINK;BORN PINK;Shut Down
 BLACKPINK;BORN PINK;Typa Girl
 BLACKPINK;BORN PINK;Ready For Love
+0 HOHO
