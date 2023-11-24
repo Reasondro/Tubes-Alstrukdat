@@ -1,8 +1,5 @@
-#include "../MesinKarakter_MesinKata/mesinkata.h"
-#include "../MesinKarakter_MesinKata/mesinkarakter.h"
+#include "SETMAP.h"
 
-#include "../struct.h"
-#include <stdio.h>
 
 // #include "mesinkarakter.c" // non comment hanya klao mo test
 // #include "mesinkata.c"

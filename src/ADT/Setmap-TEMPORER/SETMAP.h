@@ -9,9 +9,11 @@
 
 // typedef char Word[20];
 
-void CreatEmptySet(SetSongRevisi *S);
+void CreateEmptySet(SetSongRevisi *S);
 
-boolean IsMemberSet(SetSongRevisi S, QueueSongTypeRevisi Song);
+boolean IsEmptySetSong(SetSongRevisi S);
+
+boolean IsMemberSet(SetSongRevisi S, Word Song);
 
 int SearchAlbum(PenyanyiTypeRevisi2 P, Word album_dicari);
 
@@ -20,6 +22,8 @@ int SearchPenyanyi(ListPenyanyiRevisi LP, Word penyanyi_dicari);
 void InsertSet(Word Song, AlbumTypeRevisi2 *Album, Word NamaAlbumDicari);
 
 void DisplaySet(AlbumTypeRevisi2 Album, Word NamaAlbumDicari);
+
+// -------------------------------------------------------------------
 
 void CreateEmptyMap(AlbumTypeRevisi2 *Album);
 

@@ -61,6 +61,18 @@ void CopyCommand();
 
 void readCommand();
 
+// --------NO BLANK -------------
+void IgnoreBlanksInputNB();
+
+void STARTCOMMANDNB();
+
+void ADVCOMMANDNB();
+
+void CopyCommandNB();
+
+void readCommandNB();
+
+// -------- NO BLANK ------------
 int stringLength(char *string);
 
 int stringLengthNoBlanks(char *string);
@@ -68,12 +80,6 @@ int stringLengthNoBlanks(char *string);
 boolean IsSameWord(Word W1, char w2[]);
 
 void printWord(Word word);
-
-void stringCopy(char *string1, char *string2);
-
-// void WordToString(Word word, char *string);
-// void stringToWord(char *string1, Word *word1);
-int WordToInt(Word word);
 
 boolean IsSameString(char w1[], char w2[]);
 
