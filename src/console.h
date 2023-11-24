@@ -27,7 +27,7 @@ void Queue_Playlist();
 
 void Queue_Swap(int x, int y);
 
-void playlistalbum(Playlist *L, ListPenyanyiRevisi *LP, int idxp, int idxa, int idxplay);
+void playlistalbum(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, int idxp, int idxa, int idxplay);
 
 void Queue_Remove(int id);
 
@@ -35,9 +35,13 @@ void Queue_Clear();
 
 void playlist_create();
 
-void playlist_add_song();
+void playlist_add_song(DaftarPlaylist *depe, ListPenyanyiRevisi *DaftarPenyanyi);
 
-void playlist_add_album();
+void playlistsong(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, int idxp, int idxa, int idxl, int idxplay);
+
+void playlist_add_album(DaftarPlaylist *depe, ListPenyanyiRevisi *DaftarPenyanyi);
+
+void playlistalbum(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, int idxp, int idxa, int idxplay);
 
 void playlist_swap(int idxplay, int idxl1, int idxl2);
 

@@ -137,6 +137,6 @@ void swap_tengah(Playlist L, int idx1, int idx2);
 
 void swap_pinggir(Playlist *L, int idx1, int idx2);
 
-int cekLagu(Playlist L, Word lagu);
+boolean cekLagu(DaftarPlaylist *DP, Word penyanyi, Word album, Word lagu, int idxplay);
 
 #endif

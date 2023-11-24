@@ -48,16 +48,18 @@ addressPlaylist Alokasi(Word penyanyi, Word album, Word judul)
     }
 }
 
-int cekLagu(Playlist L, Word lagu)
+boolean cekLagu(DaftarPlaylist *DP, Word penyanyi, Word album, Word lagu, int idxplay)
 {
-    addressPlaylist P = First(L);
+    addressPlaylist P = First((*DP).pl[idxplay]);
     while (P != Nil)
     {
-        if (IsDuplicateWord(Info(P).judul_lagu, lagu)) {
-            return -1;}
+        if (IsDuplicateWord(Info(P).judul_lagu, lagu) &&
+            IsDuplicateWord(Info(P).album, album) &&
+            IsDuplicateWord(Info(P).penyanyi, penyanyi)) 
+            return false;
         else P = Next(P);
     }
-    return 1;
+    return true;
 }
 
 void Dealokasi(addressPlaylist *P)
@@ -308,13 +310,13 @@ void PrintInfo(Playlist L)
     int i = 1;
     while (P != Nil)
     {
-        printf("%d", i);
+        printf("    %d. ", i);
         printWord(Info(P).penyanyi);
-        printf(", ");
+        printf("; ");
         printWord(Info(P).album);
-        printf(", ");
+        printf("; ");
         printWord(Info(P).judul_lagu);
-        printf("\n");
+        printf(";\n");
         P = Next(P);
         i++;
     } 
