@@ -65,7 +65,7 @@ void load_playlistsong(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, Word penyan
 
 void ListDefault(ListPenyanyiRevisi L);
 
-void Save(ListPenyanyiRevisi L, QueueRevisi Q, StackRevisi S, DaftarPlaylist D, QueueSongTypeRevisi CPS)
+void Save(ListPenyanyiRevisi L, QueueRevisi Q, StackRevisi S, DaftarPlaylist D, QueueSongTypeRevisi CPS, Word filepath);
 
 void Status();
 
