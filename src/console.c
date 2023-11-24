@@ -12,6 +12,19 @@ boolean sesi = false;
 int ComeToPlaylist[5];
 ListPenyanyiRevisi DaftarPenyanyi;
 
+void art_WayangWave()
+{
+    printf("\n");
+    printf("      _       _                               _       _                   \n");
+    printf("     ( )  _  ( )                             ( )  _  ( )                  \n");
+    printf("     | | ( ) | |  _ _ _   _   _ _  ___    __ | | ( ) | |  _ _ _   _   __  \n");
+    printf("     | | | | | |/ _  ) ) ( )/ _  )  _  \\/ _  \\ | | | | |/ _  ) ) ( )/ __ \\\n");
+    printf("     | (_/ \\_) | (_| | (_) | (_| | ( ) | (_) | (_/ \\_) | (_| | \\_/ |  ___/\n");
+    printf("      \\__/\\___/ \\__ _)\\__  |\\__ _)_) (_)\\__  |\\__/\\___/ \\__ _)\\___/ \\____)\n");
+    printf("                     ( )_| |           ( )_) |                            \n");
+    printf("                      \\___/             \\___/                             \n");
+    printf("\n");
+}
 void init_dafplay()
 {
     DP.pl = (Playlist *)malloc(InitialSize * sizeof(Playlist));
@@ -1055,6 +1068,7 @@ void Start()
         }
     }
     printf("File konfigurasi aplikasi berhasil dibaca. WayangWave berhasil dijalankan.\n");
+
     sesi = true;
 }
 
@@ -1284,6 +1298,7 @@ void Load()
     {
         // printf("%c", currentLine.TabLine[0]); // isinya nanti habis ngerti playlist
     }
+
     sesi = true;
 }
 
@@ -1662,6 +1677,7 @@ Word tes1;
 void cmd_user()
 {
     stringToWord("BLACKPINK", &tes1);
+    art_WayangWave();
 
     while (mulai)
     {
