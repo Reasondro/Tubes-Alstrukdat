@@ -1,6 +1,8 @@
 #include "mesinkarakter.h"
 
 char currentChar;
+char currentCharNB;
+
 char currentCharLoad;
 
 boolean EOP;
@@ -8,6 +10,9 @@ boolean EOL;
 
 static FILE *pita;
 static int retval;
+
+static FILE *pitaNB;
+static int retvalNB;
 
 static FILE *pitaLoad;
 static int retvalLoad;
@@ -86,33 +91,9 @@ boolean IsSameString(char w1[], char w2[])
     return IsSame;
 }
 
-// boolean IsSameChar(char c1, char c2)
-// {
-//     boolean IsSame = true;
-//     // if (stringLength(c1) != stringLength(c2))
-//     // {
-//     //     IsSame = false;
-//     //     return IsSame;
-//     // }
-
-//     if (c1 != c2)
-//     {
-//         IsSame = false;
-//         return IsSame;
-//     }
-
-//     return IsSame;
-// }
-
 void START()
 {
-    /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
-       Karakter pertama yang ada pada pita posisinya adalah pada jendela.
-       Pita baca diambil dari stdin.
-       I.S. : sembarang
-       F.S. : currentChar adalah karakter pertama pada pita
-              Jika currentChar != MARK maka EOP akan padam (false)
-              Jika currentChar = MARK maka EOP akan menyala (true) */
+
     pita = stdin;
     ADV();
 }
@@ -144,21 +125,23 @@ void ADVINPUT()
     retval = fscanf(pita, "%c", &currentChar);
 }
 
+void STARTINPUTNB()
+{
+    pitaNB = stdin;
+    ADVINPUTNB();
+}
+
+void ADVINPUTNB()
+{
+    retvalNB = fscanf(pitaNB, "%c", &currentCharNB);
+}
+
 boolean IsEOP()
 {
     /* Mengirimkan true jika currentChar = MARK */
     return (currentChar == MARK);
 }
 
-// void STARTLOAD(char *filename)
-// {
-//     // pita = stdin;
-//     char *dir = "saves/";
-//     char file[20] = "save.txt";
-//     stringCopy(file, dir);
-//     pitaLoad = fopen(dir, "r");
-//     ADVLOAD();
-// }
 void stringToWord(char *string1, Word *word1)
 {
     int i = 0;

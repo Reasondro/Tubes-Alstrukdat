@@ -6,6 +6,9 @@
 boolean EndWord;
 Word currentWord;
 
+boolean EndWordNB;
+Word currentWordNB;
+
 boolean EndLine;
 Line currentLine;
 
@@ -102,19 +105,6 @@ void CopyWord()
     currentWord.Length = i - 1;
 }
 
-// void CopasWord(Word *Dest, Word Src)
-// {
-//     // int len = LengthWord(Src);
-//     int len = Src.Length;
-//     int i;
-//     Dest->Length = 0;
-//     for (i = 0; i < len; i++)
-//     {
-//         Dest->TabWord[i] = Src.TabWord[i];
-//         Dest->Length++;
-//     }
-// }
-
 void CopyCommand()
 {
     int i = 0;
@@ -160,6 +150,61 @@ void readCommand()
     // printf("Masukkan command: ");
     STARTCOMMAND();
 }
+
+// ------------------- COMMAND NO BLANKS ---------------------------------------------
+void IgnoreBlanksInputNB()
+
+{
+    while (currentCharNB == BLANK || currentCharNB == ENTER)
+    {
+        ADVINPUTNB();
+    }
+}
+void CopyCommandNB()
+{
+    int i = 0;
+    currentWordNB.Length = 0;
+    while ((currentCharNB != MARK) && (currentCharNB != BLANK))
+    {
+        currentWordNB.TabWord[i] = currentCharNB;
+        i++;
+        ADVINPUTNB();
+    }
+    currentWordNB.Length = i;
+}
+void ADVCOMMANDNB()
+{
+    IgnoreBlanksInputNB();
+    if (currentCharNB == MARK)
+    {
+        EndWordNB = true;
+    }
+    else
+    {
+        CopyCommandNB();
+    }
+}
+
+void STARTCOMMANDNB()
+{
+    STARTINPUTNB();
+    IgnoreBlanksInputNB();
+    if (currentCharNB == MARK)
+    {
+        EndWordNB = true;
+    }
+    else
+    {
+        EndWordNB = false;
+        CopyCommandNB();
+    }
+}
+
+void readCommandNB()
+{
+    STARTCOMMANDNB();
+}
+// ------------------- COMMAND NO BLANKS ---------------------------------------------
 
 int stringLengthNoBlanks(char *string)
 {

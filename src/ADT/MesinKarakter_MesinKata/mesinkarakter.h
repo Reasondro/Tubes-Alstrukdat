@@ -15,6 +15,8 @@
 
 /* State Mesin */
 extern char currentChar;
+extern char currentCharNB;
+
 extern char currentCharLoad;
 extern boolean EOP;
 extern boolean EOL;
@@ -38,6 +40,9 @@ void ADV();
 void STARTINPUT();
 
 void ADVINPUT();
+
+void STARTINPUTNB();
+void ADVINPUTNB();
 
 void STARTLOAD(char *filename);
 

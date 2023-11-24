@@ -16,6 +16,9 @@
 extern boolean EndWord;
 extern Word currentWord;
 
+extern boolean EndWordNB;
+extern Word currentWordNB;
+
 extern boolean EndLine;
 extern Line currentLine;
 
@@ -87,4 +90,17 @@ void CopyLine();
 void displayLine(Line line); // somehow naming the function printLine will result in an error
 void LineToString(Line line, char *string);
 void FPRINTWORD(FILE *fptr, Word W);
+
+// --------NO BLANK -------------
+void IgnoreBlanksInputNB();
+
+void STARTCOMMANDNB();
+
+void ADVCOMMANDNB();
+
+void CopyCommandNB();
+
+void readCommandNB();
+
+// -------- NO BLANK ------------
 #endif
