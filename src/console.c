@@ -117,15 +117,15 @@ void list_playlist(DaftarPlaylist depe)
     }
 }
 
-void DisplayPlaylist(DaftarPlaylist depe)
+void DisplayPlaylist(DaftarPlaylist *depe)
 {
     boolean foundplay = false;
     int idxplay;
-    list_playlist(depe);
+    list_playlist(*depe);
     printf("Masukkan ID Playlist yang dipilih : ");
     STARTCOMMAND();
     idxplay = *(currentWord.TabWord) - '0';
-    if (!(idxplay <= (depe).Neff && idxplay > 0))
+    if (!(idxplay <= (*depe).Neff && idxplay > 0))
     {
         printf("ID Playlist %d tidak valid. Silakan coba lagi", idxplay);
         return;
@@ -133,7 +133,7 @@ void DisplayPlaylist(DaftarPlaylist depe)
     else
     {
         idxplay--;
-        PrintInfo(depe.pl[idxplay]);
+        PrintInfo((*depe).pl[idxplay]);
     }
 }
 
@@ -2024,7 +2024,7 @@ void cmd_user()
                 }
                 else if (IsSameWord(Second_Word, "DISPLAY"))
                 {
-                    DisplayPlaylist(DP);
+                    DisplayPlaylist(&DP);
                 }
             }
             else if (IsSameWord(First_Word, "STATUS"))
