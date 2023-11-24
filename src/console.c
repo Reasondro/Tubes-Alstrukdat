@@ -1146,10 +1146,11 @@ void load_playlistsong(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, Word penyan
 // // ------------------------------------------------------------
 void Load()
 {
+    Word Second_Word = SentenceToWord(currentWord, 1);
     char LoadFileName[40];
-    printf("Masukkan nama file: ");
-    readCommand();
-    WordToString(currentWord, LoadFileName);
+    // printf("Masukkan nama file: ");
+    // readCommand();
+    WordToString(Second_Word, LoadFileName);
     STARTLINE(LoadFileName);
 
     boolean IsComplete = false;
