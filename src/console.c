@@ -117,6 +117,26 @@ void list_playlist(DaftarPlaylist depe)
     }
 }
 
+void DisplayPlaylist(DaftarPlaylist depe)
+{
+    boolean foundplay = false;
+    int idxplay;
+    list_playlist(depe);
+    printf("Masukkan ID Playlist yang dipilih : ");
+    STARTCOMMAND();
+    idxplay = *(currentWord.TabWord) - '0';
+    if (!(idxplay <= (depe).Neff && idxplay > 0))
+    {
+        printf("ID Playlist %d tidak valid. Silakan coba lagi", idxplay);
+        return;
+    }
+    else
+    {
+        idxplay--;
+        PrintInfo(depe.pl[idxplay]);
+    }
+}
+
 void Song_Next()
 {
     QueueSongTypeRevisi next_song;
@@ -1026,13 +1046,14 @@ void quit()
     {
         printf("Masukkan nama save file: ");
         STARTCOMMAND();
-        Word filepath = currentWordNB;
+        Word filepath = currentWord;
         Save(DaftarPenyanyi, QueueOriginal, StackOriginal, DP, currentPlaySong, filepath);
     }
     else if (IsSameWord(currentWord, "N"))
     {
         printf("Kamu keluar dari WayangWave.\nDadah ^_^/\n");
     }
+    mulai = false;
 }
 
 void help()
