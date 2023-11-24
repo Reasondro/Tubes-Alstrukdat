@@ -1731,6 +1731,7 @@ void Save(ListPenyanyiRevisi L, QueueRevisi Q, StackRevisi S, DaftarPlaylist D, 
             }
         }
     }
+    printf("File berhasil disave.\n\n");
     fclose(fptr);
 }
 
@@ -1984,7 +1985,8 @@ void cmd_user()
                     int x = *(Fourth_Word.TabWord) - '0';
                     Word Fifth_Word = SentenceToWord(currentWord, 4);
                     int y = *(Fifth_Word.TabWord) - '0';
-                    playlist_swap(id, x, y);
+                    if (x==y) invalid_command();
+                    else playlist_swap(id, x, y);
                 }
                 else if (IsSameWord(Second_Word, "REMOVE"))
                 {
