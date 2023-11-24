@@ -876,6 +876,7 @@ void Queue_Song()
 void Queue_Playlist()
 {
     int id_playlist, i;
+    list_playlist(DP);
     printf("Masukkan ID Playlist: ");
     readCommand();
     id_playlist = (*(currentWord.TabWord) - '0') - 1;
@@ -1003,7 +1004,7 @@ void Queue_Remove(int id)
         printWord(hapus.judul_lagu);
         printf("\" oleh \"");
         printWord(hapus.penyanyi);
-        printf("telah diahpsu dari queue!\".\n");
+        printf("telah dihapus dari queue!\".\n");
     }
 }
 
