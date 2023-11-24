@@ -180,7 +180,7 @@ Word SentenceToWord(Word w, int wordKe)
         {
             if (count == 0)
             {
-                printf("%c\n", w.TabWord[j]);
+                // printf("%c\n", w.TabWord[j]);
                 break;
             }
             if (w.TabWord[j] == BLANK)
