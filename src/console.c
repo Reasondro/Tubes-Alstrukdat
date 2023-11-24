@@ -194,20 +194,19 @@ void Play_Playlist()
     if (id_Playlist < DP.Neff)
     {
         QueueSongTypeRevisi otherSong;
-        for (int i = 0; i < LengthQueue(QueueOriginal); i++)
-        {
-            dequeue(&QueueOriginal, &otherSong);
-        }
-        printf("queue dibuang\n\n");
-        while (!(IsEmptyStack(StackOriginal)))
-        {
-            Pop(&StackOriginal, &otherSong);
-        }
-        printf("stack dibuang\n\n");
+        CreateQueue(&QueueOriginal);
+        DisplayQueue(QueueOriginal);
+        // printf("queue dibuang\n\n");
+        // printf("\n");
+        CreateEmptyStack(&StackOriginal);
+        // displayStack(StackOriginal);
+        // printf("stack dibuang\n\n");
+        printf("\n");
         addressPlaylist p = DP.pl[id_Playlist].First;
         CopasWord(&currentPlaySong.penyanyi, p->info.penyanyi);
         CopasWord(&currentPlaySong.album, p->info.album);
         CopasWord(&currentPlaySong.judul_lagu, p->info.judul_lagu);
+        // printf("Current song ditambah\n\n");
         while (Next(p) != Nil)
         {
             p = Next(p);
@@ -823,24 +822,31 @@ void Queue_Playlist()
     int id_playlist, i;
     printf("Masukkan ID Playlist: ");
     readCommand();
-    id_playlist = *(currentWord.TabWord) - '0';
+    id_playlist = (*(currentWord.TabWord) - '0')-1;
     if (id_playlist < DP.Neff)
     {
-        printf("%d", id_playlist);
+        // printf("%d", id_playlist);
         addressPlaylist p = (DP.pl[id_playlist].First);
-        CopasWord(&currentPlaySong.penyanyi, p->info.penyanyi);
-        CopasWord(&currentPlaySong.album, p->info.album);
-        CopasWord(&currentPlaySong.judul_lagu, p->info.judul_lagu);
-        p = Next(p);
-        while (p != Nil)
-        {
-            enqueue(&QueueOriginal, p->info);
-            p = Next(p);
+        if (currentPlaySong.penyanyi.Length == 0){
+            CopasWord(&currentPlaySong.penyanyi, p->info.penyanyi);
+            CopasWord(&currentPlaySong.album, p->info.album);
+            CopasWord(&currentPlaySong.judul_lagu, p->info.judul_lagu);
+            while (Next (p) != Nil)
+                {
+                    p = Next(p);
+                    enqueue(&QueueOriginal, p->info);
+                }
+        }else{
+            while (p != Nil)
+            {
+                enqueue(&QueueOriginal, p->info);
+                p = Next(p);
+            }
         }
         // printf("Berhasil menambahkan playlist \"%s\" ke queue.\n", DP.pl[id_playlist].nama);
         printf("Berhasil menambahkan playlist \"");
         printWord(DP.pl[id_playlist].nama);
-        printf(" ke queue.\n");
+        printf("\" ke queue.\n");
     }
     else
     {
@@ -1690,6 +1696,12 @@ void cmd_user()
             else if (IsSameWord(currentWord, "testing"))
             {
                 playlist_create();
+                playlist_add_album(&DP, &DaftarPenyanyi);
+                // printf("Berhasil ditambah\n");
+                Queue_Playlist();
+                Status();
+                Queue_Playlist();
+                Status();
             }
             else if (IsSameWord(currentWord, "CEK"))
             {
