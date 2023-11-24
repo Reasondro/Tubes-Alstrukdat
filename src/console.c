@@ -190,7 +190,7 @@ void Play_Playlist()
     DisplayDP(DP);
     printf("Masukkan Id Playlist: ");
     readCommand();
-    id_Playlist = (*(currentWord.TabWord) - '0')-1;
+    id_Playlist = (*(currentWord.TabWord) - '0') - 1;
     if (id_Playlist < DP.Neff)
     {
         QueueSongTypeRevisi otherSong;
@@ -431,7 +431,7 @@ void playlist_add_album(DaftarPlaylist *depe, ListPenyanyiRevisi *DaftarPenyanyi
             else
             {
                 idxplay--;
-                playlistalbum(depe,DaftarPenyanyi,idxp,idxa,idxplay);
+                playlistalbum(depe, DaftarPenyanyi, idxp, idxa, idxplay);
             }
         }
     }
@@ -441,7 +441,7 @@ void playlistalbum(DaftarPlaylist *depe, ListPenyanyiRevisi *LP, int idxp, int i
 {
     int count = 0, idxl = 0;
     QueueSongTypeRevisi P;
-    for (idxl=0; idxl < (*LP).Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.JumlahLagu; idxl++)
+    for (idxl = 0; idxl < (*LP).Penyanyi[idxp].album.AlbumKe[idxa].DaftarLagu.JumlahLagu; idxl++)
     {
         P.penyanyi = (*LP).Penyanyi[idxp].nama;
         P.album = (*LP).Penyanyi[idxp].album.AlbumKe[idxa].NamaAlbum;
@@ -618,7 +618,7 @@ void playlist_delete()
             DP.pl[i] = DP.pl[i + 1];
         }
         // printf("Playlist ID %d dengan judul %s berhasil dihapus.", idxplay, DP.pl[idxplay].nama);
-        printf("Playlist ID %d dengan judul \"", idxplay+1);
+        printf("Playlist ID %d dengan judul \"", idxplay + 1);
         printWord(DP.pl[idxplay].nama);
         printf("\" berhasil dihapus.\n");
     }
@@ -1349,12 +1349,21 @@ void Save(ListPenyanyiRevisi L, QueueRevisi Q, StackRevisi S, DaftarPlaylist D, 
     FILE *fptr; // inisisasi file
     char dir[40] = "../save/";
     char saveFilePath[40];
-    stringCopy(saveFilePath, dir);
-    char saveFileName[20];
+
+    Word dirW;
+    Word savefilepathW;
+    Word savefilenameW;
+
+    stringToWord(dir, &(dirW));
+    CopasWord(&savefilepathW, dirW);
+
+    char saveFileName[30];
     printf("Masukkan nama save file: ");
     readCommand();
-    WordToString(currentWord, saveFileName);
-    stringConcat(saveFilePath, saveFileName);
+    CopasWord(&(savefilenameW), currentWord);
+
+    wordConcat(&(savefilepathW), savefilenameW);
+    WordToString(savefilepathW, saveFilePath);
 
     // scanf("%s", saveFileName);
     fptr = fopen(saveFilePath, "w");
@@ -1680,94 +1689,7 @@ void cmd_user()
 
             else if (IsSameWord(currentWord, "testing"))
             {
-                // Queue_Playlist();
-                // Queue_Song();
-                // Queue_Song();
-                // Queue_Song();
-                // Song_Next();
-                // DisplayQueue(QueueOriginal);
-                // Queue_Playlist();
-
-                // ListDefault(DaftarPenyanyi);
-                // printWord(DaftarPenyanyi.Penyanyi[0].nama);
-                // printf("\n");
-                // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].NamaAlbum);
-                // printf("\n");
-                // // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[1].NamaAlbum);
-                // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[0]);
-                // printf("\n");
-                // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[1]);
-                // printf("\n");
-                // printWord(DaftarPenyanyi.Penyanyi[0].album.AlbumKe[0].DaftarLagu.Songs[2]);
-                // printf("\n");
-                // init_dafplay();
                 playlist_create();
-                // PrintInfo(DP.pl[0]);
-                // PrintInfo(DP.pl[1]);
-                playlist_create();
-                playlist_create();
-                playlist_add_album(&DP,&DaftarPenyanyi);
-                playlist_add_album(&DP,&DaftarPenyanyi);
-                // PrintInfo(DP.pl[0]);
-                // PrintInfo(DP.pl[1]);
-                playlist_add_album(&DP,&DaftarPenyanyi);
-                PrintInfo(DP.pl[0]);
-                PrintInfo(DP.pl[1]);
-                PrintInfo(DP.pl[2]);
-                int a, b, c,d,e,f,g,h,i,j,k,l,m,n,o,p,q;
-                printf("swap\n");
-                scanf("%d %d %d", &a, &b, &c);
-                playlist_swap(a,b,c);
-                PrintInfo(DP.pl[0]);
-                PrintInfo(DP.pl[1]);
-                PrintInfo(DP.pl[2]);
-                // jgn pake scanf ges, burik
-                scanf("%d %d %d", &d, &e, &f);
-                printf("swap\n");
-                playlist_swap(a,b,c);
-                PrintInfo(DP.pl[0]);
-                PrintInfo(DP.pl[1]);
-                PrintInfo(DP.pl[2]);
-                scanf("%d %d %d", &g, &h, &i);
-                // jgn pake scanf ges, burik
-                printf("swap\n");
-                playlist_swap(a,b,c);
-                PrintInfo(DP.pl[0]);
-                PrintInfo(DP.pl[1]);
-                PrintInfo(DP.pl[2]);
-                scanf("%d %d %d", &j, &k, &l);
-                // jgn pake scanf ges, burik
-                printf("swap\n");
-                playlist_swap(a,b,c);
-                PrintInfo(DP.pl[0]);
-                PrintInfo(DP.pl[1]);
-                PrintInfo(DP.pl[2]);
-                scanf("%d %d", &m, &n);
-                printf("remove\n");
-                playlist_removesong(a,c);
-                PrintInfo(DP.pl[0]);
-                PrintInfo(DP.pl[1]);
-                PrintInfo(DP.pl[2]);
-                scanf("%d %d", &o, &p);
-                printf("remove\n");
-                playlist_removesong(a,c);
-                PrintInfo(DP.pl[0]);
-                PrintInfo(DP.pl[1]);
-                PrintInfo(DP.pl[2]);
-                printf("delet\n");
-                playlist_delete();
-                
-                PrintInfo(DP.pl[0]);
-                PrintInfo(DP.pl[1]);
-                PrintInfo(DP.pl[2]);
-                printWord(DP.pl[1].First->info.judul_lagu);
-
-                // printWord(DaftarPenyanyi.Penyanyi[2].nama);
-                printf("\n");
-
-                // DisplayMap(DaftarPenyanyi, tes1);
-
-                // Status();
             }
             else if (IsSameWord(currentWord, "CEK"))
             {
@@ -1775,11 +1697,11 @@ void cmd_user()
             }
             else if (IsSameWord(currentWord, "playlistsong"))
             {
-                playlist_add_song(&DP,&DaftarPenyanyi);
+                playlist_add_song(&DP, &DaftarPenyanyi);
             }
             else if (IsSameWord(currentWord, "playlistalbum"))
             {
-                playlist_add_album(&DP,&DaftarPenyanyi);
+                playlist_add_album(&DP, &DaftarPenyanyi);
             }
             else if (IsSameWord(currentWord, "playlistprint"))
             {
@@ -1840,11 +1762,11 @@ void cmd_user()
                 {
                     if (IsSameWord(currentWord, "SONG"))
                     {
-                        playlist_add_song(&DP,&DaftarPenyanyi);
+                        playlist_add_song(&DP, &DaftarPenyanyi);
                     }
                     else if (IsSameWord(currentWord, "ALBUM"))
                     {
-                        playlist_add_album(&DP,&DaftarPenyanyi);
+                        playlist_add_album(&DP, &DaftarPenyanyi);
                     }
                 }
                 else if (IsSameWord(currentWord, "SWAP"))
