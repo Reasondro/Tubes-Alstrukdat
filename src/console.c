@@ -835,21 +835,24 @@ void Queue_Playlist()
     int id_playlist, i;
     printf("Masukkan ID Playlist: ");
     readCommand();
-    id_playlist = (*(currentWord.TabWord) - '0')-1;
+    id_playlist = (*(currentWord.TabWord) - '0') - 1;
     if (id_playlist < DP.Neff)
     {
         // printf("%d", id_playlist);
         addressPlaylist p = (DP.pl[id_playlist].First);
-        if (currentPlaySong.penyanyi.Length == 0){
+        if (currentPlaySong.penyanyi.Length == 0)
+        {
             CopasWord(&currentPlaySong.penyanyi, p->info.penyanyi);
             CopasWord(&currentPlaySong.album, p->info.album);
             CopasWord(&currentPlaySong.judul_lagu, p->info.judul_lagu);
-            while (Next (p) != Nil)
-                {
-                    p = Next(p);
-                    enqueue(&QueueOriginal, p->info);
-                }
-        }else{
+            while (Next(p) != Nil)
+            {
+                p = Next(p);
+                enqueue(&QueueOriginal, p->info);
+            }
+        }
+        else
+        {
             while (p != Nil)
             {
                 enqueue(&QueueOriginal, p->info);
@@ -1540,10 +1543,44 @@ void Save(ListPenyanyiRevisi L, QueueRevisi Q, StackRevisi S, DaftarPlaylist D, 
     }
     else
     {
+        fprintf(fptr, "%d\n", D.Neff);
+        int countPlaylist = D.Neff;
+        int idxPlaylist;
+        int countPlaylistSong;
+        addressPlaylist P1;
+        addressPlaylist P2;
+        for (idxPlaylist = 0; idxPlaylist < countPlaylist; idxPlaylist++)
+        {
+            countPlaylistSong = 0;
+            P1 = D.pl[idxPlaylist].First;
+            while (P1 != Nil)
+            {
+                countPlaylistSong++;
+                P1 = P1->next;
+            }
+            fprintf(fptr, "%d ", countPlaylistSong);
+            FPRINTWORD(fptr, D.pl[idxPlaylist].nama);
+            fprintf(fptr, "\n");
+            if (countPlaylistSong != 0)
+            {
+                P1 = D.pl[idxPlaylist].First;
+                while (P1 != Nil)
+                {
+                    FPRINTWORD(fptr, P1->info.penyanyi);
+                    fprintf(fptr, ";");
+                    FPRINTWORD(fptr, P1->info.album);
+                    fprintf(fptr, ";");
+                    FPRINTWORD(fptr, P1->info.judul_lagu);
+                    fprintf(fptr, "\n");
+                }
+            }
+            else
+            {
+            }
+        }
     }
     fclose(fptr);
 }
-
 void invalid_command()
 {
     boolean error = false;
